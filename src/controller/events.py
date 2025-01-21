@@ -25,9 +25,15 @@ class ButtonHandler:
     cor5 = '#3757A0' # Cor azul para botões - hover color
     cor6 = 'white'   # Cor branca para textos
 
-    def __init__(self, master):
+    def __init__(self, master, submaster):
 
         self.master = master
+        self.submaster = submaster
+
+        self._segx = None
+        self._segz = None
+        self._trocax = None
+        self._trocaz = None
 
         self.comandos = {
             "! compile -c: desbaste": self.desbaste
@@ -36,16 +42,19 @@ class ButtonHandler:
     def executar_comando(self, comando):
 
         if comando not in self.comandos:
-            print('Comando erro')
+            msg = messagebox.showerror(title='Compilador G-Code', message='O comando informado não existe no sistema. Por favor, verifique e tente novamente.')
 
         else:
             self.comandos[comando]()
 
     def desbaste(self):
 
-        # SEÇÃO DE G-CODE
-
         def gcode():
+
+            # SEÇÃO DE CONVERSÃO DE ENTRADAs
+
+            ferramenta = entry_ferramenta.get().upper()
+            referencia = entry_ref.get().upper()
 
             try:
                 diametro_inicial = float(entry_diametroi.get())
@@ -54,9 +63,6 @@ class ButtonHandler:
                 rotacao = float(entry_rotacao.get())
                 avanco = float(entry_avanco.get())
                 passe = float(entry_passe.get())
-
-                ferramenta = entry_ferramenta.get()
-                referencia = entry_ref.get()
 
                 ciclo_desbaste = CicloDesbaste(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura, passe=passe)
 
@@ -67,9 +73,11 @@ class ButtonHandler:
 
             except Exception as e:
                 print(f'Erro! {e}')
+                msg = messagebox.showerror(title='Compilador G-Code', 
+                                           message='Por favor, recompile o ciclo e tente novamente.')
             else:
                 gcode_text = ciclo_desbaste.gcode()
-                msg = messagebox.showinfo(title='Compilador G-Code',
+                msg = messagebox.showinfo(title='Compilador G-Code', 
                                           message='O ciclo de desbaste foi concluído com sucesso e já está salvo em seus arquivos.')
 
         # SEÇÃO DE LABELs
@@ -129,5 +137,5 @@ class ButtonHandler:
 
         # SEÇÃO DE BUTTONs
 
-        button_save = ctk.CTkButton(master=self.master, command=gcode, height=35, corner_radius=12, text='G-CODE', font=('Arial', 15, 'bold'), image=ButtonHandler.img_code, bg_color=ButtonHandler.cor2, fg_color=ButtonHandler.cor4, hover_color=ButtonHandler.cor5)
-        button_save.place(x=705, y=355)
+        button_pos = ctk.CTkButton(master=self.master, command=gcode, height=35, corner_radius=12, text='G-CODE', font=('Arial', 15, 'bold'), image=ButtonHandler.img_code, bg_color=ButtonHandler.cor2, fg_color=ButtonHandler.cor4, hover_color=ButtonHandler.cor5)
+        button_pos.place(x=705, y=355)

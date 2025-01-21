@@ -281,7 +281,7 @@ class CicloDesbaste:
         else:
             self._referencia = ref
             return self._referencia
-        
+
     def gcode(self):
 
         gcode_text = textwrap.dedent(f'''
@@ -291,7 +291,7 @@ class CicloDesbaste:
         N10 G290
         N20 G18 G40 G90 G95
 
-        N30 G0 {self._referencia} X400 Z100
+        N30 G0 {self._referencia} X1000 Z600
 
         N40 {self._ferramenta} M3
         N50 G97 S{self._rotacao}
@@ -358,7 +358,7 @@ class CicloDesbaste:
         N130 G0 X=R1
 
         MSG("")
-        N140 G0 {self._referencia} X400 Z100 
+        N140 G0 {self._referencia} X1000 Z600
 
         N150 M5
         N160 M30''')

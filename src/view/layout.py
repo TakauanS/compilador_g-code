@@ -24,11 +24,12 @@ class Interface(ctk.CTk):
         self.title('Compilador G-Code')
         self.config(bg=Interface.cor1)
         self.resizable(width=False, height=False)
+        self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
         # SEÇÃO DE DEFs
 
         def on_button():
-
+            
             comando = entry_command.get()
             button_action.executar_comando(comando=comando)
 
@@ -37,7 +38,7 @@ class Interface(ctk.CTk):
         frame_p = ctk.CTkFrame(master=self, corner_radius=15, width=860, height=400, bg_color=Interface.cor1, fg_color=Interface.cor2)
         frame_p.place(x=20, y=80)
 
-        button_action = ButtonHandler(master=frame_p)
+        button_action = ButtonHandler(master=frame_p, submaster=self)
 
         # SEÇÃO DE ENTRYs
 
@@ -48,7 +49,3 @@ class Interface(ctk.CTk):
 
         button_pesq = ctk.CTkButton(master=self, image=Interface.img_cima, text='UP', font=('Arial', 15, 'bold'), height=35, corner_radius=12, command=on_button, bg_color=Interface.cor1, fg_color=Interface.cor4, hover_color=Interface.cor5)
         button_pesq.place(x=735, y=20)
-
-if __name__ == "__main__":
-    app = Interface()
-    app.mainloop
