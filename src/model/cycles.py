@@ -160,14 +160,17 @@ class CicloDesbaste:
         if diametro_inicial < diametro_final:
             msg = messagebox.showerror(title='Compilador G-Code',
                                        message='O diâmetro inicial não pode ser menor que o diâmetro final. Por favor, insira um valor válido.')
+            return
 
         if espessura <= 0:
             msg = messagebox.showerror(title='Compilador G-Code',
                                        message='A espessura não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            return
 
         if passe <= 0:
             msg = messagebox.showerror(title='Compilador G-Code',
                                        message='O passe de profundidade não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            return
 
         self._diametro_inicial = diametro_inicial
         self._diametro_final = diametro_final
@@ -255,6 +258,7 @@ class CicloDesbaste:
         if advance <= 0:
             msg = messagebox.showerror(title='Compilador G-Code',
                                        message='O avanço não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            return
 
         self._avanco = advance
         return self._avanco
@@ -267,6 +271,7 @@ class CicloDesbaste:
         if rpm <= 0:
             msg = messagebox.showerror(title='Compilador G-Code', 
                                        message='O valor do RPM não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            return
 
         self._rotacao = rpm
         return self._rotacao
@@ -301,8 +306,8 @@ class CicloDesbaste:
         R3 = -{self._espessura}
 
         R4 = -{self._passe}
-        R5 = 0.5
-        R6 = (R1 - R2) / 1
+        R5 = ABS(R4) * 2
+        R6 = (R1 - R2) / R5
         R7 = 0
 
         N_PASSES = R6

@@ -1,4 +1,4 @@
-from tkinter import filedialog, messagebox
+from tkinter import messagebox
 import customtkinter as ctk
 from PIL import Image
 import sys
@@ -25,16 +25,10 @@ class ButtonHandler:
     cor5 = '#3757A0' # Cor azul para botões - hover color
     cor6 = 'white'   # Cor branca para textos
 
-    def __init__(self, master, submaster):
+    def __init__(self, master):
 
         self.master = master
-        self.submaster = submaster
-
-        self._segx = None
-        self._segz = None
-        self._trocax = None
-        self._trocaz = None
-
+        
         self.comandos = {
             "! compile -c: desbaste": self.desbaste
         }
@@ -56,29 +50,37 @@ class ButtonHandler:
             ferramenta = entry_ferramenta.get().upper()
             referencia = entry_ref.get().upper()
 
-            try:
-                diametro_inicial = float(entry_diametroi.get())
-                diametro_final = float(entry_diametrof.get())
-                espessura = float(entry_espessura.get())
-                rotacao = float(entry_rotacao.get())
-                avanco = float(entry_avanco.get())
-                passe = float(entry_passe.get())
+            # SEÇÃO DE VALIDAÇÃO DE G-CODE
 
-                ciclo_desbaste = CicloDesbaste(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura, passe=passe)
+            validacao_code = messagebox.askquestion(title='Compilador G-Code', message='Antes de prosseguir para gerar o G-code, você configurou os posicionamentos da ferramenta corretamente?')
 
-                ciclo_desbaste.ferramenta(tool=ferramenta)
-                ciclo_desbaste.avanco(advance=avanco)
-                ciclo_desbaste.rotacao(rpm=rotacao)
-                ciclo_desbaste.referencia_trabalho(ref=referencia)
+            if validacao_code == 'yes':
 
-            except Exception as e:
-                print(f'Erro! {e}')
-                msg = messagebox.showerror(title='Compilador G-Code', 
-                                           message='Por favor, recompile o ciclo e tente novamente.')
+                try:
+                    diametro_inicial = float(entry_diametroi.get())
+                    diametro_final = float(entry_diametrof.get())
+                    espessura = float(entry_espessura.get())
+                    rotacao = float(entry_rotacao.get())
+                    avanco = float(entry_avanco.get())
+                    passe = float(entry_passe.get())
+
+                    ciclo_desbaste = CicloDesbaste(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura, passe=passe)
+
+                    ciclo_desbaste.ferramenta(tool=ferramenta)
+                    ciclo_desbaste.avanco(advance=avanco)
+                    ciclo_desbaste.rotacao(rpm=rotacao)
+                    ciclo_desbaste.referencia_trabalho(ref=referencia)
+
+                except Exception as e:
+                    print(f'Erro! {e}')
+                    msg = messagebox.showerror(title='Compilador G-Code', 
+                                            message='Por favor, recompile o ciclo e tente novamente.')
+                else:
+                    gcode_text = ciclo_desbaste.gcode()
+                    msg = messagebox.showinfo(title='Compilador G-Code', 
+                                            message='O ciclo de desbaste foi concluído com sucesso e já está salvo em seus arquivos.')
             else:
-                gcode_text = ciclo_desbaste.gcode()
-                msg = messagebox.showinfo(title='Compilador G-Code', 
-                                          message='O ciclo de desbaste foi concluído com sucesso e já está salvo em seus arquivos.')
+                pass
 
         # SEÇÃO DE LABELs
 
