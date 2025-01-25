@@ -8,6 +8,7 @@ base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(base_dir)
 
 from src.model.cycles import CicloDesbaste
+from src.model.menu import Menu
 
 class ButtonHandler:
 
@@ -28,6 +29,7 @@ class ButtonHandler:
     def __init__(self, master):
 
         self.master = master
+        self.menu = Menu(self.master)
         
         self.comandos = {
             "! compile -c: desbaste": self.desbaste
@@ -71,14 +73,17 @@ class ButtonHandler:
                     ciclo_desbaste.rotacao(rpm=rotacao)
                     ciclo_desbaste.referencia_trabalho(ref=referencia)
 
+                    ciclo_desbaste.trocax_pos(trocax=self.menu.get_trocax)
+                    ciclo_desbaste.trocaz_pos(trocaz=self.menu.get_trocaz)
+                    ciclo_desbaste.afastx_pos(afastx=self.menu.get_afastx)
+                    ciclo_desbaste.afastz_pos(afastz=self.menu.get_afastz)
+
                 except Exception as e:
                     print(f'Erro! {e}')
-                    msg = messagebox.showerror(title='Compilador G-Code', 
-                                            message='Por favor, recompile o ciclo e tente novamente.')
+                    msg = messagebox.showerror(title='Compilador G-Code', message='Por favor, recompile o ciclo e tente novamente.')
                 else:
                     gcode_text = ciclo_desbaste.gcode()
-                    msg = messagebox.showinfo(title='Compilador G-Code', 
-                                            message='O ciclo de desbaste foi concluído com sucesso e já está salvo em seus arquivos.')
+                    msg = messagebox.showinfo(title='Compilador G-Code', message='O ciclo de desbaste foi concluído com sucesso e já está salvo em seus arquivos.')
             else:
                 pass
 

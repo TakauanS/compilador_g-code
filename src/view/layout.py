@@ -1,5 +1,6 @@
 from PIL import Image
 import customtkinter as ctk
+from src.model.menu import Menu
 from src.controller.events import ButtonHandler
 
 class Interface(ctk.CTk):
@@ -26,6 +27,9 @@ class Interface(ctk.CTk):
         self.resizable(width=False, height=False)
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
+        menu = Menu(root=self)
+        #self.config(menu=menu)
+
         # SEÇÃO DE DEFs
 
         def on_button():
@@ -38,14 +42,14 @@ class Interface(ctk.CTk):
         frame_p = ctk.CTkFrame(master=self, corner_radius=15, width=860, height=400, bg_color=Interface.cor1, fg_color=Interface.cor2)
         frame_p.place(x=20, y=80)
 
-        button_action = ButtonHandler(master=frame_p, submaster=self)
-
         # SEÇÃO DE ENTRYs
 
         entry_command = ctk.CTkEntry(master=self, width=700, height=35, corner_radius=12, font=('Corbel', 18), bg_color=Interface.cor1, fg_color=Interface.cor2, text_color=Interface.cor6, border_color=Interface.cor1, placeholder_text_color=Interface.cor3, placeholder_text='Insira o comando que deseja...')
         entry_command.place(x=20, y=20)
 
         # SEÇÃO DE BUTTONs
+
+        button_action = ButtonHandler(master=frame_p)
 
         button_pesq = ctk.CTkButton(master=self, image=Interface.img_cima, text='UP', font=('Arial', 15, 'bold'), height=35, corner_radius=12, command=on_button, bg_color=Interface.cor1, fg_color=Interface.cor4, hover_color=Interface.cor5)
         button_pesq.place(x=735, y=20)

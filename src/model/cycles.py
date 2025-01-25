@@ -158,18 +158,15 @@ class CicloDesbaste:
             raise ValueError ('O valor do passe deve ser um número decimal (float). Por favor, insira um valor válido.')
 
         if diametro_inicial < diametro_final:
-            msg = messagebox.showerror(title='Compilador G-Code',
-                                       message='O diâmetro inicial não pode ser menor que o diâmetro final. Por favor, insira um valor válido.')
+            msg = messagebox.showerror(title='Compilador G-Code', message='O diâmetro inicial não pode ser menor que o diâmetro final. Por favor, insira um valor válido.')
             return
 
         if espessura <= 0:
-            msg = messagebox.showerror(title='Compilador G-Code',
-                                       message='A espessura não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            msg = messagebox.showerror(title='Compilador G-Code', message='A espessura não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
             return
 
         if passe <= 0:
-            msg = messagebox.showerror(title='Compilador G-Code',
-                                       message='O passe de profundidade não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            msg = messagebox.showerror(title='Compilador G-Code', message='O passe de profundidade não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
             return
 
         self._diametro_inicial = diametro_inicial
@@ -256,8 +253,7 @@ class CicloDesbaste:
             raise ValueError ('O valor do avanço deve ser um número decimal (float). Por favor, insira um valor válido.')
 
         if advance <= 0:
-            msg = messagebox.showerror(title='Compilador G-Code',
-                                       message='O avanço não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            msg = messagebox.showerror(title='Compilador G-Code', message='O avanço não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
             return
 
         self._avanco = advance
@@ -269,8 +265,7 @@ class CicloDesbaste:
             raise ValueError ('O valor do RPM deve ser um número decimal (float). Por favor, insira um valor válido.')
 
         if rpm <= 0:
-            msg = messagebox.showerror(title='Compilador G-Code', 
-                                       message='O valor do RPM não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
+            msg = messagebox.showerror(title='Compilador G-Code', message='O valor do RPM não pode ser menor ou igual a zero. Por favor, insira um valor válido.')
             return
 
         self._rotacao = rpm
@@ -287,6 +282,42 @@ class CicloDesbaste:
             self._referencia = ref
             return self._referencia
 
+    def trocax_pos(self, trocax):
+
+        if trocax <= 800 or trocax > 1000:
+            self.msg = messagebox.showerror(title='Compilador G-Code', message='O valor de troca de ferramenta no eixo X deve estar entre 800 e 1000. Por favor, insira um valor dentro desse intervalo.')
+            return
+        else:
+            self._trocax = trocax
+            return self._trocax
+        
+    def trocaz_pos(self, trocaz):
+
+        if trocaz <= 800 or trocaz > 1000:
+            self.msg = messagebox.showerror(title='Compilador G-Code', message='O valor de troca de ferramenta no eixo Z deve estar entre 800 e 1000. Por favor, insira um valor dentro desse intervalo.')
+            return
+        else:
+            self._trocaz = trocaz
+            return self._trocaz
+
+    def afastx_pos(self, afastx):
+
+        if afastx <= 800 or afastx > 1000:
+            self.msg = messagebox.showerror(title='Compilador G-Code', message='O valor de afastamento da ferramenta no eixo X deve estar entre 800 e 1000. Por favor, insira um valor dentro desse intervalo.')
+            return
+        else:
+            self._afastx = afastx
+            return self._afastx
+        
+    def afastz_pos(self, afastz):
+
+        if afastz <= 800 or afastz > 1000:
+            self.msg = messagebox.showerror(title='Compilador G-Code', message='O valor de afastamento da ferramenta no eixo Z deve estar entre 800 e 1000. Por favor, insira um valor dentro desse intervalo.')
+            return
+        else:
+            self._afastz = afastz
+            return self._afastz
+
     def gcode(self):
 
         gcode_text = textwrap.dedent(f'''
@@ -296,7 +327,7 @@ class CicloDesbaste:
         N10 G290
         N20 G18 G40 G90 G95
 
-        N30 G0 {self._referencia} X1000 Z600
+        N30 G0 {self._referencia} X{self._trocax} Z{self._trocaz}
 
         N40 {self._ferramenta} M3
         N50 G97 S{self._rotacao}
@@ -363,7 +394,7 @@ class CicloDesbaste:
         N130 G0 X=R1
 
         MSG("")
-        N140 G0 {self._referencia} X1000 Z600
+        N140 G0 {self._referencia} X{self._afastx} Z{self._afastz}
 
         N150 M5
         N160 M30''')
