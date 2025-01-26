@@ -132,13 +132,16 @@ class CicloCanal:
 
         gcode_text = textwrap.dedent(f'''
         DEF INT CANAIS[{self._n_canais}] = SET ({self._pos_canais})
+        DEF INT N_CANAIS
+        DEF INT C_CANAIS
+        DEF INT C_MSG
         
         N10 G290
         N20 G18 G40 G90 G95
 
         N30 G0 {self._referencia} X{self._trocax} Z{self._trocaz}
 
-        N40 {self._ferramenta} M3;
+        N40 {self._ferramenta} M3
         N50 G97 S{self._rotacao} M8
 
         R1 = {self._diametro_inicial};
@@ -146,33 +149,72 @@ class CicloCanal:
 
         R3 = 0.5;
         R4 = -0.5;
-        R5 = R1 - R2;
+        R5 = (R1 - R2) - 1;
 
-        R7 = {self._n_canais}
+        R7 = {self._n_canais};
+        R11 = 0;
 
-        N60 G0 X=(R1 + 1) Z0
+        N_CANAIS = (R5 * R7) + R7;
+        C_CANAIS = 1;
+        C_MSG = 0;
+
+        IF R11 == 0
+            MSG("INICIAR CICLO DE DESBASTE? - (CYCLE START)")
+            M00
+            GOTO N60
+        ENDIF
+
+        IF R11 == 1
+            MSG("INICIAR CICLO DE ACABAMENTO? - (CYCLE START)")
+            M00
+            GOTO N100
+        ENDIF
+
+        IF NOT R11 <> 0 OR 1
+            MSG("ERRO: É NECESSÁRIO INFORMAR NA VARIÁVEL R11 SE O PROCESSO É DE DESBASTE (0) OU ACABAMENTO (1) DOS CANAIS.")
+            M00
+            M30
+        ENDIF
+
+        N60 G0 X=R1 Z0
 
         FOR R6 = 0 TO (R7 - 1)
+            C_MSG = C_MSG + 1
             G1 Z=CANAIS[R6] F{self._avanco}
             FOR R9 = 0 TO R5
+                MSG("CANAL "<<C_MSG<<" | PASSE DE DESBASTE: "<<C_CANAIS<<" DE "<<N_CANAIS)
                 G91
                 G1 X=R4 F{self._avanco}
                 X=R3
                 X=R4
+                C_CANAIS = C_CANAIS + 1
             ENDFOR
             G90
-            G0 X=(R1 + 1)
+            G0 X=R1
         ENDFOR
 
         N70 G90
         N80 G0 X=(R1 + 1)
         N90 Z0
 
+        MSG("INICIAR CICLO DE ACABAMENTO? - (CYCLE START)")
+        M00
+
+        N100 ; 
+        MSG("CICLO DE ACABAMENTO EM ANDAMENTO...")
+
+        FOR R10 = 0 TO (R7 - 1)
+            G1 Z=CANAIS[R10] F{self._avanco}
+            X=R2
+            X=R1
+        ENDFOR
+
+        MSG("")
         N100 G0 {self._referencia} X{self._afastx} Z{self._afastz}
 
-        N110 M9
-        N120 M5
-        N130 M30''')
+        N120 M9
+        N130 M5
+        N140 M30''')
 
         with open(f'{nome_arquivo}.txt', "w") as arquivo:
             arquivo.write(gcode_text)
