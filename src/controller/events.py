@@ -8,6 +8,7 @@ base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(base_dir)
 
 from src.model.cycles import CicloDesbaste, CicloCanal
+from src.model.assents import Assents
 from src.model.menu import Menu
 
 class ButtonHandler:
@@ -30,6 +31,7 @@ class ButtonHandler:
 
         self.master = master
         self.menu = Menu(self.master)
+        self.assents = Assents(self.master)
         
         self.comandos = {
             "! compile -c: desbaste": self.desbaste,
@@ -90,58 +92,34 @@ class ButtonHandler:
 
         # SEÇÃO DE LABELs
 
-        label_diametroi = ctk.CTkLabel(master=self.master, text='DIÂMETRO INICIAL', font=('Corbel', 23), text_color='white')
-        label_diametroi.place(x=15, y=10)
+        label_diametroi = self.assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
+        label_diametrof = self.assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
 
-        label_diametrof = ctk.CTkLabel(master=self.master, text='DIÂMETRO FINAL', font=('Corbel', 23), text_color='white')
-        label_diametrof.place(x=15, y=50)
+        label_ferramenta = self.assents.criar_label(text='FERRAMENTA', x=15, y=170)
+        label_ref = self.assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
 
-        label_espessura = ctk.CTkLabel(master=self.master, text='ESPESSURA', font=('Corbel', 23), text_color='white')
-        label_espessura.place(x=500, y=10)
+        label_espessura = self.assents.criar_label(text='ESPESSURA', x=500, y=10)
+        label_rotacao = self.assents.criar_label(text='ROTAÇÃO', x=500, y=130)
 
-        label_passe = ctk.CTkLabel(master=self.master, text='PASSE', font=('Corbel', 23), text_color='white')
-        label_passe.place(x=500, y=50)
-
-        label_ref = ctk.CTkLabel(master=self.master, text='REF. DE TRABALHO', font=('Corbel', 23), text_color='white')
-        label_ref.place(x=15, y=130)
-
-        label_ferramenta = ctk.CTkLabel(master=self.master, text='FERRAMENTA', font=('Corbel', 23), text_color='white')
-        label_ferramenta.place(x=15, y=170)
-
-        label_rotacao = ctk.CTkLabel(master=self.master, text='ROTAÇÃO', font=('Corbel', 23), text_color='white')
-        label_rotacao.place(x=500, y=130)
-
-        label_avanco = ctk.CTkLabel(master=self.master, text='AVANÇO', font=('Corbel', 23), text_color='white')
-        label_avanco.place(x=500, y=170)
+        label_avanco = self.assents.criar_label(text='AVANÇO', x=500, y=170)
+        label_passe = self.assents.criar_label(text='PASSE', x=500, y=50)
 
         label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=ButtonHandler.img_linha)
         label_linha.place(x=15, y=95)
 
         # SEÇÃO DE ENTRYs
 
-        entry_diametroi = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_diametroi.place(x=220, y=10)
+        entry_ferramenta = self.assents.criar_entry(x=220, y=170)
+        entry_espessura = self.assents.criar_entry(x=640, y=10)
 
-        entry_diametrof = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_diametrof.place(x=220, y=50)
+        entry_diametroi = self.assents.criar_entry(x=220, y=10)
+        entry_diametrof = self.assents.criar_entry(x=220, y=50)
 
-        entry_espessura = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_espessura.place(x=640, y=10)
+        entry_rotacao = self.assents.criar_entry(x=640, y=130)
+        entry_avanco = self.assents.criar_entry(x=640, y=170)
 
-        entry_passe = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_passe.place(x=640, y=50)
-
-        entry_ref = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_ref.place(x=220, y=130)
-
-        entry_ferramenta = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_ferramenta.place(x=220, y=170)
-
-        entry_rotacao = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_rotacao.place(x=640, y=130)
-
-        entry_avanco = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_avanco.place(x=640, y=170)
+        entry_passe = self.assents.criar_entry(x=640, y=50)
+        entry_ref = self.assents.criar_entry(x=220, y=130)
 
         # SEÇÃO DE BUTTONs
 
@@ -195,58 +173,34 @@ class ButtonHandler:
                 
         # SEÇÃO DE LABELs
 
-        label_diametroi = ctk.CTkLabel(master=self.master, text='DIÂMETRO INICIAL', font=('Corbel', 23), text_color='white')
-        label_diametroi.place(x=15, y=10)
+        label_diametroi = self.assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
+        label_diametrof = self.assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
 
-        label_diametrof = ctk.CTkLabel(master=self.master, text='DIÂMETRO FINAL', font=('Corbel', 23), text_color='white')
-        label_diametrof.place(x=15, y=50)
+        label_ferramenta = self.assents.criar_label(text='FERRAMENTA', x=15, y=170)
+        label_ref = self.assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
 
-        label_poscanais = ctk.CTkLabel(master=self.master, text='POS CANAIS', font=('Corbel', 23), text_color='white')
-        label_poscanais.place(x=500, y=10)
+        label_poscanais = self.assents.criar_label(text='POS CANAIS', x=500, y=10)
+        label_rotacao = self.assents.criar_label(text='ROTAÇÃO', x=500, y=130)
 
-        label_ncanais = ctk.CTkLabel(master=self.master, text='N.CANAIS', font=('Corbel', 23), text_color='white')
-        label_ncanais.place(x=500, y=50)
-
-        label_ref = ctk.CTkLabel(master=self.master, text='REF. DE TRABALHO', font=('Corbel', 23), text_color='white')
-        label_ref.place(x=15, y=130)
-
-        label_ferramenta = ctk.CTkLabel(master=self.master, text='FERRAMENTA', font=('Corbel', 23), text_color='white')
-        label_ferramenta.place(x=15, y=170)
-
-        label_rotacao = ctk.CTkLabel(master=self.master, text='ROTAÇÃO', font=('Corbel', 23), text_color='white')
-        label_rotacao.place(x=500, y=130)
-
-        label_avanco = ctk.CTkLabel(master=self.master, text='AVANÇO', font=('Corbel', 23), text_color='white')
-        label_avanco.place(x=500, y=170)
+        label_ncanais = self.assents.criar_label(text='N.CANAIS', x=500, y=50)
+        label_avanco = self.assents.criar_label(text='AVANÇO', x=500, y=170)
 
         label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=ButtonHandler.img_linha)
         label_linha.place(x=15, y=95)
 
         # SEÇÃO DE ENTRYs
 
-        entry_diametroi = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_diametroi.place(x=220, y=10)
+        entry_ferramenta = self.assents.criar_entry(x=220, y=170)
+        entry_poscanais = self.assents.criar_entry(x=640, y=10)
 
-        entry_diametrof = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_diametrof.place(x=220, y=50)
+        entry_diametroi = self.assents.criar_entry(x=220, y=10)
+        entry_diametrof = self.assents.criar_entry(x=220, y=50)
 
-        entry_poscanais = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_poscanais.place(x=640, y=10)
+        entry_rotacao = self.assents.criar_entry(x=640, y=130)
+        entry_ncanais = self.assents.criar_entry(x=640, y=50)
 
-        entry_ncanais = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_ncanais.place(x=640, y=50)
-
-        entry_ref = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_ref.place(x=220, y=130)
-
-        entry_ferramenta = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_ferramenta.place(x=220, y=170)
-
-        entry_rotacao = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_rotacao.place(x=640, y=130)
-
-        entry_avanco = ctk.CTkEntry(master=self.master, width=200, corner_radius=12, font=('Consola', 16))
-        entry_avanco.place(x=640, y=170)
+        entry_avanco = self.assents.criar_entry(x=640, y=170)
+        entry_ref = self.assents.criar_entry(x=220, y=130)
 
         # SEÇÃO DE BUTTONs
 
