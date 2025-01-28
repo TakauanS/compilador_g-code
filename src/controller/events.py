@@ -15,17 +15,8 @@ class ButtonHandler:
 
     # SEÇÃO DE EXPORTAÇÃO DE IMAGEs
 
-    img_linha = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha.png'), size=(825, 20))
-    img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(20, 20))
-
-    # SEÇÃO DE COREs
-
-    cor1 = '#1C1A1B' # Cor preta para bg_color - Mais Forte
-    cor2 = '#333031' # Cor preta para fg_color - Mais fraca
-    cor3 = '#737277' # Cor cinza para placeholder
-    cor4 = '#2E53F2' # Cor azul para butões
-    cor5 = '#3757A0' # Cor azul para botões - hover color
-    cor6 = 'white'   # Cor branca para textos
+    #img_linha = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha.png'), size=(825, 20))
+    #img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(20, 20))
 
     def __init__(self, master):
 
@@ -104,8 +95,8 @@ class ButtonHandler:
         label_avanco = self.assents.criar_label(text='AVANÇO', x=500, y=170)
         label_passe = self.assents.criar_label(text='PASSE', x=500, y=50)
 
-        label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=ButtonHandler.img_linha)
-        label_linha.place(x=15, y=95)
+        #label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=img_linha)
+        #label_linha.place(x=15, y=95)
 
         # SEÇÃO DE ENTRYs
 
@@ -123,8 +114,7 @@ class ButtonHandler:
 
         # SEÇÃO DE BUTTONs
 
-        button_pos = ctk.CTkButton(master=self.master, command=gcode, height=35, corner_radius=12, text='G-CODE', font=('Arial', 15, 'bold'), image=ButtonHandler.img_code, bg_color=ButtonHandler.cor2, fg_color=ButtonHandler.cor4, hover_color=ButtonHandler.cor5)
-        button_pos.place(x=705, y=355)
+        button_code = self.assents.criar_button(text='G-CODE', command=gcode, x=705, y=355)
 
     def canais(self):
 
@@ -185,8 +175,8 @@ class ButtonHandler:
         label_ncanais = self.assents.criar_label(text='N.CANAIS', x=500, y=50)
         label_avanco = self.assents.criar_label(text='AVANÇO', x=500, y=170)
 
-        label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=ButtonHandler.img_linha)
-        label_linha.place(x=15, y=95)
+        #label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=ButtonHandler.img_linha)
+        #label_linha.place(x=15, y=95)
 
         # SEÇÃO DE ENTRYs
 
@@ -204,5 +194,4 @@ class ButtonHandler:
 
         # SEÇÃO DE BUTTONs
 
-        button_pos = ctk.CTkButton(master=self.master, command=gcode, height=35, corner_radius=12, text='G-CODE', font=('Arial', 15, 'bold'), image=ButtonHandler.img_code, bg_color=ButtonHandler.cor2, fg_color=ButtonHandler.cor4, hover_color=ButtonHandler.cor5)
-        button_pos.place(x=705, y=355)
+        button_code = self.assents.criar_button(text='G-CODE', command=gcode, x=705, y=355)
