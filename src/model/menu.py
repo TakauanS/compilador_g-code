@@ -22,11 +22,11 @@ class Menu:
         self.sub_pos = tk.Menu(master=self.menu, tearoff=0) # Sub-menu posicionamentos
 
         self.menu.add_cascade(label='POSICIONAMENTO', menu=self.sub_pos)
-        self.menu.add_command(label='AJUDA')
+        self.menu.add_cascade(label='ATUALIZAR', command=self.atualizar_tela)
 
         self.menu.add_separator()
 
-        self.menu.add_command(label='SAIR', command=self.fechar_tela)
+        self.menu.add_command(label='AJUDA')
 
         # SEÇÃO DE SUBMENUs - POSICIONAMENTOS
 
@@ -57,10 +57,6 @@ class Menu:
     def exibir_menu(self, event):
 
         self.menu.post(event.x_root, event.y_root)
-
-    def fechar_tela(self):
-
-        self.root.destroy()
 
     def trocax(self):
 
@@ -117,3 +113,12 @@ class Menu:
         else:
             self.msg = messagebox.showinfo(title='Compilador G-Code', message='O valor de afastamento da ferramenta no eixo Z foi salvo com sucesso e já está registrado no sistema.')
             self._afastz = self.valor_afastz
+
+    def atualizar_tela(self):
+
+        lista_widgets = self.root.winfo_children()
+
+        for widget in lista_widgets:
+            widget.place_forget()
+
+        print('A tela foi limpa!')

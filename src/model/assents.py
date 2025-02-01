@@ -26,11 +26,12 @@ class Assents:
 
         return self.entry
     
-    def criar_button(self, text, command, x, y):
+    def criar_button(self, text, command, image, x, y):
 
         self.button = ctk.CTkButton(master=self.master,
                                     height=35,
-                                        text=text, 
+                                        text=text,
+                                        image=image, 
                                             command=command, 
                                                 corner_radius=12,   
                                                     bg_color=Assents.cor2, 
