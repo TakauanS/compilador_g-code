@@ -15,7 +15,7 @@ class Interface(ctk.CTk):
         self.assents = Assents(master=self)
 
         self.geometry('900x500')
-        self.title('Compilador G-Code - 1.0')
+        self.title('Compilador G-Code')
         self.config(bg=self.assents.cor1)
         self.resizable(width=False, height=False)
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
