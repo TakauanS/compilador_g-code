@@ -1,6 +1,6 @@
 import textwrap
 from tkinter import messagebox
-from src.model.cycle_base import CycleBase
+from src.model.cycles.cycle_base import CycleBase
 
 class CicloCanal(CycleBase):
     

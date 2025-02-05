@@ -7,8 +7,8 @@ import os
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(base_dir)
 
-from src.model.cycle_desbaste import CicloDesbaste
-from src.model.cycle_canal import CicloCanal
+from src.model.cycles.cycle_desbaste import CicloDesbaste
+from src.model.cycles.cycle_canal import CicloCanal
 from src.model.assents import Assents
 from src.controller.menu import Menu
 
