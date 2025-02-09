@@ -23,26 +23,26 @@ class CicloCanal(CycleBase):
             messagebox.showerror(title='Compilador G-Code', message='O valor do número de canais não pode ser negativo. Por favor, insira um valor válido.')
             return
 
-        self._diametro_inicial = diametro_inicial
-        self._diametro_final = diametro_final
-        self._n_canais = n_canais
-        self._pos_canais = pos_canais
+        self.__diametro_inicial = diametro_inicial
+        self.__diametro_final = diametro_final
+        self.__n_canais = n_canais
+        self.__pos_canais = pos_canais
 
     @property
     def get_diametro_inicial(self):
-        return self._diametro_inicial
+        return self.__diametro_inicial
 
     @property
     def get_diametro_final(self):
-        return self._diametro_final
+        return self.__diametro_final
 
     @property
     def get_n_canais(self):
-        return self._n_canais
+        return self.__n_canais
 
     @property
     def get_pos_canais(self):
-        return self._pos_canais
+        return self.__pos_canais
 
     @get_diametro_inicial.setter
     def set_diametro_inicial(self, novo_diametro_inicial: float):
@@ -54,7 +54,7 @@ class CicloCanal(CycleBase):
             messagebox.showerror(title='Compilador G-Code', message='O diâmetro inicial não pode ser menor que o diâmetro final. Por favor, insira valores válidos.')
             return
         else:
-            self._diametro_inicial = novo_diametro_inicial
+            self.__diametro_inicial = novo_diametro_inicial
 
     @get_diametro_final.setter
     def set_diametro_final(self, novo_diametro_final: float):
@@ -65,19 +65,19 @@ class CicloCanal(CycleBase):
         if novo_diametro_final > self._diametro_inicial:
             messagebox.showerror(title='Compilador G-Code', message='O diâmetro final não pode ser maior que o diâmetro inicial. Por favor, insira valores válidos.')
         else:
-            self._diametro_final = novo_diametro_final
+            self.__diametro_final = novo_diametro_final
 
     @get_n_canais.setter
     def set_n_canais(self, novo_n_canais: int):
 
-        if novo_n_canais < 0:
+        if novo_n_canais <= 0:
             messagebox.showerror(title='Compilador G-Code', message='O valor do número de canais não pode ser negativo. Por favor, insira um valor válido.')
         else:
-            self._n_canais = novo_n_canais
+            self.__n_canais = novo_n_canais
 
     @get_pos_canais.setter
     def set_pos_canais(self, novo_pos_canais):
-        self._pos_canais = novo_pos_canais
+        self.__pos_canais = novo_pos_canais
 
     def gcode(self, nome_arquivo='Ciclo de Canais'):
 

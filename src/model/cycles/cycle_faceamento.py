@@ -23,21 +23,21 @@ class CicloFaceamento(CycleBase):
             messagebox.showerror(title='Compilador G-Code', message='O valor da espessura deve ser maior que zero. Por favor, verifique e tente novamente!')
             return
 
-        self._diametro_inicial = diametro_inicial
-        self._diametro_final = diametro_final
-        self._espessura = espessura
+        self.__diametro_inicial = diametro_inicial
+        self.__diametro_final = diametro_final
+        self.__espessura = espessura
 
     @property
     def get_diametro_inicial(self):
-        return self._diametro_inicial
+        return self.__diametro_inicial
     
     @property
     def get_diametro_final(self):
-        return self._diametro_final
+        return self.__diametro_final
     
     @property
     def get_espessura(self):
-        return self._espessura
+        return self.__espessura
 
     @get_diametro_inicial.setter
     def set_diametro_inicial(self, novo_diametro_inicial: float):
@@ -52,8 +52,7 @@ class CicloFaceamento(CycleBase):
             messagebox.showerror(title='Compilador G-Code', message='O novo diâmetro inicial informado é igual ao diâmetro inicial anterior.')
             return
 
-        self._diametro_inicial = novo_diametro_inicial
-        return self._diametro_inicial
+        self.__diametro_inicial = novo_diametro_inicial
 
     @get_diametro_final.setter
     def set_diametro_final(self, novo_diametro_final: float):
@@ -68,8 +67,7 @@ class CicloFaceamento(CycleBase):
             messagebox.showerror(title='Compilador G-Code', message='O novo diâmetro final é maior que o diâmetro inicial. Por favor, verifique os valores e tente novamente.')
             return
 
-        self._diametro_final = novo_diametro_final
-        return self._diametro_final
+        self.__diametro_final = novo_diametro_final
     
     @get_espessura.setter
     def set_espessura(self, nova_espessura: float):
@@ -81,8 +79,7 @@ class CicloFaceamento(CycleBase):
             messagebox.showerror(title='Compilador G-Code', message='O valor da nova espessura deve ser maior que zero. Por favor, verifique e tente novamente!')
             return
         
-        self._espessura = nova_espessura
-        return self._espessura
+        self.__espessura = nova_espessura
 
     def gcode(self, nome_arquivo='Ciclo de Faceamento'):
 
