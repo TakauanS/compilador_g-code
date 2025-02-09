@@ -87,55 +87,66 @@ class CicloFaceamento(CycleBase):
     def gcode(self, nome_arquivo='Ciclo de Faceamento'):
 
         gcode_text = textwrap.dedent(f'''
-        G290
-        G18 G40 G90 G95
+        N10 G290
+        N20 G18 G40 G90 G95
 
-        G0 {self.get_referencia} X{self.get_posx} Z{self.get_posz}
+        N30 G0 {self.get_referencia} X{self.get_posx} Z{self.get_posz}
 
-        {self.get_ferramenta} M3
-        G97 S{self.get_rotacao}
+        N40 {self.get_ferramenta} M3
+        N50 G97 S{self.get_rotacao} M8
 
         R1 = {self.get_diametro_inicial}
         R2 = {self.get_diametro_final}
-        R3 = {self.get_espessura}
+        R3 = -{self.get_espessura}
 
         R4 = -{self.get_passe}
-        R6 = 0
+        R5 = 0
+        R6 = ABS(R3) / ABS(R4)
 
-        R7 = ABS(R3) 
-        R8 = ABS(R4)
-        R9 = R7 / R8
+        R7 = 0
 
-        G0 X=(R1 + 1) M8
-        G0 Z0
+        IF R7 == 0
+            MSG("CICLO DE FACEAMENTO EM ANDAMENTO (DBT)...")
+            GOTO N60
+        ENDIF
 
-        WHILE R6 < R9
-            G90
-            G1 X=R2 F{self.get_avanco}
-            G91
-            Z=ABS(R4)
-            G90
-            X=R1
-            G91
-            Z=(R4 * 2)
-            R6 = R6 + 1
+        IF R7 == 1
+            MSG("CICLO DE FACEAMENTO EM ANDAMENTO (ACB)...")
+            GOTO N110
+        ENDIF
+
+        N60 G0 X=(R1 + 1) 
+        N70 G0 Z0
+
+        WHILE R5 < R6
+        G90 G1 X=R2 F{self.get_avanco}
+        X=R1
+        G91 Z=R4
+        R5 = R5 + 1
         ENDWHILE
+
+        N80 G90
+        N90 G0 X=(R1 + 1) 
+        N100 G0 Z0
+
+        MSG("INICIAR CICLO DE FACEAMENTO (ACB)? - CYCLE START")
 
         M00
 
-        G90
-        G0 X=(R1 + 1)
-        G0 Z0
+        MSG("")
+        MSG("CICLO DE FACEAMENTO EM ANDAMENTO (ACB)...")
 
-        G0 Z=R3
-        G1 X=R2 F{self.get_avanco}
-        G0 X=(R1 + 1)
+        N110 G1 Z=R3 F{self.get_avanco}
+        N120 X=R2
+        N130 G0 Z=(R3 + 1)
 
-        G0 {self.get_referencia} X{self.get_posx} Z{self.get_posz}
+        MSG("")
 
-        M5
-        M9
-        M30''')
+        N140 G0 G54 X400 Z1
+
+        N150 M9
+        N160 M5
+        N170 M30''')
 
         with open(f'{nome_arquivo}.txt', 'w') as arquivo:
             arquivo.write(gcode_text)
