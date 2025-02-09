@@ -7,22 +7,22 @@ class CycleBase:
         if not isinstance(tool, str):
             raise ValueError ('O valor do parâmetro da ferramenta deve ser do tipo `str`. Por favor, insira um valor válido.')
         else:
-            self._ferramenta = tool
-            return self._ferramenta
+            self.__ferramenta = tool
+            return self.__ferramenta
 
     def referencia_trabalho(self, referencia: str):
 
-        self.lista_referencias = ['G54', 'G55', 'G56', 'G57', 'G58', 'G59']
+        self.__lista_referencias = ['G54', 'G55', 'G56', 'G57', 'G58', 'G59']
 
         if not isinstance(referencia, str):
             raise ValueError ('O valor do parâmetro de referência de trabalho deve ser do tipo `str`. Por favor, insira um valor válido.')
         
-        if referencia not in self.lista_referencias:
+        if referencia not in self.__lista_referencias:
             messagebox.showerror(title='Compilador G-Code', message='Valor de referência inválido. Use apenas: G54, G55, G56, G57, G58 ou G59.')
             return
         else:
-            self._referencia = referencia
-            return self._referencia
+            self.__referencia = referencia
+            return self.__referencia
 
     def rotacao(self, rpm: float):
 
@@ -33,8 +33,8 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor da rotação deve ser maior que zero para garantir um funcionamento adequado.')
             return
         else:
-            self._rotacao = rpm
-            return self._rotacao
+            self.__rotacao = rpm
+            return self.__rotacao
 
     def avanco(self, advance: float):
 
@@ -45,8 +45,8 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor do avanço deve ser maior que zero para garantir um funcionamento adequado.')
             return
         else:
-            self._avanco = advance
-            return self._avanco
+            self.__avanco = advance
+            return self.__avanco
         
     def passe(self, pf: float):
 
@@ -57,8 +57,8 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor do passe deve ser maior que zero para garantir um funcionamento adequado.')
             return
         else:
-            self._passe = pf
-            return self._passe
+            self.__passe = pf
+            return self.__passe
 
     def pos_segurancaX(self, posx: float):
 
@@ -69,8 +69,8 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor de segurança no eixo X deve ser maior que zero.')
             return
         else:
-            self._segurancax = posx
-            return self._segurancax
+            self.__segurancax = posx
+            return self.__segurancax
         
     def pos_segurancaZ(self, posz: float):
 
@@ -81,36 +81,36 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor de segurança no eixo Z deve ser maior que zero.')
             return
         else:
-            self._segurancaz = posz
-            return self._segurancaz
+            self.__segurancaz = posz
+            return self.__segurancaz
 
     @property
     def get_posx(self):
-        return self._segurancax
+        return self.__segurancax
     
     @property
     def get_posz(self):
-        return self._segurancaz
+        return self.__segurancaz
 
     @property
     def get_ferramenta(self):
-        return self._ferramenta
+        return self.__ferramenta
     
     @property
     def get_referencia(self):
-        return self._referencia
+        return self.__referencia
     
     @property
     def get_rotacao(self):
-        return self._rotacao
+        return self.__rotacao
 
     @property
     def get_avanco(self):
-        return self._avanco
+        return self.__avanco
     
     @property
     def get_passe(self):
-        return self._passe
+        return self.__passe
     
     @get_ferramenta.setter
     def set_ferramenta(self, nova_ferramenta: str):
@@ -118,8 +118,8 @@ class CycleBase:
         if not isinstance(nova_ferramenta, str):
             raise ValueError ('O valor do parâmetro da ferramenta deve ser do tipo `str`. Por favor, insira um valor válido.')
         else:
-            self._ferramenta = nova_ferramenta
-            return self._ferramenta
+            self.__ferramenta = nova_ferramenta
+            return self.__ferramenta
 
     @get_referencia.setter
     def set_referencia(self, nova_referencia: str):
@@ -131,8 +131,8 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='Valor da nova referência é inválido. Use apenas: G54, G55, G56, G57, G58 ou G59.')
             return
         else:
-            self._referencia = nova_referencia
-            return self._referencia
+            self.__referencia = nova_referencia
+            return self.__referencia
 
     @get_rotacao.setter
     def set_rotacao(self, nova_rotacao: float):
@@ -144,8 +144,8 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor da rotação deve ser maior que zero para garantir um funcionamento adequado.')
             return
         else:
-            self._rotacao = nova_rotacao
-            return self._rotacao
+            self.__rotacao = nova_rotacao
+            return self.__rotacao
 
     @get_avanco.setter
     def set_avanco(self, novo_avanco: float):
@@ -157,8 +157,8 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor do avanço deve ser maior que zero para garantir um funcionamento adequado.')
             return
         else:
-            self._avanco = novo_avanco
-            return self._avanco
+            self.__avanco = novo_avanco
+            return self.__avanco
 
     @get_passe.setter
     def set_passe(self, novo_passe: float):
@@ -170,5 +170,5 @@ class CycleBase:
             messagebox.showerror(title='Compilador G-Code', message='O valor do passe deve ser maior que zero para garantir um funcionamento adequado.')
             return
         else:
-            self._passe = novo_passe
-            return self._passe
+            self.__passe = novo_passe
+            return self.__passe
