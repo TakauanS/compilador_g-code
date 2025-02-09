@@ -8,7 +8,6 @@ class CycleBase:
             raise ValueError ('O valor do parâmetro da ferramenta deve ser do tipo `str`. Por favor, insira um valor válido.')
         else:
             self.__ferramenta = tool
-            return self.__ferramenta
 
     def referencia_trabalho(self, referencia: str):
 
@@ -22,7 +21,6 @@ class CycleBase:
             return
         else:
             self.__referencia = referencia
-            return self.__referencia
 
     def rotacao(self, rpm: float):
 
@@ -34,7 +32,6 @@ class CycleBase:
             return
         else:
             self.__rotacao = rpm
-            return self.__rotacao
 
     def avanco(self, advance: float):
 
@@ -46,7 +43,6 @@ class CycleBase:
             return
         else:
             self.__avanco = advance
-            return self.__avanco
         
     def passe(self, pf: float):
 
@@ -58,7 +54,6 @@ class CycleBase:
             return
         else:
             self.__passe = pf
-            return self.__passe
 
     def pos_segurancaX(self, posx: float):
 
@@ -70,7 +65,6 @@ class CycleBase:
             return
         else:
             self.__segurancax = posx
-            return self.__segurancax
         
     def pos_segurancaZ(self, posz: float):
 
@@ -82,7 +76,6 @@ class CycleBase:
             return
         else:
             self.__segurancaz = posz
-            return self.__segurancaz
 
     @property
     def get_posx(self):
@@ -119,7 +112,6 @@ class CycleBase:
             raise ValueError ('O valor do parâmetro da ferramenta deve ser do tipo `str`. Por favor, insira um valor válido.')
         else:
             self.__ferramenta = nova_ferramenta
-            return self.__ferramenta
 
     @get_referencia.setter
     def set_referencia(self, nova_referencia: str):
@@ -132,7 +124,6 @@ class CycleBase:
             return
         else:
             self.__referencia = nova_referencia
-            return self.__referencia
 
     @get_rotacao.setter
     def set_rotacao(self, nova_rotacao: float):
@@ -145,7 +136,6 @@ class CycleBase:
             return
         else:
             self.__rotacao = nova_rotacao
-            return self.__rotacao
 
     @get_avanco.setter
     def set_avanco(self, novo_avanco: float):
@@ -158,7 +148,6 @@ class CycleBase:
             return
         else:
             self.__avanco = novo_avanco
-            return self.__avanco
 
     @get_passe.setter
     def set_passe(self, novo_passe: float):
@@ -171,4 +160,3 @@ class CycleBase:
             return
         else:
             self.__passe = novo_passe
-            return self.__passe
