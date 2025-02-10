@@ -134,14 +134,17 @@ class ButtonHandler:
                 try:
                     diametro_inicial = float(entry_diametroi.get())
                     diametro_final = float(entry_diametrof.get())
+                    espessura = float(entry_espessura.get())
                     rotacao = float(entry_rotacao.get())
                     avanco = float(entry_avanco.get())
                     ncanais = int(entry_ncanais.get())
+                    passe = float(entry_passe.get())
 
                     pos_canais = entry_poscanais.get()
 
-                    ciclo_canal = CicloCanal(diametro_inicial=diametro_inicial, diametro_final=diametro_final, n_canais=ncanais, pos_canais=pos_canais)
+                    ciclo_canal = CicloCanal(diametro_inicial=diametro_inicial, diametro_final=diametro_final, n_canais=ncanais, espessura=espessura, pos_canais=pos_canais)
 
+                    ciclo_canal.passe(pf=passe)
                     ciclo_canal.rotacao(rpm=rotacao)
                     ciclo_canal.avanco(advance=avanco)
                     ciclo_canal.ferramenta(tool=ferramenta)
@@ -172,6 +175,9 @@ class ButtonHandler:
         label_ncanais = self.assents.criar_label(text='N.CANAIS', x=500, y=50)
         label_avanco = self.assents.criar_label(text='AVANÇO', x=500, y=170)
 
+        label_espessura = self.assents.criar_label(text='ESPESSURA', x=15, y=210)
+        label_passe = self.assents.criar_label(text='PASSE', x=500, y=210)
+
         label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=ButtonHandler.img_linha)
         label_linha.place(x=15, y=95)
 
@@ -188,6 +194,9 @@ class ButtonHandler:
 
         entry_avanco = self.assents.criar_entry(x=640, y=170)
         entry_ref = self.assents.criar_entry(x=220, y=130)
+
+        entry_espessura = self.assents.criar_entry(x=220, y=210)
+        entry_passe = self.assents.criar_entry(x=640, y=210)
 
         # SEÇÃO DE BUTTONs
 
