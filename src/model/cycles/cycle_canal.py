@@ -144,15 +144,15 @@ class CicloCanal(CycleBase):
         FOR R8 = 0 TO R6 - 1
             G90
             G0 X=R1
-            G0 Z=POS_CANAIS[R8]
+            G0 Z=(POS_CANAIS[R8] + 0.5)
             R7 = R1
             WHILE R7 >= R5 + ABS(R4)
                 G91
                 G1 X=R4 F{self.get_avanco}
                 Z=R3
-                X=ABS(R4)
-                Z=ABS(R3)
-                X=R4
+                G0 X=ABS(R4)
+                G0 Z=ABS(R3)
+                G1 X=R4 F{self.get_avanco}
                 R7 = R7 - ABS(R4)
             ENDWHILE
         ENDFOR
