@@ -5,7 +5,7 @@ from tkinter import messagebox
 import customtkinter as ctk
 from PIL import Image
 
-class DesbasteUI:
+class BackDesbaste:
 
     img_linha = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha.png'), size=(825, 20))
     img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(24, 24))
@@ -30,7 +30,7 @@ class DesbasteUI:
         label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
         label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
 
-        label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=DesbasteUI.img_linha)
+        label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=BackDesbaste.img_linha)
         label_linha.place(x=15, y=95)
 
         # SEÇÃO DE ENTRYs
@@ -49,9 +49,9 @@ class DesbasteUI:
 
         # SEÇÃO DE BUTTONs
 
-        self.button_code = self.__assents.criar_button(text='G-CODE', command=self.back_desbaste, image=DesbasteUI.img_code, x=705, y=355)
+        self.button_code = self.__assents.criar_button(text='G-CODE', command=self.gcode_desbaste, image=BackDesbaste.img_code, x=705, y=355)
 
-    def back_desbaste(self):
+    def gcode_desbaste(self):
 
         validacao_code = messagebox.askquestion(title='Compilador G-Code', message='Antes de prosseguir para gerar o G-code, você configurou os posicionamentos da ferramenta corretamente?')
 
@@ -84,6 +84,5 @@ class DesbasteUI:
                 print(f'Erro! {e}')
             else:
                 ciclo_desbaste.gcode()
-                print('- O ciclo de desbaste foi gerado!')
         else:
             pass
