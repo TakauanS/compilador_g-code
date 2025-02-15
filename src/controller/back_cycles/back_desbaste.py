@@ -53,36 +53,38 @@ class BackDesbaste:
 
     def gcode_desbaste(self):
 
-        validacao_code = messagebox.askquestion(title='Compilador G-Code', message='Antes de prosseguir para gerar o G-code, você configurou os posicionamentos da ferramenta corretamente?')
-
-        if validacao_code == 'yes':
-            
-            try:
-                diametro_inicial = float(self.entry_diametroi.get())
-                diametro_final = float(self.entry_diametrof.get())
-                espessura = float(self.entry_espessura.get())
-                rotacao = float(self.entry_rotacao.get())
-                avanco = float(self.entry_avanco.get())
-                passe = float(self.entry_passe.get())
-
-                ferramenta = self.entry_ferramenta.get().upper()
-                referencia = self.entry_ref.get().upper()
-
-                ciclo_desbaste = CicloDesbaste(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
-
-                ciclo_desbaste.referencia_trabalho(referencia=referencia)
-                ciclo_desbaste.ferramenta(tool=ferramenta)
-                ciclo_desbaste.avanco(advance=avanco)
-                ciclo_desbaste.rotacao(rpm=rotacao)
-                ciclo_desbaste.passe(pf=passe)
-
-                ciclo_desbaste.pos_segurancaX(self.menu.get_posx)
-                ciclo_desbaste.pos_segurancaZ(self.menu.get_posz)
-
-            except Exception as e:
-                messagebox.showerror(title='Compilador G-Code', message='Por favor, recompile o ciclo e tente novamente.')
-                print(f'Erro! {e}')
-            else:
-                ciclo_desbaste.gcode()
+        if self.entry_diametroi.get() == '' or self.entry_diametrof.get() == '':
+            messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial e diâmetro final devem ser informados para garantir o correto funcionamento do ciclo.')   
         else:
-            pass
+            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro inicial atual é {self.entry_diametroi.get()}mm. O diâmetro final desejado é realmente {self.entry_diametrof.get()}mm?')
+
+            if validacao_diametro == 'yes':
+
+                try:
+                    diametro_inicial = float(self.entry_diametroi.get())
+                    diametro_final = float(self.entry_diametrof.get())
+                    espessura = float(self.entry_espessura.get())
+                    rotacao = float(self.entry_rotacao.get())
+                    avanco = float(self.entry_avanco.get())
+                    passe = float(self.entry_passe.get())
+
+                    ferramenta = self.entry_ferramenta.get().upper()
+                    referencia = self.entry_ref.get().upper()
+
+                    ciclo_desbaste = CicloDesbaste(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
+
+                    ciclo_desbaste.referencia_trabalho(referencia=referencia)
+                    ciclo_desbaste.ferramenta(tool=ferramenta)
+                    ciclo_desbaste.avanco(advance=avanco)
+                    ciclo_desbaste.rotacao(rpm=rotacao)
+                    ciclo_desbaste.passe(pf=passe)
+
+                    ciclo_desbaste.pos_segurancaX(self.menu.get_posx)
+                    ciclo_desbaste.pos_segurancaZ(self.menu.get_posz)
+
+                except Exception as e:
+                    print(f' - Erro! {e}')
+                else:
+                    ciclo_desbaste.gcode()
+            else:
+                pass

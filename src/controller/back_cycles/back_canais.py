@@ -59,39 +59,40 @@ class BackCanais:
 
     def gcode_canais(self):
 
-        validacao_code = messagebox.askquestion(title='Compilador G-Code', message='Antes de prosseguir para gerar o G-code, você configurou os posicionamentos da ferramenta corretamente?')
-
-        if validacao_code == 'yes':
-
-            try:
-                diametro_inicial = float(self.entry_diametroi.get())
-                diametro_final = float(self.entry_diametrof.get())
-                espessura = float(self.entry_espessura.get())
-                rotacao = float(self.entry_rotacao.get())
-                ncanais = int(self.entry_ncanais.get())
-                avanco = float(self.entry_avanco.get())
-                passe = float(self.entry_passe.get())
-
-                ferramenta = self.entry_ferramenta.get().upper()
-                referencia = self.entry_ref.get().upper()
-                poscanais = self.entry_poscanais.get()
-
-                ciclo_canal = CicloCanal(diametro_inicial=diametro_inicial, diametro_final=diametro_final, n_canais=ncanais, espessura=espessura, pos_canais=poscanais)
-
-                ciclo_canal.referencia_trabalho(referencia=referencia)
-                ciclo_canal.ferramenta(tool=ferramenta)
-                ciclo_canal.avanco(advance=avanco)
-                ciclo_canal.rotacao(rpm=rotacao)
-                ciclo_canal.passe(passe)       
-
-                ciclo_canal.pos_segurancaX(posx=self.menu.get_posx)
-                ciclo_canal.pos_segurancaZ(posz=self.menu.get_posz)
-
-            except Exception as e:
-                messagebox.showerror(title='Compilador G-Code', message='Por favor, recompile o ciclo e tente novamente.')
-                print(f'Error! {e}')
-
-            else:
-                ciclo_canal.gcode()
+        if self.entry_diametroi.get() == '' or self.entry_diametrof.get() == '':
+            messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial e diâmetro final devem ser informados para garantir o correto funcionamento do ciclo.')   
         else:
-            pass
+            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro inicial atual é {self.entry_diametroi.get()}mm. O diâmetro final desejado é realmente {self.entry_diametrof.get()}mm?')
+
+            if validacao_diametro == 'yes':
+
+                try:
+                    diametro_inicial = float(self.entry_diametroi.get())
+                    diametro_final = float(self.entry_diametrof.get())
+                    espessura = float(self.entry_espessura.get())
+                    rotacao = float(self.entry_rotacao.get())
+                    ncanais = int(self.entry_ncanais.get())
+                    avanco = float(self.entry_avanco.get())
+                    passe = float(self.entry_passe.get())
+
+                    ferramenta = self.entry_ferramenta.get().upper()
+                    referencia = self.entry_ref.get().upper()
+                    poscanais = self.entry_poscanais.get()
+
+                    ciclo_canal = CicloCanal(diametro_inicial=diametro_inicial, diametro_final=diametro_final, n_canais=ncanais, espessura=espessura, pos_canais=poscanais)
+
+                    ciclo_canal.referencia_trabalho(referencia=referencia)
+                    ciclo_canal.ferramenta(tool=ferramenta)
+                    ciclo_canal.avanco(advance=avanco)
+                    ciclo_canal.rotacao(rpm=rotacao)
+                    ciclo_canal.passe(passe)       
+
+                    ciclo_canal.pos_segurancaX(posx=self.menu.get_posx)
+                    ciclo_canal.pos_segurancaZ(posz=self.menu.get_posz)
+
+                except Exception as e:
+                    print(f' - Error! {e}')
+                else:
+                    ciclo_canal.gcode()
+            else:
+                pass

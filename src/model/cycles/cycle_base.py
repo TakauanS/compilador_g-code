@@ -58,6 +58,7 @@ class CycleBase:
     def pos_segurancaX(self, posx: float):
 
         if not isinstance(posx, float):
+            messagebox.showerror(title='Compilador G-Code', message='O valor de segurança no eixo X não foi informado. Por favor, insira um valor válido.')
             raise ValueError ('O valor de segurança no eixo X deve ser do tipo `float`.')
         
         if posx <= 0:
@@ -65,10 +66,12 @@ class CycleBase:
             return
         else:
             self.__segurancax = posx
+            print(' - O valor de segurança no eixo X foi configurado!')
         
     def pos_segurancaZ(self, posz: float):
 
         if not isinstance(posz, float):
+            messagebox.showerror(title='Compilador G-Code', message='O valor de segurança no eixo Z não foi informado. Por favor, insira um valor válido.')
             raise ValueError ('O valor de segurança no eixo Z deve ser do tipo `float`.')
         
         if posz <= 0:
@@ -76,6 +79,7 @@ class CycleBase:
             return
         else:
             self.__segurancaz = posz
+            print(' - O valor de segurança no eixo Z foi configurado!')
 
     @property
     def get_posx(self):

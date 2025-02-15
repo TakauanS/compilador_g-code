@@ -1,5 +1,6 @@
 from PIL import Image
 import customtkinter as ctk
+import textwrap
 
 class Assents:
 
@@ -9,6 +10,23 @@ class Assents:
     cor4 = '#2E53F2' # Cor azul para butões
     cor5 = '#3757A0' # Cor azul para botões - hover color
     cor6 = 'white'   # Cor branca para textos
+
+    text_list = textwrap.dedent('''• CICLOS DE USINAGEM:
+                                
+- ! compile -c: faceamento > Ciclo de faceamento parametrizado.
+- ! compile -c: desbaste > Ciclo de desbaste parametrizado.
+- ! compile -c: canais > Ciclo de canais parametrizado.
+                                
+- ! compile -c: faceamento (f) > Ciclo de faceamento funcional.
+- ! compile -c: desbaste (f) > Ciclo de desbaste funcional.
+- ! compile -c: canais (f) > Ciclo de canais funcional.
+                                
+• VISUALIZAÇÃO DE COMANDOS
+                                
+- ! compile -list > Lista todos os comandos disponiveis no sistema.
+- ! compile -list: cycles > Lista apenas os comandos de ciclo de usinagem.
+- ! compile -list: pos > Lista apenas os valores de posicionamentos de segurança.
+                                ''')
 
     def __init__(self, master):
 
@@ -25,7 +43,24 @@ class Assents:
         self.entry.place(x=x, y=y)
 
         return self.entry
-    
+
+    def criar_texbox(self, width, height, x, y):
+
+        self.texbox = ctk.CTkTextbox(master=self.master, 
+                                                width=width, 
+                                                    height=height,
+                                                        corner_radius=12,
+                                                            font=('Consolas', 18),
+                                                                text_color=Assents.cor6,  
+                                                                    bg_color=Assents.cor2, 
+                                                                        fg_color=Assents.cor2, 
+                                                                            activate_scrollbars=True)
+        
+        self.texbox.place(x=x, y=y)
+
+        self.texbox.insert(index='1.0', text=Assents.text_list)
+        self.texbox.configure(state='disabled')
+
     def criar_button(self, text, command, image, x, y):
 
         self.button = ctk.CTkButton(master=self.master,
