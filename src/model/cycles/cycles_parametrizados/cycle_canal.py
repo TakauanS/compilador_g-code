@@ -2,7 +2,7 @@ import textwrap
 from tkinter import messagebox
 from src.model.cycles.cycle_base import CycleBase
 
-class CicloCanal(CycleBase):
+class Canal_Parametrizado(CycleBase):
     
     def __init__(self, diametro_inicial: float, diametro_final: float, n_canais: int, espessura: float, pos_canais):
 
@@ -185,8 +185,8 @@ class CicloCanal(CycleBase):
         N150 M5
         N160 M30''')
 
-        with open(f'{nome_arquivo}.txt', "w") as arquivo:
+        with open(f'{nome_arquivo} (p).txt', "w") as arquivo:
             arquivo.write(gcode_text)
 
-        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de canais foi gerado com sucesso e já está disponível no sistema.')
-        print('- O seu ciclo de canais foi gerado!')
+        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de canal (p) foi gerado com sucesso e já está disponível no sistema.')
+        print(' - O seu ciclo de canais foi gerado!')

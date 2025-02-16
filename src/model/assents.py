@@ -11,23 +11,6 @@ class Assents:
     cor5 = '#3757A0' # Cor azul para botões - hover color
     cor6 = 'white'   # Cor branca para textos
 
-    text_list = textwrap.dedent('''• CICLOS DE USINAGEM:
-                                
-- ! compile -c: faceamento > Ciclo de faceamento parametrizado.
-- ! compile -c: desbaste > Ciclo de desbaste parametrizado.
-- ! compile -c: canais > Ciclo de canais parametrizado.
-                                
-- ! compile -c: faceamento (f) > Ciclo de faceamento funcional.
-- ! compile -c: desbaste (f) > Ciclo de desbaste funcional.
-- ! compile -c: canais (f) > Ciclo de canais funcional.
-                                
-• VISUALIZAÇÃO DE COMANDOS
-                                
-- ! compile -list > Lista todos os comandos disponiveis no sistema.
-- ! compile -list: cycles > Lista apenas os comandos de ciclo de usinagem.
-- ! compile -list: pos > Lista apenas os valores de posicionamentos de segurança.
-                                ''')
-
     def __init__(self, master):
 
         self.master = master
@@ -44,7 +27,7 @@ class Assents:
 
         return self.entry
 
-    def criar_texbox(self, width, height, x, y):
+    def criar_texbox(self, text, width, height, x, y):
 
         self.texbox = ctk.CTkTextbox(master=self.master, 
                                                 width=width, 
@@ -58,7 +41,7 @@ class Assents:
         
         self.texbox.place(x=x, y=y)
 
-        self.texbox.insert(index='1.0', text=Assents.text_list)
+        self.texbox.insert(index='1.0', text=text)
         self.texbox.configure(state='disabled')
 
     def criar_button(self, text, command, image, x, y):

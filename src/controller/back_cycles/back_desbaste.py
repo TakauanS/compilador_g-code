@@ -1,4 +1,4 @@
-from src.model.cycles.cycle_desbaste import CicloDesbaste
+from src.model.cycles.cycles_parametrizados.cycle_desbaste import Desbaste_Parametrizado
 from src.model.assents import Assents
 from src.controller.menu import Menu
 from tkinter import messagebox
@@ -71,7 +71,7 @@ class BackDesbaste:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    ciclo_desbaste = CicloDesbaste(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
+                    ciclo_desbaste = Desbaste_Parametrizado(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
 
                     ciclo_desbaste.referencia_trabalho(referencia=referencia)
                     ciclo_desbaste.ferramenta(tool=ferramenta)

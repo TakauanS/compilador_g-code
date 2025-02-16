@@ -1,4 +1,4 @@
-from src.model.cycles.cycle_faceamento import CicloFaceamento
+from src.model.cycles.cycles_parametrizados.cycle_faceamento import Faceamento_Parametrizado
 from src.model.assents import Assents
 from src.controller.menu import Menu
 from tkinter import messagebox
@@ -71,7 +71,7 @@ class BackFaceamento:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    ciclo_faceamento = CicloFaceamento(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
+                    ciclo_faceamento = Faceamento_Parametrizado(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
 
                     ciclo_faceamento.referencia_trabalho(referencia=referencia)
                     ciclo_faceamento.ferramenta(tool=ferramenta)

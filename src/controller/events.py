@@ -34,7 +34,8 @@ class ButtonHandler:
         }
 
         self.utils = {
-            '! compile -list': self.list
+            '! compile -list': self.list,
+            '! compile -list: cycles': self.list_cycles
         }
 
         self.lista_comandos = [self.comandos, self.utils]
@@ -72,3 +73,8 @@ class ButtonHandler:
         
         self.utils_cmds.limpar_tela()
         self.utils_cmds.list_comands()
+
+    def list_cycles(self):
+
+        self.utils_cmds.limpar_tela()
+        self.utils_cmds.list_cycles()

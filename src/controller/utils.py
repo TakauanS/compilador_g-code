@@ -1,3 +1,4 @@
+import textwrap
 from src.model.assents import Assents
 
 class Utils:
@@ -16,4 +17,34 @@ class Utils:
 
     def list_comands(self):
 
-        self.assents.criar_texbox(width=840, height=380, x=10, y=10)
+        self.text_list = textwrap.dedent('''• CICLOS DE USINAGEM:
+                                
+- ! compile -c: faceamento > Ciclo de faceamento parametrizado.
+- ! compile -c: desbaste > Ciclo de desbaste parametrizado.
+- ! compile -c: canais > Ciclo de canais parametrizado.
+                                
+- ! compile -c: faceamento (f) > Ciclo de faceamento funcional.
+- ! compile -c: desbaste (f) > Ciclo de desbaste funcional.
+- ! compile -c: canais (f) > Ciclo de canais funcional.
+                                
+• VISUALIZAÇÃO DE COMANDOS
+                                
+- ! compile -list > Lista todos os comandos disponiveis no sistema.
+- ! compile -list: cycles > Lista apenas os comandos de ciclo de usinagem.
+- ! compile -list: pos > Lista apenas os valores de posicionamentos de segurança.''')
+
+        self.assents.criar_texbox(text=self.text_list, width=840, height=380, x=10, y=10)
+
+    def list_cycles(self):
+
+        self.text_list_cycles = textwrap.dedent('''• CICLOS DE USINAGEM:
+                                
+- ! compile -c: faceamento > Ciclo de faceamento parametrizado.
+- ! compile -c: desbaste > Ciclo de desbaste parametrizado.
+- ! compile -c: canais > Ciclo de canais parametrizado.
+                                
+- ! compile -c: faceamento (f) > Ciclo de faceamento funcional.
+- ! compile -c: desbaste (f) > Ciclo de desbaste funcional.
+- ! compile -c: canais (f) > Ciclo de canais funcional.''')
+
+        self.assents.criar_texbox(text=self.text_list_cycles, width=840, height=380, x=10, y=10)

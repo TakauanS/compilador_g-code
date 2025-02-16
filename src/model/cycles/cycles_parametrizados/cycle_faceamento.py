@@ -2,7 +2,7 @@ import textwrap
 from tkinter import messagebox
 from src.model.cycles.cycle_base import CycleBase
 
-class CicloFaceamento(CycleBase):
+class Faceamento_Parametrizado(CycleBase):
 
     def __init__(self, diametro_inicial: float, diametro_final: float, espessura: float):
 
@@ -145,8 +145,8 @@ class CicloFaceamento(CycleBase):
         N160 M5
         N170 M30''')
 
-        with open(f'{nome_arquivo}.txt', 'w') as arquivo:
+        with open(f'{nome_arquivo} (p).txt', 'w') as arquivo:
             arquivo.write(gcode_text)
 
-        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de faceamento foi gerado com sucesso e já está disponível no sistema.')
-        print('- O seu ciclo de faceamento foi gerado!')
+        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de faceamento (p) foi gerado com sucesso e já está disponível no sistema.')
+        print(' - O seu ciclo de faceamento foi gerado!')

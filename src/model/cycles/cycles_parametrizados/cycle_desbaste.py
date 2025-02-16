@@ -2,7 +2,7 @@ import textwrap
 from tkinter import messagebox
 from src.model.cycles.cycle_base import CycleBase
 
-class CicloDesbaste(CycleBase):
+class Desbaste_Parametrizado(CycleBase):
 
     def __init__(self, diametro_inicial: float, diametro_final: float, espessura: float):
         
@@ -156,8 +156,8 @@ class CicloDesbaste(CycleBase):
         N150 M5
         N160 M30''')
 
-        with open(file='Ciclo de Desbaste.txt', mode='w') as file:
+        with open(file='Ciclo de Desbaste (p).txt', mode='w') as file:
             file.write(gcode_text)
 
-        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de desbaste foi gerado com sucesso e já está disponível no sistema.')
-        print('- O seu ciclo de desbaste foi gerado!')
+        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de desbaste (p) foi gerado com sucesso e já está disponível no sistema.')
+        print(' - O seu ciclo de desbaste foi gerado!')

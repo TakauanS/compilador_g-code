@@ -1,4 +1,4 @@
-from src.model.cycles.cycle_canal import CicloCanal
+from src.model.cycles.cycles_parametrizados.cycle_canal import Canal_Parametrizado
 from src.model.assents import Assents
 from src.controller.menu import Menu
 from tkinter import messagebox
@@ -79,7 +79,7 @@ class BackCanais:
                     referencia = self.entry_ref.get().upper()
                     poscanais = self.entry_poscanais.get()
 
-                    ciclo_canal = CicloCanal(diametro_inicial=diametro_inicial, diametro_final=diametro_final, n_canais=ncanais, espessura=espessura, pos_canais=poscanais)
+                    ciclo_canal = Canal_Parametrizado(diametro_inicial=diametro_inicial, diametro_final=diametro_final, n_canais=ncanais, espessura=espessura, pos_canais=poscanais)
 
                     ciclo_canal.referencia_trabalho(referencia=referencia)
                     ciclo_canal.ferramenta(tool=ferramenta)
