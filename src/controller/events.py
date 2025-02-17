@@ -14,6 +14,8 @@ from src.controller.back_cycles.back_faceamento import BackFaceamento
 from src.controller.back_cycles.back_desbaste import BackDesbaste
 from src.controller.back_cycles.back_canais import BackCanais
 
+from src.controller.back_cycles.back_desbastef import BackDesbasteF
+
 class ButtonHandler:
 
     # SEÇÃO DE EXPORTAÇÃO DE IMAGEs
@@ -30,7 +32,8 @@ class ButtonHandler:
         self.comandos = {
             "! compile -c: desbaste": self.back_desbaste,
             "! compile -c: canais": self.back_canais,
-            "! compile -c: faceamento": self.back_faceamento
+            "! compile -c: faceamento": self.back_faceamento,
+            "! compile -c: desbaste (f)": self.back_desbastef
         }
 
         self.utils = {
@@ -54,6 +57,8 @@ class ButtonHandler:
             messagebox.showerror(title='Compilador G-Code', message='O comando informado não existe no sistema. Por favor, verifique e tente novamente.')
             return
 
+    # SEÇÃO DE MÉTODOS DE CICLOS PARAMETRIZADOs
+
     def back_desbaste(self):
 
         self.utils_cmds.limpar_tela()
@@ -68,6 +73,15 @@ class ButtonHandler:
 
         self.utils_cmds.limpar_tela()
         self.__faceamento = BackFaceamento(master=self.master)
+
+    # SEÇÃO DE MÉTODOS DE CICLOS FUNCIONAIs
+
+    def back_desbastef(self):
+
+        self.utils_cmds.limpar_tela()
+        self.__desbastef = BackDesbasteF(master=self.master)
+
+    # SEÇÃO DE MÉTODOS UTILs
 
     def list(self):
         

@@ -8,8 +8,8 @@ class Menu:
 
         # SEÇÃO DE ATRIBUTOS DE POSICIONAMENTOs
 
-        self.__posx = None
-        self.__posz = None
+        self.__posx = 400.0
+        self.__posz = 1.0
 
         # SEÇÃO DE MENU PRINCIPAL
 
@@ -39,38 +39,44 @@ class Menu:
     def get_posz(self):
         return self.__posz
 
+    @get_posx.setter
+    def set_posx(self, nova_posx: float):
+
+        if not isinstance(nova_posx, float):
+            messagebox.showerror(title='Compilador G-Code', message='O valor de segurança no eixo X não foi informado. Por favor, insira um valor válido.')
+            raise ValueError ('O valor de segurança no eixo X deve ser do tipo `float`.')
+        
+        self.__posx = nova_posx
+
+    @get_posz.setter
+    def set_posz(self, nova_posz: float):
+
+        if not isinstance(nova_posz, float):
+            messagebox.showerror(title='Compilador G-Code', message='O valor de segurança no eixo Z não foi informado. Por favor, insira um valor válido.')
+            raise ValueError ('O valor de segurança no eixo Z deve ser do tipo `float`.')
+        
+        self.__posz = nova_posz
+
     def exibir_menu(self, event):
 
         self.__menu.post(event.x_root, event.y_root)
 
     def posx(self):
 
-        self.__input_pos = CTkInputDialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo X.')
-        self.__valor_posx = float(self.__input_pos.get_input())
+        self.__input_posx = CTkInputDialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo X.')
+        self.__valor_posx = float(self.__input_posx.get_input())
 
-        if self.__valor_posx <= 800 or self.__valor_posx > 1000:
-
-            messagebox.showerror(title='Compilador G-Code', message='O valor de segurança de ferramenta no eixo X deve estar entre 800 e 1000. Por favor, insira um valor dentro desse intervalo.')
-            return
-
-        else:
-            messagebox.showinfo(title='Compilador G-Code', message='O valor de troca de segurança no eixo X foi salvo com sucesso e já está registrado no sistema.')
-            self.__posx = self.__valor_posx
+        self.__posx = self.__valor_posx
+        print(f' - O valor de posicionamento de segurança no eixo X foi configurado! ({self.get_posx})')
 
     def posz(self):
 
-        self.__input_pos = CTkInputDialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo Z.')
-        self.__valor_posz = float(self.__input_pos.get_input())
+        self.__input_posz = CTkInputDialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo Z.')
+        self.__valor_posz = float(self.__input_posz.get_input())
 
-        if self.__valor_posz <= 800 or self.__valor_posz > 1000:
+        self.__posz = self.__valor_posz
+        print(f' - O valor de posicionamento de segurança no eixo Z foi configurado! ({self.get_posz})')
 
-            messagebox.showerror(title='Compilador G-Code', message='O valor de segurança de ferramenta no eixo Z deve estar entre 800 e 1000. Por favor, insira um valor dentro desse intervalo.')
-            return
-
-        else:
-            messagebox.showinfo(title='Compilador G-Code', message='O valor de troca de segurança no eixo Z foi salvo com sucesso e já está registrado no sistema.')
-            self.__posz = self.__valor_posz
-            
     def atualizar_tela(self):
 
         lista_widgets = self.__root.winfo_children()
@@ -78,4 +84,4 @@ class Menu:
         for widget in lista_widgets:
             widget.place_forget()
 
-        print('- A tela foi atualizada com o menu!')
+        print(' - A tela foi atualizada com o menu!')
