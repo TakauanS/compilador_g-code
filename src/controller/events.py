@@ -46,10 +46,12 @@ class ButtonHandler:
     def executar_comando(self, comando):
 
         if comando in self.comandos:
+            print(f' - Você chamou o comando: {comando}')
             self.comandos[comando]()
             return
 
         if comando in self.utils:
+            print(f' - Você chamou o comando: {comando}')
             self.utils[comando]()
             return
 
