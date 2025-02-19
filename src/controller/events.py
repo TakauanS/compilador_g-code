@@ -10,11 +10,12 @@ sys.path.append(base_dir)
 from src.model.assents import Assents
 from src.controller.utils import Utils
 
-from src.controller.back_cycles.back_faceamento import BackFaceamento
-from src.controller.back_cycles.back_desbaste import BackDesbaste
-from src.controller.back_cycles.back_canais import BackCanais
+from src.controller.back_cycles.cycles_parametrizados.back_faceamento import BackFaceamento
+from src.controller.back_cycles.cycles_parametrizados.back_desbaste import BackDesbaste
+from src.controller.back_cycles.cycles_parametrizados.back_canais import BackCanais
 
-from src.controller.back_cycles.back_desbastef import BackDesbasteF
+from src.controller.back_cycles.cycles_funcionais.back_faceamentof import BackFaceamentoF
+from src.controller.back_cycles.cycles_funcionais.back_desbastef import BackDesbasteF
 
 class ButtonHandler:
 
@@ -30,9 +31,10 @@ class ButtonHandler:
         self.utils_cmds = Utils(master=self.master)
         
         self.comandos = {
+            "! compile -c: faceamento": self.back_faceamento,
             "! compile -c: desbaste": self.back_desbaste,
             "! compile -c: canais": self.back_canais,
-            "! compile -c: faceamento": self.back_faceamento,
+            "! compile -c: faceamento (f)": self.back_faceamentof,
             "! compile -c: desbaste (f)": self.back_desbastef
         }
 
@@ -82,6 +84,10 @@ class ButtonHandler:
 
         self.utils_cmds.limpar_tela()
         self.__desbastef = BackDesbasteF(master=self.master)
+
+    def back_faceamentof(self):
+        self.utils_cmds.limpar_tela()
+        self.__faceamentof = BackFaceamentoF(master=self.master)
 
     # SEÇÃO DE MÉTODOS UTILs
 
