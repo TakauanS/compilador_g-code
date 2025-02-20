@@ -17,14 +17,32 @@ class Menu:
         self.__root.bind('<Button-3>', self.exibir_menu) # Captura o clique do botão do mouse
 
         self.__menu = tk.Menu(master=self.__root, tearoff=0) # Menu principal
-        self.__sub_pos = tk.Menu(master=self.__menu, tearoff=0) # Sub-menu posicionamentos
 
+        self.__sub_pos = tk.Menu(master=self.__menu, tearoff=0) # Sub-menu posicionamentos
+        self.__sub_comandos = tk.Menu(master=self.__menu, tearoff=0) # Sub-menu comandos
+        self.__sub_funcionais = tk.Menu(master=self.__sub_comandos, tearoff=0) # Sub-menu ciclos funcionais
+        self.__sub_parametrizados = tk.Menu(master=self.__sub_comandos, tearoff=0) # Sub-menu ciclos parametrizados
+
+        self.__menu.add_cascade(label='COMANDOS', menu=self.__sub_comandos)
         self.__menu.add_cascade(label='POSICIONAMENTO', menu=self.__sub_pos)
-        self.__menu.add_cascade(label='ATUALIZAR', command=self.atualizar_tela)
+        self.__menu.add_command(label='ATUALIZAR', command=self.atualizar_tela)
 
         self.__menu.add_separator()
 
         self.__menu.add_command(label='AJUDA')
+
+        # SEÇÃO DE SUBMENUs - COMANDOS
+
+        self.__sub_comandos.add_cascade(label='CYCLES FUNCIONAIS', menu=self.__sub_funcionais)
+        self.__sub_comandos.add_cascade(label='CYCLES PARAMETRIZADOS', menu=self.__sub_parametrizados)
+
+        self.__sub_funcionais.add_command(label='FACEAMENTO')
+        self.__sub_funcionais.add_command(label='DESBASTE')
+        self.__sub_funcionais.add_command(label='CANAIS')
+
+        self.__sub_parametrizados.add_command(label='FACEAMENTO')
+        self.__sub_parametrizados.add_command(label='DESBASTE')
+        self.__sub_parametrizados.add_command(label='CANAIS')
 
         # SEÇÃO DE SUBMENUs - POSICIONAMENTOS
 
