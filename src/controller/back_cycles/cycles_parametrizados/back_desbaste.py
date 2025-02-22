@@ -1,6 +1,5 @@
 from src.model.cycles.cycles_parametrizados.cycle_desbaste import Desbaste_Parametrizado
 from src.model.assents import Assents
-from src.controller.menu import Menu
 from tkinter import messagebox
 import customtkinter as ctk
 from PIL import Image
@@ -12,7 +11,6 @@ class BackDesbaste:
     def __init__(self, master):
 
         self.master = master
-        self.menu = Menu(root=self.master)
         self.__assents = Assents(master=master)
  
         # SEÇÃO DE LABELs

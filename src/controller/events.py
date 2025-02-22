@@ -1,6 +1,4 @@
 from tkinter import messagebox
-import customtkinter as ctk
-from PIL import Image
 import sys
 import os
 
@@ -18,11 +16,6 @@ from src.controller.back_cycles.cycles_funcionais.back_faceamentof import BackFa
 from src.controller.back_cycles.cycles_funcionais.back_desbastef import BackDesbasteF
 
 class ButtonHandler:
-
-    # SEÇÃO DE EXPORTAÇÃO DE IMAGEs
-
-    img_linha = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha.png'), size=(825, 20))
-    img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(24, 24))
 
     def __init__(self, master):
 

@@ -1,19 +1,16 @@
 from src.model.cycles.cycles_parametrizados.cycle_canal import Canal_Parametrizado
 from src.model.assents import Assents
-from src.controller.menu import Menu
 from tkinter import messagebox
 import customtkinter as ctk
 from PIL import Image
 
 class BackCanais:
 
-    img_linha = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha.png'), size=(825, 20))
     img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(24, 24))
 
     def __init__(self, master):
 
         self.master = master
-        self.menu = Menu(root=self.master)
         self.__assents = Assents(master=self.master)
 
         # SEÇÃO DE LABELs
