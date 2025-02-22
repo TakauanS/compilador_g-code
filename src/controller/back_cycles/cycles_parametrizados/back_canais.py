@@ -19,7 +19,7 @@ class BackCanais:
         # SEÇÃO DE LABELs
 
         label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
-        label_diametrof = self.__assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
+        label_profundidade = self.__assents.criar_label(text='PROFUND.CANAL', x=15, y=50)
 
         label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
         label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
@@ -41,11 +41,11 @@ class BackCanais:
 
         # SEÇÃO DE ENTRYs
 
+        self.entry_profundidade = self.__assents.criar_entry(x=220, y=50)
         self.entry_ferramenta = self.__assents.criar_entry(x=220, y=170)
-        self.entry_poscanais = self.__assents.criar_entry(x=640, y=10)
 
+        self.entry_poscanais = self.__assents.criar_entry(x=640, y=10)
         self.entry_diametroi = self.__assents.criar_entry(x=220, y=10)
-        self.entry_diametrof = self.__assents.criar_entry(x=220, y=50)
 
         self.entry_rotacao = self.__assents.criar_entry(x=640, y=130)
         self.entry_ncanais = self.__assents.criar_entry(x=640, y=50)
@@ -65,16 +65,16 @@ class BackCanais:
 
     def gcode_canais(self):
 
-        if self.entry_diametroi.get() == '' or self.entry_diametrof.get() == '':
-            messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial e diâmetro final devem ser informados para garantir o correto funcionamento do ciclo.')   
+        if self.entry_diametroi.get() == '':
+            messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial devem ser informados para garantir o correto funcionamento do ciclo.')   
         else:
-            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro inicial atual é {self.entry_diametroi.get()}mm. O diâmetro final desejado é realmente {self.entry_diametrof.get()}mm?')
+            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro inicial atual é {self.entry_diametroi.get()}mm. A profundidade do canal é realmente {self.entry_profundidade.get()}mm?')
 
             if validacao_diametro == 'yes':
 
                 try:
                     diametro_inicial = float(self.entry_diametroi.get())
-                    diametro_final = float(self.entry_diametrof.get())
+                    profundidade = float(self.entry_profundidade.get())
                     espessura = float(self.entry_espessura.get())
                     rotacao = float(self.entry_rotacao.get())
                     ncanais = int(self.entry_ncanais.get())
@@ -88,7 +88,7 @@ class BackCanais:
                     referencia = self.entry_ref.get().upper()
                     poscanais = self.entry_poscanais.get()
 
-                    ciclo_canal = Canal_Parametrizado(diametro_inicial=diametro_inicial, diametro_final=diametro_final, n_canais=ncanais, espessura=espessura, pos_canais=poscanais)
+                    ciclo_canal = Canal_Parametrizado(diametro_inicial=diametro_inicial, profundidade_canal=profundidade, n_canais=ncanais, espessura=espessura, pos_canais=poscanais)
 
                     ciclo_canal.referencia_trabalho(referencia=referencia)
                     ciclo_canal.ferramenta(tool=ferramenta)

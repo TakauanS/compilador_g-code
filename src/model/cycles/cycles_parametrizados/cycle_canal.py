@@ -4,23 +4,19 @@ from src.model.cycles.cycle_base import CycleBase
 
 class Canal_Parametrizado(CycleBase):
     
-    def __init__(self, diametro_inicial: float, diametro_final: float, n_canais: int, espessura: float, pos_canais):
+    def __init__(self, diametro_inicial: float, profundidade_canal: float, n_canais: int, espessura: float, pos_canais):
 
         if not isinstance(diametro_inicial, float):
             raise ValueError('O valor do diâmetro inicial deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
         
-        if not isinstance(diametro_final, float):
-            raise ValueError('O valor do diâmetro final deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
+        if not isinstance(profundidade_canal, float):
+            raise ValueError('O valor da profundidade do canal deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
         
         if not isinstance(n_canais, int):
             raise ValueError('O valor do número de canais deve ser um número inteiro (int). Por favor, insira um valor válido.')
 
         if not isinstance(espessura, float):
             raise ValueError ('O valor da espessura deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-
-        if diametro_inicial < diametro_final:
-            messagebox.showerror(title='Compilador G-Code', message='O diâmetro inicial não pode ser menor que o diâmetro final. Por favor, insira um valor válido.')
-            return
 
         if espessura <= 0:
             messagebox.showerror(title='Compilador G-Code', message='O valor da espessura (abertura) do canal deve ser maior que zero. Por favor, verifique e tente novamente!')
@@ -30,19 +26,19 @@ class Canal_Parametrizado(CycleBase):
             messagebox.showerror(title='Compilador G-Code', message='O valor do número de canais não pode ser negativo. Por favor, insira um valor válido.')
             return
 
+        self.__profundidade_canal = profundidade_canal
         self.__diametro_inicial = diametro_inicial
-        self.__diametro_final = diametro_final
         self.__pos_canais = pos_canais
         self.__espessura = espessura
         self.__n_canais = n_canais
 
     @property
-    def get_diametro_inicial(self):
-        return self.__diametro_inicial
+    def get_profundidade_canal(self):
+        return self.__profundidade_canal
 
     @property
-    def get_diametro_final(self):
-        return self.__diametro_final
+    def get_diametro_inicial(self):
+        return self.__diametro_inicial
 
     @property
     def get_n_canais(self):
@@ -56,28 +52,21 @@ class Canal_Parametrizado(CycleBase):
     def get_pos_canais(self):
         return self.__pos_canais
 
+    @get_profundidade_canal.setter
+    def set_profundidade_canal(self, nova_pf: float):
+
+        if not isinstance(nova_pf, float):
+            raise ValueError ('O valor da nova profundidade do canal deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
+        else:
+            self.__profundidade_canal = nova_pf
+
     @get_diametro_inicial.setter
     def set_diametro_inicial(self, novo_diametro_inicial: float):
 
         if not isinstance(novo_diametro_inicial, float):
             raise ValueError ('O valor do novo diâmetro inicial deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-
-        if novo_diametro_inicial < self._diametro_final:
-            messagebox.showerror(title='Compilador G-Code', message='O diâmetro inicial não pode ser menor que o diâmetro final. Por favor, insira valores válidos.')
-            return
         else:
             self.__diametro_inicial = novo_diametro_inicial
-
-    @get_diametro_final.setter
-    def set_diametro_final(self, novo_diametro_final: float):
-
-        if not isinstance(novo_diametro_final, float):
-            raise ValueError ('O valor do novo diâmetro final deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-
-        if novo_diametro_final > self._diametro_inicial:
-            messagebox.showerror(title='Compilador G-Code', message='O diâmetro final não pode ser maior que o diâmetro inicial. Por favor, insira valores válidos.')
-        else:
-            self.__diametro_final = novo_diametro_final
 
     @get_n_canais.setter
     def set_n_canais(self, novo_n_canais: int):
@@ -107,7 +96,7 @@ class Canal_Parametrizado(CycleBase):
 
         gcode_text = textwrap.dedent(f'''
         DEF INT POS_CANAIS [{self.get_n_canais}] = SET ({self.get_pos_canais})
-                                     
+
         N10 G290
         N20 G18 G40 G90 G95
 
@@ -117,17 +106,18 @@ class Canal_Parametrizado(CycleBase):
         N50 G97 S{self.get_rotacao} M8
 
         R1 = {self.get_diametro_inicial}
-        R2 = {self.get_diametro_final}
-        R3 = -{self.get_espessura}
+        R2 = {self.get_profundidade_canal}
+        R3 = {self.get_espessura}
 
         R4 = -{self.get_passe}
-        R5 = R2
+        R5 = ABS(R4)
         R6 = {self.get_n_canais}
 
-        R7 = R1
         R8 = 0
         R9 = 0
+
         R10 = 0
+        R11 = R1
 
         IF R10 == 0
             MSG("CICLO DE CANAIS EM ANDAMENTO (DBT)...")
@@ -144,16 +134,17 @@ class Canal_Parametrizado(CycleBase):
         FOR R8 = 0 TO R6 - 1
             G90
             G0 X=R1
-            G0 Z=(POS_CANAIS[R8] + 0.5)
-            R7 = R1
-            WHILE R7 >= R5 + ABS(R4)
+            G0 Z=POS_CANAIS[R8]
+            R7 = R1 + R2
+            R11 = R1
+            WHILE R7 > R11
                 G91
                 G1 X=R4 F{self.get_avanco}
                 Z=R3
                 G0 X=ABS(R4)
                 G0 Z=ABS(R3)
                 G1 X=R4 F{self.get_avanco}
-                R7 = R7 - ABS(R4)
+                R11 = R11 + R5
             ENDWHILE
         ENDFOR
 
@@ -169,9 +160,9 @@ class Canal_Parametrizado(CycleBase):
             G90
             G0 X=R1
             G0 Z=POS_CANAIS[R9]
-            G1 X=R2 F{self.get_avanco}
+            G1 X=(R1 - R2) F{self.get_avanco}
             G91 Z=R3
-            G90 X=R2
+            G90 X=R1
         ENDFOR
 
         MSG("")
@@ -179,7 +170,7 @@ class Canal_Parametrizado(CycleBase):
         N110 G0 X=(R1 + 1)
         N120 G0 Z0
 
-        N130 G0 {self.get_referencia} X{self.get_posx} Z{self.get_posz}
+        N130 {self.get_referencia} X{self.get_posx} Z{self.get_posz}
 
         N140 M9
         N150 M5
