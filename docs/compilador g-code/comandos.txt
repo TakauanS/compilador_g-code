@@ -1,0 +1,19 @@
+Os comandos do compilador G-Code foram inspirados no Git, um sistema de versionamento de código. Para manter um padrão, todos os comandos utilizam 
+o prefixo de sintaxe "! compile".  
+
+Ao inserir um comando, o primeiro passo é utilizar esse prefixo. Em seguida, basta informar a ação desejada, como visualizar os comandos disponíveis 
+ou executar ciclos de usinagem. 
+
+Para visualização de comandos você pode usar os seguintes comandos:
+
+- ! compile -list > exibi todos comandos disponiveis ao usuário.
+- ! compile -list: cycles > exibi todos os comandos de ciclos de usinagem.
+
+Os comandos de ciclos de usinagem são:
+
+• ! compile -c: faceamento (f) > compila o ciclo de faceamento funcional.
+• ! compile -c: desbaste (f) > compila o ciclo de desbaste funcional.
+
+• ! compile -c: faceamento > compila o ciclo de faceamento parametrizado.
+• ! compile -c: desbaste > compila o ciclo de desbaste parametrizado.
+• ! compile -c: canais > compila o ciclo de canais parametrizado.
