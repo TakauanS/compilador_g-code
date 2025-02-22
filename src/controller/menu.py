@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from customtkinter import CTkInputDialog
+from src.model.assents import Assents
 
 class Menu:
     
@@ -16,33 +16,17 @@ class Menu:
         self.__root = root # Recebe como argumento a tela principal do software
         self.__root.bind('<Button-3>', self.exibir_menu) # Captura o clique do botão do mouse
 
+        self.__assents = Assents(master=self.__root)
+
         self.__menu = tk.Menu(master=self.__root, tearoff=0) # Menu principal
-
         self.__sub_pos = tk.Menu(master=self.__menu, tearoff=0) # Sub-menu posicionamentos
-        self.__sub_comandos = tk.Menu(master=self.__menu, tearoff=0) # Sub-menu comandos
-        self.__sub_funcionais = tk.Menu(master=self.__sub_comandos, tearoff=0) # Sub-menu ciclos funcionais
-        self.__sub_parametrizados = tk.Menu(master=self.__sub_comandos, tearoff=0) # Sub-menu ciclos parametrizados
 
-        self.__menu.add_cascade(label='COMANDOS', menu=self.__sub_comandos)
         self.__menu.add_cascade(label='POSICIONAMENTO', menu=self.__sub_pos)
         self.__menu.add_command(label='ATUALIZAR', command=self.atualizar_tela)
 
         self.__menu.add_separator()
 
-        self.__menu.add_command(label='AJUDA')
-
-        # SEÇÃO DE SUBMENUs - COMANDOS
-
-        self.__sub_comandos.add_cascade(label='CYCLES FUNCIONAIS', menu=self.__sub_funcionais)
-        self.__sub_comandos.add_cascade(label='CYCLES PARAMETRIZADOS', menu=self.__sub_parametrizados)
-
-        self.__sub_funcionais.add_command(label='FACEAMENTO')
-        self.__sub_funcionais.add_command(label='DESBASTE')
-        self.__sub_funcionais.add_command(label='CANAIS')
-
-        self.__sub_parametrizados.add_command(label='FACEAMENTO')
-        self.__sub_parametrizados.add_command(label='DESBASTE')
-        self.__sub_parametrizados.add_command(label='CANAIS')
+        self.__menu.add_command(label='VERSION', command=self.exibir_version)
 
         # SEÇÃO DE SUBMENUs - POSICIONAMENTOS
 
@@ -74,14 +58,19 @@ class Menu:
             raise ValueError ('O valor de segurança no eixo Z deve ser do tipo `float`.')
         
         self.__posz = nova_posz
-
+  
     def exibir_menu(self, event):
 
         self.__menu.post(event.x_root, event.y_root)
 
+    def exibir_version(self):
+
+        print(' - Você consultou a versão do software pelo o menu!')
+        messagebox.showinfo(title='Compilador G-Code', message='A versão atual do Compilador G-Code é: 1.0')
+
     def posx(self):
 
-        self.__input_posx = CTkInputDialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo X.')
+        self.__input_posx = self.__assents.criar_inputdialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo X.')
         self.__valor_posx = float(self.__input_posx.get_input())
 
         self.__posx = self.__valor_posx
@@ -89,7 +78,7 @@ class Menu:
 
     def posz(self):
 
-        self.__input_posz = CTkInputDialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo Z.')
+        self.__input_posz = self.__assents.criar_inputdialog(title='Compilador G-Code', text='Por favor, insira o valor do posicionamento de segurança no eixo Z.')
         self.__valor_posz = float(self.__input_posz.get_input())
 
         self.__posz = self.__valor_posz

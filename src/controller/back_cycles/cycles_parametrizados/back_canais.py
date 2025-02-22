@@ -33,8 +33,11 @@ class BackCanais:
         label_espessura = self.__assents.criar_label(text='ESPESSURA', x=15, y=210)
         label_passe = self.__assents.criar_label(text='PASSE', x=500, y=210)
 
-        label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=BackCanais.img_linha)
-        label_linha.place(x=15, y=95)
+        label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=290)
+        label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=330)
+
+        self.__assents.criar_linha(x=15, y=95)
+        self.__assents.criar_linha(x=15, y=255)
 
         # SEÇÃO DE ENTRYs
 
@@ -52,6 +55,9 @@ class BackCanais:
 
         self.entry_espessura = self.__assents.criar_entry(x=220, y=210)
         self.entry_passe = self.__assents.criar_entry(x=640, y=210)
+
+        self.entry_posx = self.__assents.criar_entry(x=220, y=290)
+        self.entry_posz = self.__assents.criar_entry(x=220, y=330)
 
         # SEÇÃO DE BUTTONs
 
@@ -75,6 +81,9 @@ class BackCanais:
                     avanco = float(self.entry_avanco.get())
                     passe = float(self.entry_passe.get())
 
+                    posx = float(self.entry_posx.get())
+                    posz = float(self.entry_posz.get())
+
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
                     poscanais = self.entry_poscanais.get()
@@ -85,10 +94,10 @@ class BackCanais:
                     ciclo_canal.ferramenta(tool=ferramenta)
                     ciclo_canal.avanco(advance=avanco)
                     ciclo_canal.rotacao(rpm=rotacao)
-                    ciclo_canal.passe(passe)       
+                    ciclo_canal.passe(pf=passe)       
 
-                    ciclo_canal.pos_segurancaX(posx=self.menu.get_posx)
-                    ciclo_canal.pos_segurancaZ(posz=self.menu.get_posz)
+                    ciclo_canal.pos_segurancaX(posx=posx)
+                    ciclo_canal.pos_segurancaZ(posz=posz)
 
                 except Exception as e:
                     print(f' - Error! {e}')

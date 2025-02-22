@@ -30,8 +30,11 @@ class BackFaceamentoF:
         label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
         label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
 
-        label_linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=BackFaceamentoF.img_linha)
-        label_linha.place(x=15, y=95)
+        label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=245)
+        label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=285)
+
+        self.__assents.criar_linha(x=15, y=95)
+        self.__assents.criar_linha(x=15, y=210)
 
         # SEÇÃO DE ENTRYs
 
@@ -46,6 +49,9 @@ class BackFaceamentoF:
 
         self.entry_avanco = self.__assents.criar_entry(x=640, y=170)
         self.entry_ref = self.__assents.criar_entry(x=220, y=130)
+
+        self.entry_posx = self.__assents.criar_entry(x=220, y=245)
+        self.entry_posz = self.__assents.criar_entry(x=220, y=285)
 
         # SEÇÃO DE BUTTONs
 
@@ -68,6 +74,9 @@ class BackFaceamentoF:
                     avanco = float(self.entry_avanco.get())
                     passe = float(self.entry_passe.get())
 
+                    posx = float(self.entry_posx.get())
+                    posz = float(self.entry_posz.get())
+
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
@@ -79,8 +88,8 @@ class BackFaceamentoF:
                     ciclo_faceamento.rotacao(rpm=rotacao)
                     ciclo_faceamento.passe(pf=passe)
 
-                    ciclo_faceamento.pos_segurancaX(posx=self.menu.get_posx)
-                    ciclo_faceamento.pos_segurancaZ(posz=self.menu.get_posz)
+                    ciclo_faceamento.pos_segurancaX(posx=posx)
+                    ciclo_faceamento.pos_segurancaZ(posz=posz)
                 
                 except Exception as e:
                     print(f' - Erro! {e}')
