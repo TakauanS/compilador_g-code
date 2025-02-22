@@ -5,10 +5,6 @@ from src.controller.events import ButtonHandler
 
 class Interface(ctk.CTk):
 
-    # SEÇÃO DE EXPORTAÇÃO DE IMAGEs
-
-    img_cima = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/seta_cima.png'), size=(20, 20))
-
     def __init__(self):
         super().__init__()
 
@@ -41,5 +37,5 @@ class Interface(ctk.CTk):
 
         button_action = ButtonHandler(master=frame_p)
 
-        button_pesq = ctk.CTkButton(master=self, image=Interface.img_cima, text='UP', font=('Arial', 15, 'bold'), height=35, corner_radius=12, command=on_button, bg_color=self.assents.cor1, fg_color=self.assents.cor4, hover_color=self.assents.cor5)
+        button_pesq = ctk.CTkButton(master=self, image=self.assents.img_cima, text='UP', font=('Arial', 15, 'bold'), height=35, corner_radius=12, command=on_button, bg_color=self.assents.cor1, fg_color=self.assents.cor4, hover_color=self.assents.cor5)
         button_pesq.place(x=735, y=20)

@@ -1,16 +1,14 @@
 from src.model.cycles.cycles_parametrizados.cycle_canal import Canal_Parametrizado
 from src.model.assents import Assents
+from src.controller.menu import Menu
 from tkinter import messagebox
-import customtkinter as ctk
-from PIL import Image
 
 class BackCanais:
-
-    img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(24, 24))
 
     def __init__(self, master):
 
         self.master = master
+        self.menu = Menu(root=self.master)
         self.__assents = Assents(master=self.master)
 
         # SEÇÃO DE LABELs
@@ -58,7 +56,7 @@ class BackCanais:
 
         # SEÇÃO DE BUTTONs
 
-        self.button_code = self.__assents.criar_button(text='G-CODE', command=self.gcode_canais, image=BackCanais.img_code, x=705, y=355)
+        self.button_code = self.__assents.criar_button(text='G-CODE', command=self.gcode_canais, image=self.__assents.img_code, x=705, y=355)
 
     def gcode_canais(self):
 

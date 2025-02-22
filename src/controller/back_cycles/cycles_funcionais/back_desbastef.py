@@ -1,16 +1,14 @@
 from src.model.cycles.cycles_funcionais.cycle_desbastef import Desbaste_Funcional
 from src.model.assents import Assents
+from src.controller.menu import Menu
 from tkinter import messagebox
-import customtkinter as ctk
-from PIL import Image
 
 class BackDesbasteF:
-
-    img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(24, 24))
 
     def __init__(self, master):
 
         self.master = master
+        self.menu = Menu(root=self.master)
         self.__assents = Assents(master=master)
  
         # SEÇÃO DE LABELs
@@ -52,7 +50,7 @@ class BackDesbasteF:
 
         # SEÇÃO DE BUTTONs
 
-        self.button_code = self.__assents.criar_button(text='G-CODE', command=self.gcode_desbastef, image=BackDesbasteF.img_code, x=705, y=355)
+        self.button_code = self.__assents.criar_button(text='G-CODE', command=self.gcode_desbastef, image=self.__assents.img_code, x=705, y=355)
         
     def gcode_desbastef(self):
 

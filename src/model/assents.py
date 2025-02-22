@@ -11,6 +11,7 @@ class Assents:
     cor6 = 'white'   # Cor branca para textos
     cor7 = '#FAEFEB' # Cor branca para input dialog
 
+    img_cima = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/seta_cima.png'), size=(20, 20))
     img_linha = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha.png'), size=(825, 20))
     img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(24, 24))
 
