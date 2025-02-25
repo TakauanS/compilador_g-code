@@ -135,7 +135,7 @@ class Canal_Parametrizado(CycleBase):
             G90
             G0 X=R1
             G0 Z=POS_CANAIS[R8]
-            R7 = R1 + R2
+            R7 = (R1 + R2) - R5
             R11 = R1
             WHILE R7 > R11
                 G91

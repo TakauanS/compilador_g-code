@@ -14,6 +14,7 @@ from src.controller.back_cycles.cycles_parametrizados.back_canais import BackCan
 
 from src.controller.back_cycles.cycles_funcionais.back_faceamentof import BackFaceamentoF
 from src.controller.back_cycles.cycles_funcionais.back_desbastef import BackDesbasteF
+from src.controller.back_cycles.cycles_funcionais.back_canaisf import Back_CanaisF
 
 class ButtonHandler:
 
@@ -28,7 +29,8 @@ class ButtonHandler:
             "! compile -c: desbaste": self.back_desbaste,
             "! compile -c: canais": self.back_canais,
             "! compile -c: faceamento (f)": self.back_faceamentof,
-            "! compile -c: desbaste (f)": self.back_desbastef
+            "! compile -c: desbaste (f)": self.back_desbastef,
+            "! compile -c: canais (f)": self.back_canaisf
         }
 
         self.utils = {
@@ -79,8 +81,14 @@ class ButtonHandler:
         self.__desbastef = BackDesbasteF(master=self.master)
 
     def back_faceamentof(self):
+
         self.utils_cmds.limpar_tela()
         self.__faceamentof = BackFaceamentoF(master=self.master)
+
+    def back_canaisf(self):
+
+        self.utils_cmds.limpar_tela()
+        self.__canaisf = Back_CanaisF(master=self.master)
 
     # SEÇÃO DE MÉTODOS UTILs
 
