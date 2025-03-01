@@ -19,9 +19,9 @@ class Utils:
 
         self.text_list = textwrap.dedent('''• CICLOS DE USINAGEM:
                                 
-- ! compile -c: faceamento > Ciclo de faceamento parametrizado.
-- ! compile -c: desbaste > Ciclo de desbaste parametrizado.
-- ! compile -c: canais > Ciclo de canais parametrizado.
+- ! compile -c: faceamento (p) > Ciclo de faceamento parametrizado.
+- ! compile -c: desbaste (p) > Ciclo de desbaste parametrizado.
+- ! compile -c: canais (p) > Ciclo de canais parametrizado.
                                 
 - ! compile -c: faceamento (f) > Ciclo de faceamento funcional.
 - ! compile -c: desbaste (f) > Ciclo de desbaste funcional.

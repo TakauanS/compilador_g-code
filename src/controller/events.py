@@ -25,9 +25,9 @@ class ButtonHandler:
         self.utils_cmds = Utils(master=self.master)
         
         self.comandos = {
-            "! compile -c: faceamento": self.back_faceamento,
-            "! compile -c: desbaste": self.back_desbaste,
-            "! compile -c: canais": self.back_canais,
+            "! compile -c: faceamento (p)": self.back_faceamento,
+            "! compile -c: desbaste (p)": self.back_desbaste,
+            "! compile -c: canais (p)": self.back_canais,
             "! compile -c: faceamento (f)": self.back_faceamentof,
             "! compile -c: desbaste (f)": self.back_desbastef,
             "! compile -c: canais (f)": self.back_canaisf

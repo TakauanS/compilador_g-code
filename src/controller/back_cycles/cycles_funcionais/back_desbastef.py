@@ -14,12 +14,12 @@ class BackDesbasteF:
         # SEÇÃO DE LABELs
 
         label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
-        label_diametrof = self.__assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
+        label_diametrof = self.__assents.criar_label(text='DIÂMETROS FINAIS', x=15, y=50)
 
         label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
         label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
 
-        label_espessura = self.__assents.criar_label(text='ESPESSURA', x=500, y=10)
+        label_espessura = self.__assents.criar_label(text='ESPESSURAS', x=500, y=10)
         label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
 
         label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
@@ -51,20 +51,20 @@ class BackDesbasteF:
         # SEÇÃO DE BUTTONs
 
         self.button_code = self.__assents.criar_button(text='G-CODE', command=self.gcode_desbastef, image=self.__assents.img_code, x=705, y=355)
-        
+
     def gcode_desbastef(self):
 
         if self.entry_diametroi.get() == '' or self.entry_diametrof.get() == '':
-            messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial e diâmetro final devem ser informados para garantir o correto funcionamento do ciclo.')   
+            messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial e diâmetro finais devem ser informados para garantir o correto funcionamento do ciclo.')   
         else:
-            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro inicial atual é {self.entry_diametroi.get()}mm. O diâmetro final desejado é realmente {self.entry_diametrof.get()}mm?')
+            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro inicial atual é {self.entry_diametroi.get()}mm?')
 
             if validacao_diametro == 'yes':
 
                 try:
                     diametro_inicial = float(self.entry_diametroi.get())
-                    diametro_final = float(self.entry_diametrof.get())
-                    espessura = float(self.entry_espessura.get())
+                    diametro_finais = self.entry_diametrof
+                    espessuras = self.entry_espessura
                     rotacao = float(self.entry_rotacao.get())
                     avanco = float(self.entry_avanco.get())
                     passe = float(self.entry_passe.get())
@@ -75,7 +75,9 @@ class BackDesbasteF:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    ciclo_desbaste = Desbaste_Funcional(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
+                    ciclo_desbaste = Desbaste_Funcional(diametro_inicial=diametro_inicial)
+
+                    ciclo_desbaste.gerar_coordenadas(diametros_finais=diametro_finais, espessuras=espessuras)
 
                     ciclo_desbaste.referencia_trabalho(referencia=referencia)
                     ciclo_desbaste.ferramenta(tool=ferramenta)

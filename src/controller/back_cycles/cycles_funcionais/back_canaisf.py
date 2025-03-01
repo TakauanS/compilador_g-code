@@ -84,16 +84,13 @@ class Back_CanaisF:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    passe_c = passe * 1000
-                    dist_c = dist * 1000
-
-                    ciclo_canal = Canais_Funcional(diametro_inicial=diametro_inicial, diametro_final=diametro_final, distancia_final=dist_c, posicao_final=posicao, aproximacao_z=aproximacao)
+                    ciclo_canal = Canais_Funcional(diametro_inicial=diametro_inicial, diametro_final=diametro_final, distancia_final=dist, posicao_final=posicao, aproximacao_z=aproximacao)
 
                     ciclo_canal.referencia_trabalho(referencia=referencia)
                     ciclo_canal.ferramenta(tool=ferramenta)
                     ciclo_canal.avanco(advance=avanco)
                     ciclo_canal.rotacao(rpm=rotacao)
-                    ciclo_canal.passe(pf=passe_c)       
+                    ciclo_canal.passe(pf=passe)       
 
                     ciclo_canal.pos_segurancaX(posx=posx)
                     ciclo_canal.pos_segurancaZ(posz=posz)
