@@ -15,7 +15,7 @@ Para garantir o correto funcionamento do software, certifique-se de atender aos 
 - Espaço em disco: 500 MB ou superior.
 - Sistema Operacional: Windows 10 ou superior, macOS High Sierra ou superior, Linux Ubuntu 18.04 ou superior.
 
-Se você atende a todos os requisitos, pode acessar a versão mais recente do software através do seguinte link: [Compilador G-Code]()
+Se você atende a todos os requisitos, pode acessar a versão mais recente do software através do seguinte link: [Compilador G-Code](https://github.com/TakauanS/compilador_g-code/tree/staging/bin)
 
 ## 🛠️ Construído com
 
