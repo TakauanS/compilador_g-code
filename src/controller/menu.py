@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-from src.model.assents import Assents
 
 class Menu:
     
@@ -11,9 +10,8 @@ class Menu:
         self.__root = root # Recebe como argumento a tela principal do software
         self.__root.bind('<Button-3>', self.exibir_menu) # Captura o clique do botão do mouse
 
-        self.__assents = Assents(master=self.__root)
-
         self.__menu = tk.Menu(master=self.__root, tearoff=0) # Menu principal
+
         self.__menu.add_command(label='ATUALIZAR', command=self.atualizar_tela)
         self.__menu.add_command(label='VERSION', command=self.exibir_version)
 
