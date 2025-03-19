@@ -1,7 +1,6 @@
-from PIL import Image
 import customtkinter as ctk
 from src.model.assents import Assents
-from src.controller.events import ButtonHandler
+from src.controller.events.events_main import ButtonHandler
 
 class Interface(ctk.CTk):
 

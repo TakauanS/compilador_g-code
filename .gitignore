@@ -4,6 +4,7 @@ src/view/__pycache__/
 src/model/__pycache__/
 src/controller/__pycache__/
 src/model/cycles/__pycache__/
+src/controller/events/__pycache__/
 src/controller/back_cycles/__pycache__/
 src/model/cycles/cycles_funcionais/__pycache__/
 src/controller/back_cycles/cycles_funcionais/__pycache__/
