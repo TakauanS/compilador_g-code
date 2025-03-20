@@ -13,8 +13,10 @@ Os comandos de ciclos de usinagem são:
 
 • ! compile -c: faceamento (f) > compila o ciclo de faceamento funcional.
 • ! compile -c: desbaste (f) > compila o ciclo de desbaste funcional.
+• ! compile -c: furação (f) > compila o ciclo de furação funcional.
 • ! compile -c: canais (f) > compila o ciclo de canais funcional.
 
 • ! compile -c: faceamento (p) > compila o ciclo de faceamento parametrizado.
 • ! compile -c: desbaste (p) > compila o ciclo de desbaste parametrizado.
+• ! compile -c: furação (p) > compila o ciclo de furação parametrizado.
 • ! compile -c: canais (p) > compila o ciclo de canais parametrizado.

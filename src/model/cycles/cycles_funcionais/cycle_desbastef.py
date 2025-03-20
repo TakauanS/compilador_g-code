@@ -21,14 +21,6 @@ class Desbaste_Funcional(CycleBase):
     def get_diametro_chanfro(self):
         return self.__diametro_chanfro
 
-    @get_diametro_inicial.setter
-    def set_diametro_inicial(self, novo_diametro_inicial: float):
-
-        if not isinstance(novo_diametro_inicial, float):
-            raise ValueError ('O valor do novo diâmetro inicial deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        self.__diametro_inicial = novo_diametro_inicial
-
     def gerar_coordenadas(self, diametros_finais: str, espessuras: str):
 
         self.atual_diametros = str(diametros_finais.get())

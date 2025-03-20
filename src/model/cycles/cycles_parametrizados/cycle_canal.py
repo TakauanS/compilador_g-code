@@ -52,46 +52,6 @@ class Canal_Parametrizado(CycleBase):
     def get_pos_canais(self):
         return self.__pos_canais
 
-    @get_profundidade_canal.setter
-    def set_profundidade_canal(self, nova_pf: float):
-
-        if not isinstance(nova_pf, float):
-            raise ValueError ('O valor da nova profundidade do canal deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        else:
-            self.__profundidade_canal = nova_pf
-
-    @get_diametro_inicial.setter
-    def set_diametro_inicial(self, novo_diametro_inicial: float):
-
-        if not isinstance(novo_diametro_inicial, float):
-            raise ValueError ('O valor do novo diâmetro inicial deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        else:
-            self.__diametro_inicial = novo_diametro_inicial
-
-    @get_n_canais.setter
-    def set_n_canais(self, novo_n_canais: int):
-
-        if novo_n_canais <= 0:
-            messagebox.showerror(title='Compilador G-Code', message='O valor do número de canais não pode ser negativo. Por favor, insira um valor válido.')
-        else:
-            self.__n_canais = novo_n_canais
-
-    @get_espessura.setter
-    def set_espessura(self, nova_espessura: float):
-
-        if not isinstance(nova_espessura, float):
-            raise ValueError ('O valor da nova espessura deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-
-        if nova_espessura <= 0:
-            messagebox.showerror(title='Compilador G-Code', message='O valor da nova espessura (abertura) do canal deve ser maior que zero. Por favor, verifique e tente novamente!')
-            return
-        else:
-            self.__espessura = nova_espessura
-
-    @get_pos_canais.setter
-    def set_pos_canais(self, novo_pos_canais):
-        self.__pos_canais = novo_pos_canais
-
     def gcode(self, nome_arquivo='Ciclo de Canais'):
 
         gcode_text = textwrap.dedent(f'''

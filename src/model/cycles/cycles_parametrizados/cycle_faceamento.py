@@ -39,48 +39,6 @@ class Faceamento_Parametrizado(CycleBase):
     def get_espessura(self):
         return self.__espessura
 
-    @get_diametro_inicial.setter
-    def set_diametro_inicial(self, novo_diametro_inicial: float):
-
-        if not isinstance(novo_diametro_inicial, float):
-            raise ValueError ('O valor do novo diâmetro inicial deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if novo_diametro_inicial == self._diametro_inicial:
-            messagebox.showinfo(title='Compilador G-Code', message='O novo diâmetro inicial informado é igual ao diâmetro inicial anterior.')
-
-        if novo_diametro_inicial < self._diametro_final:
-            messagebox.showerror(title='Compilador G-Code', message='O novo diâmetro inicial informado é igual ao diâmetro inicial anterior.')
-            return
-
-        self.__diametro_inicial = novo_diametro_inicial
-
-    @get_diametro_final.setter
-    def set_diametro_final(self, novo_diametro_final: float):
-
-        if not isinstance(novo_diametro_final, float):
-            raise ValueError ('O valor do diâmetro final deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if novo_diametro_final == self._diametro_final:
-            messagebox.showinfo(title='Compilador G-Code', message='O novo diâmetro final informado é igual ao diâmetro inicial anterior.')
-
-        if novo_diametro_final > self._diametro_inicial:
-            messagebox.showerror(title='Compilador G-Code', message='O novo diâmetro final é maior que o diâmetro inicial. Por favor, verifique os valores e tente novamente.')
-            return
-
-        self.__diametro_final = novo_diametro_final
-    
-    @get_espessura.setter
-    def set_espessura(self, nova_espessura: float):
-
-        if not isinstance(nova_espessura, float):
-            raise ValueError ('O valor da nova espessura deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if nova_espessura <= 0:
-            messagebox.showerror(title='Compilador G-Code', message='O valor da nova espessura deve ser maior que zero. Por favor, verifique e tente novamente!')
-            return
-        
-        self.__espessura = nova_espessura
-
     def gcode(self, nome_arquivo='Ciclo de Faceamento'):
 
         gcode_text = textwrap.dedent(f'''

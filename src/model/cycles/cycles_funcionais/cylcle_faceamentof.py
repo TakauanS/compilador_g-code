@@ -45,42 +45,6 @@ class Faceamento_Funcional(CycleBase):
     def get_espessura(self):
         return self.__espessura
     
-    @get_diametro_inicial.setter
-    def set_diametro_inicial(self, novo_diametro_inicial: float):
-
-        if not isinstance(novo_diametro_inicial, float):
-            raise ValueError ('O valor do novo diâmetro inicial deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if novo_diametro_inicial <= self.get_diametro_final:
-            messagebox.showerror(title='Compilador G-Code', message='O novo diâmetro inicial não pode ser menor que o diâmetro final. Por favor, insira um valor válido.')
-            return
-        else:
-            self.__diametro_inicial = novo_diametro_inicial
-
-    @get_diametro_final.setter
-    def set_diametro_final(self, novo_diametro_final: float):
-
-        if not isinstance(novo_diametro_final, float):
-            raise ValueError ('O valor do novo diâmetro final deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if novo_diametro_final >= self.get_diametro_inicial:
-            messagebox.showerror(title='Compilador G-Code', message='O novo diâmetro final não pode ser maior ou igual ao diâmetro inicial. Por favor, insira um valor válido.')
-            return
-        else:
-            self.__diametro_final = novo_diametro_final
-
-    @get_espessura.setter
-    def set_espessura(self, nova_espessura: float):
-
-        if not isinstance(nova_espessura, float):
-            raise ValueError ('O valor da nova espessura deve ser do tipo decimal (float). Por favor, insira um valor válido.')
-        
-        if nova_espessura <= 0:
-            messagebox.showerror(title='Compilador G-Code', message='O valor da espessura deve ser maior que zero. Por favor, insira um valor válido.')
-            return
-        else:
-            self.__espessura = nova_espessura
-
     def gcode(self):
 
         gcode_text = textwrap.dedent(f'''

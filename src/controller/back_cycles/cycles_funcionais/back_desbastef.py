@@ -9,24 +9,24 @@ class BackDesbasteF:
 
         self.master = master
         self.menu = Menu(root=self.master)
-        self.__assents = Assents(master=master)
- 
+        self.__assents = Assents(master=self.master)
+
         # SEÇÃO DE LABELs
 
-        label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
-        label_diametrof = self.__assents.criar_label(text='DIÂMETROS FINAIS', x=15, y=50)
+        self.label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
+        self.label_diametrof = self.__assents.criar_label(text='DIÂMETROS FINAIS', x=15, y=50)
 
-        label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
-        label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
+        self.label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=245)
+        self.label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=285)
 
-        label_espessura = self.__assents.criar_label(text='ESPESSURAS', x=500, y=10)
-        label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
+        self.label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
+        self.label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
 
-        label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
-        label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
+        self.label_espessura = self.__assents.criar_label(text='ESPESSURAS', x=500, y=10)
+        self.label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
 
-        label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=245)
-        label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=285)
+        self.label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
+        self.label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
 
         self.__assents.criar_linha(x=15, y=95)
         self.__assents.criar_linha(x=15, y=210)
@@ -40,9 +40,9 @@ class BackDesbasteF:
         self.entry_diametrof = self.__assents.criar_entry(x=220, y=50)
 
         self.entry_rotacao = self.__assents.criar_entry(x=640, y=130)
-        self.entry_avanco = self.__assents.criar_entry(x=640, y=170)
-
         self.entry_passe = self.__assents.criar_entry(x=640, y=50)
+
+        self.entry_avanco = self.__assents.criar_entry(x=640, y=170)
         self.entry_ref = self.__assents.criar_entry(x=220, y=130)
 
         self.entry_posx = self.__assents.criar_entry(x=220, y=245)
@@ -57,7 +57,7 @@ class BackDesbasteF:
         if self.entry_diametroi.get() == '' or self.entry_diametrof.get() == '':
             messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial e diâmetro finais devem ser informados para garantir o correto funcionamento do ciclo.')   
         else:
-            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro inicial atual é {self.entry_diametroi.get()}mm?')
+            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro atual é {self.entry_diametroi.get()}. Os diâmetro finais são [{self.entry_diametrof.get()}]. Procede?')
 
             if validacao_diametro == 'yes':
 
@@ -93,4 +93,4 @@ class BackDesbasteF:
                 else:
                     ciclo_desbaste.gcode()
             else:
-                pass        
+                pass

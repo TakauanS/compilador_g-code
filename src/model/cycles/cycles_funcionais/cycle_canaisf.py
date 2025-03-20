@@ -59,62 +59,6 @@ class Canais_Funcional(CycleBase):
     def get_aproximacao_z(self):
         return self.__aproximcao_z
 
-    @get_diametro_inicial.setter
-    def set_diametro_inicial(self, novo_diametro_inicial: float):
-
-        if not isinstance(novo_diametro_inicial, float):
-            raise ValueError ('O valor do novo diâmetro inicial deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if novo_diametro_inicial <= self.get_diametro_final:
-            messagebox.showerror(title='Compilador G-Code', message='O novo diâmetro inicial não pode ser igual ou menor que o diâmetro final. Por favor, tente novamente.')
-            return
-        else:
-            self.__diametro_inicial = novo_diametro_inicial
-
-    @get_distancia_final.setter
-    def set_distancia_final(self, novo_distancia_final: float):
-
-        if not isinstance(novo_distancia_final, float):
-            raise ValueError ('O valor do novo diâmetro final deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if novo_distancia_final <= 0:
-            messagebox.showerror(title='Compilador G-Code', message='A distância final dos canais não pode ser menor ou igual a zero. Por favor, tente novamente.')
-            return
-        else:
-            self.__distancia_final = novo_distancia_final
-
-    @get_diametro_final.setter
-    def set_diametro_final(self, novo_diametro_final: float):
-
-        if not isinstance(novo_diametro_final, float):
-            raise ValueError ('O valor do novo diâmetro final deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if novo_diametro_final >= self.get_diametro_inicial:
-            messagebox.showerror(title='Compilador G-Code', message='O valor do novo diâmetro final não pode ser maior ou igual o diâmetro inicial. Por favor, tente novamente.')
-            return
-        else:
-            self.__diametro_final = novo_diametro_final
-
-    @get_posicao_final.setter
-    def set_posicao_final(self, nova_posicao_final: float):
-
-        if not isinstance(nova_posicao_final, float):
-            raise ValueError ('O valor da posição final deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        
-        if nova_posicao_final <= 0:
-            messagebox.showerror(title='Compilador G-Code', message='A posição final não pode ser igual ou menor que zero. Por favor, tente novamente.')
-            return
-        else:
-            self.__posicao_final = nova_posicao_final
-
-    @get_aproximacao_z.setter
-    def set_aproximacao_z(self, nova_aproximacao: float):
-
-        if not isinstance(nova_aproximacao, float):
-            raise ValueError ('O valor da aproximação em Z deve ser informado como um número decimal (float). Por favor, insira um valor válido.')
-        else:
-            self.__aproximcao_z = nova_aproximacao
-
     def gcode(self):
 
         gcode_text = textwrap.dedent(f'''
