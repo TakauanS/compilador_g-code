@@ -1,9 +1,9 @@
-from src.model.cycles.cycles_parametrizados.cycle_faceamento import Faceamento_Parametrizado
+from src.controller.gcode_generator.cycles_parametrizados.gcode_faceamentop import Gcode_FaceamentoP
 from src.model.assents import Assents
 from src.controller.menu import Menu
 from tkinter import messagebox
 
-class BackFaceamento:
+class FaceamentoP_Manager:
 
     def __init__(self, master):
 
@@ -13,20 +13,20 @@ class BackFaceamento:
 
         # SEÇÃO DE LABELs
 
-        label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
-        label_diametrof = self.__assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
+        self.label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
+        self.label_diametrof = self.__assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
 
-        label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
-        label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
+        self.label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
+        self.label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
 
-        label_espessura = self.__assents.criar_label(text='ESPESSURA', x=500, y=10)
-        label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
+        self.label_espessura = self.__assents.criar_label(text='ESPESSURA', x=500, y=10)
+        self.label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
 
-        label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
-        label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
+        self.label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
+        self.label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
 
-        label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=245)
-        label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=285)
+        self.label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=245)
+        self.label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=285)
 
         self.__assents.criar_linha(x=15, y=95)
         self.__assents.criar_linha(x=15, y=210)
@@ -75,20 +75,9 @@ class BackFaceamento:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    ciclo_faceamento = Faceamento_Parametrizado(diametro_inicial=diametro_inicial, diametro_final=diametro_final, espessura=espessura)
+                    ciclo_faceamento = Gcode_FaceamentoP(diametro_inicial, diametro_final, espessura, rotacao, avanco, passe, referencia, ferramenta, posx, posz)
 
-                    ciclo_faceamento.referencia_trabalho(referencia=referencia)
-                    ciclo_faceamento.ferramenta(tool=ferramenta)
-                    ciclo_faceamento.avanco(advance=avanco)
-                    ciclo_faceamento.rotacao(rpm=rotacao)
-                    ciclo_faceamento.passe(pf=passe)
-
-                    ciclo_faceamento.pos_segurancaX(posx=posx)
-                    ciclo_faceamento.pos_segurancaZ(posz=posz)
-                
                 except Exception as e:
                     print(f' - Erro! {e}')
                 else:
-                    ciclo_faceamento.gcode()
-            else:
-                pass
+                    ciclo_faceamento.gerar_gcode()

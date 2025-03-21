@@ -1,9 +1,9 @@
-from src.model.cycles.cycles_funcionais.cycle_canaisf import Canais_Funcional
+from src.controller.gcode_generator.cycles_funcionais.gcode_canaisf import Gcode_CanaisF
 from src.model.assents import Assents
 from src.controller.menu import Menu
 from tkinter import messagebox
 
-class Back_CanaisF:
+class CanaisF_Manager:
 
     def __init__(self, master):
 
@@ -13,24 +13,24 @@ class Back_CanaisF:
 
         # SEÇÃO DE LABELs
 
-        label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
-        label_diametrof = self.__assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
+        self.label_diametroi = self.__assents.criar_label(text='DIÂMETRO INICIAL', x=15, y=10)
+        self.label_diametrof = self.__assents.criar_label(text='DIÂMETRO FINAL', x=15, y=50)
 
-        label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
-        label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
+        self.label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
+        self.label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
 
-        label_aproximacao = self.__assents.criar_label(text='APROX.Z', x=15, y=210)
+        self.label_aproximacao = self.__assents.criar_label(text='APROX.Z', x=15, y=210)
 
-        label_dist = self.__assents.criar_label(text='DIST.CANAIS', x=500, y=10)
-        label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
+        self.label_dist = self.__assents.criar_label(text='DIST.CANAIS', x=500, y=10)
+        self.label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
 
-        label_posit = self.__assents.criar_label(text='POS.FINAL', x=500, y=50)
-        label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
+        self.label_posit = self.__assents.criar_label(text='POS.FINAL', x=500, y=50)
+        self.label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
 
-        label_passe = self.__assents.criar_label(text='PASSE', x=500, y=210)
+        self.label_passe = self.__assents.criar_label(text='PASSE', x=500, y=210)
 
-        label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=290)
-        label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=330)
+        self.label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=290)
+        self.self.label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=330)
 
         self.__assents.criar_linha(x=15, y=95)
         self.__assents.criar_linha(x=15, y=255)
@@ -84,20 +84,9 @@ class Back_CanaisF:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    ciclo_canal = Canais_Funcional(diametro_inicial=diametro_inicial, diametro_final=diametro_final, distancia_final=dist, posicao_final=posicao, aproximacao_z=aproximacao)
-
-                    ciclo_canal.referencia_trabalho(referencia=referencia)
-                    ciclo_canal.ferramenta(tool=ferramenta)
-                    ciclo_canal.avanco(advance=avanco)
-                    ciclo_canal.rotacao(rpm=rotacao)
-                    ciclo_canal.passe(pf=passe)       
-
-                    ciclo_canal.pos_segurancaX(posx=posx)
-                    ciclo_canal.pos_segurancaZ(posz=posz)
+                    ciclo_canais = Gcode_CanaisF(diametro_inicial, diametro_final, aproximacao, rotacao, posicao, avanco, passe, dist, referencia, ferramenta, posx, posz)
 
                 except Exception as e:
                     print(f' - Error! {e}')
                 else:
-                    ciclo_canal.gcode()
-            else:
-                pass
+                    ciclo_canais.gerar_gcode()

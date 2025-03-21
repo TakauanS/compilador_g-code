@@ -10,35 +10,35 @@ from src.controller.events.events_utils import Utils
 
 # SEÇÃO DE IMPORTAÇÕES DE CLASSES - PARAMETRIZADOS
 
-from src.controller.back_cycles.cycles_parametrizados.back_faceamento import BackFaceamento
-from src.controller.back_cycles.cycles_parametrizados.back_desbaste import BackDesbaste
-from src.controller.back_cycles.cycles_parametrizados.back_furacao import BackFuracao
-from src.controller.back_cycles.cycles_parametrizados.back_canais import BackCanais
+from src.controller.manager_cycles.cycles_parametrizados.faceamentop_manager import FaceamentoP_Manager
+from src.controller.manager_cycles.cycles_parametrizados.desbastep_manager import DesbasteP_Manager
+from src.controller.manager_cycles.cycles_parametrizados.furacaop_manager import FuracaoP_Manager
+from src.controller.manager_cycles.cycles_parametrizados.canaisp_manager import CanaisP_Manager
 
 # SEÇÃO DE IMPORTAÇÕES DE CLASSES - FUNCIONAIS
 
-from src.controller.back_cycles.cycles_funcionais.back_faceamentof import BackFaceamentoF
-from src.controller.back_cycles.cycles_funcionais.back_desbastef import BackDesbasteF
-from src.controller.back_cycles.cycles_funcionais.back_furacaof import BackFuracaoF
-from src.controller.back_cycles.cycles_funcionais.back_canaisf import Back_CanaisF
+from src.controller.manager_cycles.cycles_funcionais.faceamentof_manager import FaceamentoF_Manager
+from src.controller.manager_cycles.cycles_funcionais.desbastef_manager import DesbasteF_Manager
+from src.controller.manager_cycles.cycles_funcionais.furacaof_manager import FuracaoF_Manager
+from src.controller.manager_cycles.cycles_funcionais.canaisf_manager import CanaisF_Manager
 
 class ButtonHandler:
 
     def __init__(self, master):
 
         self.master = master
-        self.assents = Assents(master=self.master)
-        self.utils_cmds = Utils(master=self.master)
+        self.assents = Assents(self.master)
+        self.utils_cmds = Utils(self.master)
         
         self.comandos = {
-            "! compile -c: faceamento (p)": self.back_faceamento,
-            "! compile -c: desbaste (p)": self.back_desbaste,
-            "! compile -c: furação (p)": self.back_furacao,
-            "! compile -c: canais (p)": self.back_canais,
-            "! compile -c: faceamento (f)": self.back_faceamentof,
-            "! compile -c: desbaste (f)": self.back_desbastef,
-            "! compile -c: furação (f)": self.back_furacaof,
-            "! compile -c: canais (f)": self.back_canaisf
+            "! compile -c: faceamento (p)": self.call_faceamentop,
+            "! compile -c: desbaste (p)": self.call_desbastep,
+            "! compile -c: furação (p)": self.call_furacaop,
+            "! compile -c: canais (p)": self.call_canaisp,
+            "! compile -c: faceamento (f)": self.call_faceamentof,
+            "! compile -c: desbaste (f)": self.call_desbastef,
+            "! compile -c: furação (f)": self.call_furacaof,
+            "! compile -c: canais (f)": self.call_canaisf
         }
 
         self.utils = {
@@ -66,46 +66,46 @@ class ButtonHandler:
 
     # SEÇÃO DE MÉTODOS DE CICLOS PARAMETRIZADOs
 
-    def back_faceamento(self):
+    def call_faceamentop(self):
 
         self.utils_cmds.limpar_tela()
-        self.__faceamento = BackFaceamento(master=self.master)
+        self.__faceamentop = FaceamentoP_Manager(self.master)
 
-    def back_desbaste(self):
-
-        self.utils_cmds.limpar_tela()
-        self.__desbaste = BackDesbaste(master=self.master)
-
-    def back_furacao(self):
+    def call_desbastep(self):
 
         self.utils_cmds.limpar_tela()
-        self.__furacao = BackFuracao(master=self.master)
+        self.__desbastep = DesbasteP_Manager(self.master)
 
-    def back_canais(self):
+    def call_furacaop(self):
 
         self.utils_cmds.limpar_tela()
-        self.__canais = BackCanais(master=self.master)
+        self.__furacaop = FuracaoP_Manager(self.master)
+
+    def call_canaisp(self):
+
+        self.utils_cmds.limpar_tela()
+        self.__canaisp = CanaisP_Manager(self.master)
 
     # SEÇÃO DE MÉTODOS DE CICLOS FUNCIONAIs
 
-    def back_faceamentof(self):
+    def call_faceamentof(self):
 
         self.utils_cmds.limpar_tela()
-        self.__faceamentof = BackFaceamentoF(master=self.master)
+        self.__faceamentof = FaceamentoF_Manager(self.master)
 
-    def back_desbastef(self):
-
-        self.utils_cmds.limpar_tela()
-        self.__desbastef = BackDesbasteF(master=self.master)
-
-    def back_furacaof(self):
-        self.utils_cmds.limpar_tela()
-        self.__furacaof = BackFuracaoF(master=self.master)
-
-    def back_canaisf(self):
+    def call_desbastef(self):
 
         self.utils_cmds.limpar_tela()
-        self.__canaisf = Back_CanaisF(master=self.master)
+        self.__desbastef = DesbasteF_Manager(self.master)
+
+    def call_furacaof(self):
+        self.utils_cmds.limpar_tela()
+        self.__furacaof = FuracaoF_Manager(self.master)
+
+    def call_canaisf(self):
+
+        self.utils_cmds.limpar_tela()
+        self.__canaisf = CanaisF_Manager(self.master)
 
     # SEÇÃO DE MÉTODOS UTILs
 

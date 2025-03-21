@@ -6,7 +6,7 @@ class Utils:
     def __init__(self, master):
         
         self.master = master
-        self.assents = Assents(master=self.master)
+        self.assents = Assents(self.master)
 
     def limpar_tela(self):
 
@@ -35,7 +35,7 @@ class Utils:
 - ! compile -list: cycles > Lista apenas os comandos de ciclo de usinagem.
 - ! compile -list: pos > Lista apenas os valores de posicionamentos de segurança.''')
 
-        self.assents.criar_textbox(text=self.text_list)
+        self.assents.criar_textbox(self.text_list)
 
     def list_cycles(self):
 
@@ -51,4 +51,4 @@ class Utils:
 - ! compile -c: furação (f) > Ciclo de furação funcional.
 - ! compile -c: canais (f) > Ciclo de canais funcional.''')
 
-        self.assents.criar_textbox(text=self.text_list_cycles)
+        self.assents.criar_textbox(self.text_list_cycles)

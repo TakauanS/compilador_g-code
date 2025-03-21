@@ -1,9 +1,9 @@
-from src.model.cycles.cycles_funcionais.cycle_desbastef import Desbaste_Funcional
+from src.controller.gcode_generator.cycles_funcionais.gcode_desbastef import Gcode_DesbasteF
 from src.model.assents import Assents
 from src.controller.menu import Menu
 from tkinter import messagebox
 
-class BackDesbasteF:
+class DesbasteF_Manager:
 
     def __init__(self, master):
 
@@ -75,22 +75,9 @@ class BackDesbasteF:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    ciclo_desbaste = Desbaste_Funcional(diametro_inicial=diametro_inicial)
-
-                    ciclo_desbaste.gerar_coordenadas(diametros_finais=diametro_finais, espessuras=espessuras)
-
-                    ciclo_desbaste.referencia_trabalho(referencia=referencia)
-                    ciclo_desbaste.ferramenta(tool=ferramenta)
-                    ciclo_desbaste.avanco(advance=avanco)
-                    ciclo_desbaste.rotacao(rpm=rotacao)
-                    ciclo_desbaste.passe(pf=passe)
-
-                    ciclo_desbaste.pos_segurancaX(posx=posx)
-                    ciclo_desbaste.pos_segurancaZ(posz=posz)
+                    ciclo_desbaste = Gcode_DesbasteF(diametro_inicial, diametro_finais, espessuras, rotacao, avanco, passe, referencia, ferramenta, posx, posz)
 
                 except Exception as e:
                     print(f' - Erro! {e}')
                 else:
-                    ciclo_desbaste.gcode()
-            else:
-                pass
+                    ciclo_desbaste.gerar_gcode()

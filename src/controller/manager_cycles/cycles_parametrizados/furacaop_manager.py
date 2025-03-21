@@ -1,9 +1,9 @@
-from src.model.cycles.cycles_parametrizados.cycle_furacao import Furacao_Parametrizado
+from src.controller.gcode_generator.cycles_parametrizados.gcode_furacaop import Gcode_FuracaoP
 from src.model.assents import Assents
 from src.controller.menu import Menu
 from tkinter import messagebox
 
-class BackFuracao:
+class FuracaoP_Manager:
 
     def __init__(self, master):
 
@@ -13,20 +13,20 @@ class BackFuracao:
 
         # SEÇÃO DE LABELs
 
-        label_posicaox = self.__assents.criar_label(text='POSIÇÃO EM (X)', x=15, y=10)
-        label_posicaoz = self.__assents.criar_label(text='POSIÇÃO EM (Z)', x=15, y=50)
+        self.label_posicaox = self.__assents.criar_label(text='POSIÇÃO EM (X)', x=15, y=10)
+        self.label_posicaoz = self.__assents.criar_label(text='POSIÇÃO EM (Z)', x=15, y=50)
 
-        label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
-        label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
+        self.label_ferramenta = self.__assents.criar_label(text='FERRAMENTA', x=15, y=170)
+        self.label_ref = self.__assents.criar_label(text='REF. DE TRABALHO', x=15, y=130)
 
-        label_espessura = self.__assents.criar_label(text='ESPESSURA', x=500, y=10)
-        label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
+        self.label_espessura = self.__assents.criar_label(text='ESPESSURA', x=500, y=10)
+        self.label_rotacao = self.__assents.criar_label(text='ROTAÇÃO', x=500, y=130)
 
-        label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
-        label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
+        self.label_passe = self.__assents.criar_label(text='PASSE', x=500, y=50)
+        self.label_avanco = self.__assents.criar_label(text='AVANÇO', x=500, y=170)
 
-        label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=245)
-        label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=285)
+        self.label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=245)
+        self.label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=285)
 
         self.__assents.criar_linha(x=15, y=95)
         self.__assents.criar_linha(x=15, y=210)
@@ -75,21 +75,9 @@ class BackFuracao:
                     ferramenta = self.entry_ferramenta.get().upper()
                     referencia = self.entry_ref.get().upper()
 
-                    ciclo_furacao = Furacao_Parametrizado(position_x=posicao_x, position_z=posicao_z, espessura=espessura, passe=passe)
+                    ciclo_furacao = Gcode_FuracaoP(posicao_x, posicao_z, espessura, rotacao, avanco, passe, referencia, ferramenta, posx, posz)
 
-                    ciclo_furacao.referencia_trabalho(referencia=referencia)
-                    ciclo_furacao.ferramenta(tool=ferramenta)
-                    
-                    ciclo_furacao.avanco(advance=avanco)
-                    ciclo_furacao.rotacao(rpm=rotacao)
-                    ciclo_furacao.passe(pf=passe)
-
-                    ciclo_furacao.pos_segurancaX(posx=posx)
-                    ciclo_furacao.pos_segurancaZ(posz=posz)
-                
                 except Exception as e:
                     print(f' - Erro! {e}')
                 else:
-                    ciclo_furacao.gcode()
-            else:
-                pass
+                    ciclo_furacao.gerar_gcode()
