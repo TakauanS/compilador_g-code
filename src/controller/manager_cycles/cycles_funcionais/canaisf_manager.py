@@ -30,7 +30,7 @@ class CanaisF_Manager:
         self.label_passe = self.__assents.criar_label(text='PASSE', x=500, y=210)
 
         self.label_posx = self.__assents.criar_label(text='PS.SEGURANÇA (X)', x=15, y=290)
-        self.self.label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=330)
+        self.label_posz = self.__assents.criar_label(text='PS.SEGURANÇA (Z)', x=15, y=330)
 
         self.__assents.criar_linha(x=15, y=95)
         self.__assents.criar_linha(x=15, y=255)

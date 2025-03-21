@@ -57,7 +57,7 @@ class DesbasteF_Manager:
         if self.entry_diametroi.get() == '' or self.entry_diametrof.get() == '':
             messagebox.showerror(title='Compilador G-Code', message='Os valores de diâmetro inicial e diâmetro finais devem ser informados para garantir o correto funcionamento do ciclo.')   
         else:
-            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro atual é {self.entry_diametroi.get()}. Os diâmetro finais são [{self.entry_diametrof.get()}]. Procede?')
+            validacao_diametro = messagebox.askquestion(title='Compilador G-Code', message=f'O diâmetro atual é {self.entry_diametroi.get()}mm. Os diâmetro finais são [{self.entry_diametrof.get()}]. Procede?')
 
             if validacao_diametro == 'yes':
 

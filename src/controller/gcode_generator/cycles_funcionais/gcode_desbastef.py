@@ -26,6 +26,9 @@ class Gcode_DesbasteF:
             ciclo_desbaste.avanco(self.avanco)
             ciclo_desbaste.passe(self.passe)
 
+            ciclo_desbaste.pos_segurancaX(self.posx)
+            ciclo_desbaste.pos_segurancaZ(self.posz)
+
             ciclo_desbaste.gerar_coordenadas(self.diametro_finais, self.espessuras)
 
         except Exception as e:
