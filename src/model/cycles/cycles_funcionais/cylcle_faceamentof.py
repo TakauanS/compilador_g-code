@@ -1,4 +1,5 @@
 from src.model.cycles.cycle_base import CycleBase
+from tkinter.filedialog import asksaveasfilename
 from tkinter import messagebox
 import textwrap
 
@@ -47,7 +48,7 @@ class Faceamento_Funcional(CycleBase):
     
     def gcode(self):
 
-        gcode_text = textwrap.dedent(f'''
+        self.gcode_text = textwrap.dedent(f'''
         N20 G291
         N30 G21 G40 G90 G95
 
@@ -80,8 +81,11 @@ class Faceamento_Funcional(CycleBase):
         N190 M5
         N200 M30''')
 
-        with open(file='Ciclo de Faceamento (f).txt', mode='w') as file:
-            file.write(gcode_text)
+        arquivo = asksaveasfilename(defaultextension='.txt', filetypes=[('Arquivos de Texto', '*.txt'), ('Todos os Arquivos', '*.*')])
 
-        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de faceamento (f) foi gerado com sucesso e já está disponível no sistema.')
-        print(' - O ciclo de faceamento (f) foi gerado!')
+        if arquivo:
+            with open(arquivo, mode='w') as file:
+                file.write(self.gcode_text)
+
+            messagebox.showinfo(title='Compilador G-Code', message='O ciclo de faceamento (f) foi gerado com sucesso e já está disponível no sistema.')
+            print(' - O ciclo de faceamento (f) foi gerado!')

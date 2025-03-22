@@ -1,5 +1,6 @@
 import textwrap
 from tkinter import messagebox
+from tkinter.filedialog import asksaveasfilename
 from src.model.cycles.cycle_base import CycleBase
 
 class Desbaste_Parametrizado(CycleBase):
@@ -41,7 +42,7 @@ class Desbaste_Parametrizado(CycleBase):
 
     def gcode(self):
 
-        gcode_text = textwrap.dedent(f'''
+        self.gcode_text = textwrap.dedent(f'''
         DEF INT N_PASSES
         DEF INT C_PASSES
 
@@ -120,8 +121,11 @@ class Desbaste_Parametrizado(CycleBase):
         N150 M5
         N160 M30''')
 
-        with open(file='Ciclo de Desbaste (p).txt', mode='w') as file:
-            file.write(gcode_text)
+        arquivo = asksaveasfilename(defaultextension='.txt', filetypes=[('Arquivos de Texto', '*.txt'), ('Todos os Arquivos', '*.*')])
 
-        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de desbaste (p) foi gerado com sucesso e já está disponível no sistema.')
-        print(' - O seu ciclo de desbaste foi gerado!')
+        if arquivo:
+            with open(arquivo, mode='w') as file:
+                file.write(self.gcode_text)
+
+            messagebox.showinfo(title='Compilador G-Code', message='O ciclo de desbaste (p) foi gerado com sucesso e já está disponível no sistema.')
+            print(' - O seu ciclo de desbaste foi gerado!')

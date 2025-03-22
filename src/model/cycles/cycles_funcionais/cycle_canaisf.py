@@ -1,5 +1,6 @@
 import textwrap
 from tkinter import messagebox
+from tkinter.filedialog import asksaveasfilename
 from src.model.cycles.cycle_base import CycleBase
 
 class Canais_Funcional(CycleBase):
@@ -61,7 +62,7 @@ class Canais_Funcional(CycleBase):
 
     def gcode(self):
 
-        gcode_text = textwrap.dedent(f'''
+        self.gcode_text = textwrap.dedent(f'''
         N10 G291
         N20 G21 G40 G90 G95
 
@@ -81,8 +82,11 @@ class Canais_Funcional(CycleBase):
         N110 M5
         N120 M30''')
 
-        with open(file='Ciclo de canais (f).txt', mode='w') as file:
-            file.write(gcode_text)
+        arquivo = asksaveasfilename(defaultextension='.txt', filetypes=[('Arquivos de Texto', '*.txt'), ('Todos os Arquivos', '*.*')])
 
-        messagebox.showinfo(title='Compilador G-Code', message='O ciclo de canais (f) foi gerado com sucesso e já está disponível no sistema.')
-        print(' - O ciclo de canais (f) foi gerado!')
+        if arquivo:
+            with open(arquivo, mode='w') as file:
+                file.write(self.gcode_text)
+                
+            messagebox.showinfo(title='Compilador G-Code', message='O ciclo de canais (f) foi gerado com sucesso e já está disponível no sistema.')
+            print(' - O ciclo de canais (f) foi gerado!')
