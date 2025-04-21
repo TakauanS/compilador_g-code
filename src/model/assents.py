@@ -1,12 +1,13 @@
 from PIL import Image
 import customtkinter as ctk
+from tkinter import LabelFrame
 
 class Assents:
 
     cor1 = '#1C1A1B' # Cor preta para bg_color - Mais Forte
     cor2 = '#333031' # Cor preta para fg_color - Mais fraca
     cor3 = '#737277' # Cor cinza para placeholder
-    cor4 = '#2E53F2' # Cor azul para butões - fg color
+    cor4 = '#1A8AE5' # Cor azul para butões - fg color                      #2E53F2
     cor5 = '#3757A0' # Cor azul para botões - hover color
     cor6 = 'white'   # Cor branca para textos
     cor7 = '#FAEFEB' # Cor branca para input dialog
@@ -19,15 +20,29 @@ class Assents:
 
         self.master = master
 
-    def criar_label(self, text, x, y):
+    def criar_label(self, text, x, y, text_color='white', frame=None):
 
-        self.label = ctk.CTkLabel(master=self.master, text=text, font=('Corbel', 23), text_color='white')
+        if frame is None:
+            frame = self.master
+        
+        self.label = ctk.CTkLabel(master=frame, text=text, font=('Corbel', 23), text_color=text_color, bg_color='#fcf6f2')
         self.label.place(x=x, y=y)
 
-    def criar_entry(self, x, y):
+    def criar_labelframe(self, x, y, width, height, text, frame=None):
 
-        self.entry = ctk.CTkEntry(master=self.master, corner_radius=12, width=200, font=('Consola', 16))
-        self.entry.place(x=x, y=y)
+        if frame is None:
+            frame = self.master
+
+        self.labelframe = LabelFrame(master=frame, width=width, height=height, text=text, font=('Corbel', 14), bg='#fcf6f2')
+        self.labelframe.place(x=x, y=y)
+
+    def criar_entry(self, x, y, border_width=2, frame=None):
+
+        if frame is None:
+            frame = self.master
+
+        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=200, border_width=border_width, bg_color='#fcf6f2', font=('Consola', 16))
+        self.entry.place(x=x, y=y)    
 
         return self.entry
 
@@ -38,16 +53,15 @@ class Assents:
 
     def criar_textbox(self, text):
 
-        self.textbox = ctk.CTkTextbox(master=self.master, 
+        self.textbox = ctk.CTkTextbox(self.master, 
                                                 width=840, 
-                                                    height=380,
-                                                        corner_radius=12,
-                                                            font=('Consolas', 18),
-                                                                text_color=Assents.cor6,  
-                                                                    bg_color=Assents.cor2, 
-                                                                        fg_color=Assents.cor2, 
-                                                                            activate_scrollbars=True)
-        
+                                                height=380,
+                                                corner_radius=12,
+                                                bg_color=Assents.cor2,
+                                                fg_color=Assents.cor2, 
+                                                font=('Consolas', 18),
+                                                text_color=Assents.cor6,                                                 
+                                                activate_scrollbars=True)
         self.textbox.place(x=10, y=10)
 
         self.textbox.insert(index='1.0', text=text)
@@ -66,13 +80,42 @@ class Assents:
 
         self.button = ctk.CTkButton(master=self.master,
                                     height=35,
-                                        text=text,
-                                        image=image, 
-                                            command=command, 
-                                                corner_radius=12,   
-                                                    bg_color=Assents.cor2, 
-                                                        fg_color=Assents.cor4, 
-                                                            hover_color=Assents.cor5,
-                                                                font=('Arial', 15, 'bold'))
-        self.button.place(x=x, y=y)
+                                    text=text,
+                                    image=image, 
+                                    command=command, 
+                                    corner_radius=12,   
+                                    bg_color=Assents.cor2, 
+                                    fg_color=Assents.cor4, 
+                                    hover_color=Assents.cor5,
+                                    font=('Arial', 15, 'bold'))
+        self.button.place(x=x, y=y) 
         return self.button
+    
+    def criar_combobox(self, x, y, frame=None, width=200, corner_radius=10, values=(), justify='center'):
+
+        if not frame and values:
+            frame = self.master
+            self.combobox = ctk.CTkComboBox(frame, 
+                                            width=width,
+                                            values=values, 
+                                            border_width=1,
+                                            justify=justify,
+                                            bg_color='#fcf6f2',
+                                            font=('Arial', 16),
+                                            button_color=Assents.cor4,
+                                            corner_radius=corner_radius,
+                                            button_hover_color=Assents.cor5)
+            self.combobox.place(x=x, y=y)
+
+        else:
+            self.combobox = ctk.CTkComboBox(frame, 
+                                            width=width, 
+                                            values=values,
+                                            border_width=1, 
+                                            justify=justify,
+                                            bg_color='#fcf6f2',
+                                            font=('Arial', 16), 
+                                            button_color=Assents.cor4,
+                                            corner_radius=corner_radius, 
+                                            button_hover_color=Assents.cor5)
+            self.combobox.place(x=x, y=y)
