@@ -25,7 +25,7 @@ class Assents:
         if frame is None:
             frame = self.master
         
-        self.label = ctk.CTkLabel(master=frame, text=text, font=('Corbel', 23), text_color=text_color, bg_color='#fcf6f2')
+        self.label = ctk.CTkLabel(master=frame, text=text, font=('Corbel', 20), text_color=text_color, bg_color='#fcf6f2')
         self.label.place(x=x, y=y)
 
     def criar_labelframe(self, x, y, width, height, text, frame=None):
@@ -33,15 +33,15 @@ class Assents:
         if frame is None:
             frame = self.master
 
-        self.labelframe = LabelFrame(master=frame, width=width, height=height, text=text, font=('Corbel', 14), bg='#fcf6f2')
+        self.labelframe = LabelFrame(master=frame, width=width, height=height, text=text, font=('Corbel', 13), bg='#fcf6f2')
         self.labelframe.place(x=x, y=y)
 
-    def criar_entry(self, x, y, border_width=2, frame=None):
+    def criar_entry(self, x, y, width=200, border_width=2, frame=None):
 
         if frame is None:
             frame = self.master
 
-        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=200, border_width=border_width, bg_color='#fcf6f2', font=('Consola', 16))
+        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=width, border_width=border_width, bg_color='#fcf6f2', font=('Consola', 16))
         self.entry.place(x=x, y=y)    
 
         return self.entry
@@ -93,29 +93,32 @@ class Assents:
     
     def criar_combobox(self, x, y, frame=None, width=200, corner_radius=10, values=(), justify='center'):
 
-        if not frame and values:
+        if frame is None:
             frame = self.master
-            self.combobox = ctk.CTkComboBox(frame, 
-                                            width=width,
-                                            values=values, 
-                                            border_width=1,
-                                            justify=justify,
-                                            bg_color='#fcf6f2',
-                                            font=('Arial', 16),
-                                            button_color=Assents.cor4,
-                                            corner_radius=corner_radius,
-                                            button_hover_color=Assents.cor5)
-            self.combobox.place(x=x, y=y)
 
-        else:
-            self.combobox = ctk.CTkComboBox(frame, 
-                                            width=width, 
-                                            values=values,
-                                            border_width=1, 
-                                            justify=justify,
-                                            bg_color='#fcf6f2',
-                                            font=('Arial', 16), 
-                                            button_color=Assents.cor4,
-                                            corner_radius=corner_radius, 
-                                            button_hover_color=Assents.cor5)
-            self.combobox.place(x=x, y=y)
+        self.combobox = ctk.CTkComboBox(frame, 
+                                width=width,
+                                values=values, 
+                                border_width=1,
+                                justify=justify,
+                                state='readonly',
+                                bg_color='#fcf6f2',
+                                font=('Arial', 16),
+                                button_color=Assents.cor4,
+                                corner_radius=corner_radius,
+                                button_hover_color=Assents.cor5)
+        self.combobox.place(x=x, y=y)
+
+    def criar_radionbutton(self, x, y, text, value, variable, width=100, frame=None):
+
+        if frame is None:
+            frame = self.master
+
+        self.rad_readm2 = ctk.CTkRadioButton(frame,
+                                             width=width, 
+                                             text=text,
+                                             value=value,  
+                                             variable=variable,
+                                             bg_color='#fcf6f2', 
+                                             border_width_unchecked=1)                                     
+        self.rad_readm2.place(x=x, y=y)
