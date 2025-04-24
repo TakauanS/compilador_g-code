@@ -41,7 +41,7 @@ class Assents:
         if frame is None:
             frame = self.master
 
-        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=width, border_width=border_width, bg_color='#fcf6f2', font=('Consola', 16))
+        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=width, border_width=border_width, justify='center', bg_color='#fcf6f2', font=('Consola', 16))
         self.entry.place(x=x, y=y)    
 
         return self.entry
