@@ -1,5 +1,5 @@
-from src.view.layout import Interface  
+from src.view.main_screen import MainScreen  
 
 if __name__ == "__main__":
-    app = Interface() 
+    app = MainScreen() 
     app.mainloop()  

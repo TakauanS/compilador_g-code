@@ -1,0 +1,144 @@
+import customtkinter as ctk
+from src.model.assents import Assents
+from tkinter import filedialog, END
+
+class SetupManager(ctk.CTk):
+
+    teste_color = '#e3e2e1'
+
+    def __init__(self):
+        super().__init__()
+
+        self.__assents = Assents(self)
+
+        self.geometry('900x500')
+        self.title('Compilador G-Code')
+        self.config(bg=SetupManager.teste_color)
+        self.resizable(False, False)
+
+        self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
+
+        # SEÇÃO DE STRINGVARs
+
+        self.strv_read = ctk.StringVar(value='OP') # StringVar para o radiobutton (Criar Readme)
+        self.strv_save = ctk.StringVar(value='OP') # StringVar para o radiobutton (Salvar Pen)
+        self.strv_prin = ctk.StringVar(value='OP') # StringVar para o radiobutton (Print User)
+
+        # SEÇÃO DE FRAMEs e LABELFRAMEs
+
+        self.frame = ctk.CTkFrame(self, corner_radius=15, width=870, height=420, fg_color='#fcf6f2', bg_color=SetupManager.teste_color).place(x=15, y=60)
+
+        self.frame_file = self.__assents.criar_labelframe(30, 215, 400, 210, 'Dados de Programa', self.frame)
+        self.frame_user = self.__assents.criar_labelframe(30, 65, 400, 145, 'Dados do Usuário', self.frame)
+
+        self.frame_maq = self.__assents.criar_labelframe(440, 65, 430, 145, 'Dados da Máquina', self.frame)
+        self.frame_pos = self.__assents.criar_labelframe(440, 215, 430, 105, 'Dados de Posição de Segurança', self.frame)
+
+        self.frame_pdr = self.__assents.criar_labelframe(440, 320, 430, 105, 'Dados de Corte Padrão', self.frame)
+
+        # SEÇÃO DE LABELs
+
+        self.label_user = self.__assents.criar_label('PROGRAMADOR:', 37, 94, 'black', self.frame_user)
+        self.label_empr = self.__assents.criar_label('EMPRESA (OP):', 37, 130, 'black', self.frame)
+        self.label_mode = self.__assents.criar_label('MODELO MÁQ:', 37, 166, 'black', self.frame)
+
+        self.label_exte = self.__assents.criar_label('EXTENSÃO FILE:', 37, 245, 'black', self.frame_file)
+        self.label_cont = self.__assents.criar_label('CONT. DE PASS:', 37, 281, 'black', self.frame_file)
+        self.label_read = self.__assents.criar_label('CRIAR README:', 37, 353, 'black', self.frame_file)
+        self.label_savp = self.__assents.criar_label('SALVAR EM PEN:', 37, 386, 'black', self.frame_file)
+        self.label_styl = self.__assents.criar_label('SINTAXE GCODE:', 37, 318, 'black', self.frame_file)
+
+        self.label_supo = self.__assents.criar_label('TIPO DE SUPORTE:', 447, 94, 'black', self.frame_maq)
+        self.label_refe = self.__assents.criar_label('WORK OFFSET:', 447, 166, 'black', self.frame_maq)
+        self.label_sent = self.__assents.criar_label('SENTIDO DE ROT:', 447, 130, 'black', self.frame_maq)
+
+        self.label_posx = self.__assents.criar_label('POSIÇÃO EM X:', 447, 245, 'black', self.frame_pos)
+        self.label_posz = self.__assents.criar_label('POSIÇÃO EM Z:', 447, 281, 'black', self.frame_pos)
+
+        self.label_rpmn = self.__assents.criar_label('ROTAÇÕES P/MIN:', 447, 350, 'black', self.frame_pdr)
+        self.label_avan = self.__assents.criar_label('AVANÇO DE CORT:', 447, 386, 'black', self.frame_pdr)
+
+        # SEÇÃO DE COMBOBOXs
+
+        self.com_modelo = self.__assents.criar_combobox(200, 168, self.frame, 220, values=('Siemens 828D', 'Siemens 810D', 'Siemens 840Di'))
+        self.com_extens = self.__assents.criar_combobox(200, 245, self.frame, 220, values=('.txt', '.nc', '.mpf', '.spf'))
+        self.com_contad = self.__assents.criar_combobox(200, 281, self.frame, 220, values=('Sim', 'Não'))
+        self.com_estilo = self.__assents.criar_combobox(200, 318, self.frame, 220, values=('G0 - (Rápido)', 'G00 - (Detalhado)'))
+
+        self.com_cabeco = self.__assents.criar_combobox(625, 94, self.frame, 235, values=('Suporte Traseiro', 'Suporte Dianteiro'))
+        self.com_sentid = self.__assents.criar_combobox(625, 130, self.frame, 235, values=('Horário', 'Anti-Horário'))
+        self.com_offset = self.__assents.criar_combobox(625, 166, self.frame, 235, values=('G54', 'G55', 'G56', 'G57', 'G58', 'G59'))
+
+        # SEÇÃO DE RADIOBUTTONs
+
+        self.rad_readm1 = self.__assents.criar_radionbutton(200, 358, 'SIM', 'SIM', self.strv_read, frame=self.frame_file)
+        self.rad_readm2 = self.__assents.criar_radionbutton(278, 358, 'NÃO', 'NÃO', self.strv_read, width=60, frame=self.frame_file)
+        self.rad_readm3 = self.__assents.criar_radionbutton(355, 358, 'OP', 'OP', self.strv_read, width=60, frame=self.frame_file)
+
+        self.rad_savep1 = self.__assents.criar_radionbutton(200, 391, 'SIM', 'SIM', self.strv_save, frame=self.frame_file)
+        self.rad_savep2 = self.__assents.criar_radionbutton(278, 391, 'NÃO', 'NÃO', self.strv_save, width=60, frame=self.frame_file)
+        self.rad_savep3 = self.__assents.criar_radionbutton(355, 391, 'OP', 'OP', self.strv_save, width=60, frame=self.frame_file)
+
+        # SEÇÃO DE ENTRYs
+
+        self.entry_user = self.__assents.criar_entry(200, 94, 220, 1, self.frame_user)
+        self.entry_emp = self.__assents.criar_entry(200, 130, 220, 1, self.frame)
+
+        self.entry_posx = self.__assents.criar_entry(625, 245, 235, 1, self.frame_pos)
+        self.entry_posz = self.__assents.criar_entry(625, 281, 235, 1, self.frame_pos)
+
+        self.entry_rpmn = self.__assents.criar_entry(625, 350, 235, 1, self.frame_pdr)
+        self.entry_avan = self.__assents.criar_entry(625, 386, 235, 1, self.frame_pdr)
+
+        self.entry_prc = ctk.CTkEntry(self,
+                                  height=35, 
+                                  width=805, 
+                                  border_width=0, 
+                                  corner_radius=12, 
+                                  font=('Corbel', 17),  
+                                  bg_color=SetupManager.teste_color, 
+                                  placeholder_text='Escolha a pasta para salvar os arquivos NC...')
+        
+        self.entry_prc.place(x=15, y=10)
+
+        # SEÇÃO DE BUTTONs
+
+        self.but_direc = ctk.CTkButton(self,
+                                     height=35, 
+                                     width=50,
+                                     text='',  
+                                     corner_radius=13,
+                                     compound='right', 
+                                     font=('Arial', 16, 'bold'),
+                                     command=self.open_directory, 
+                                     fg_color=self.__assents.cor4, 
+                                     image=self.__assents.img_pasta,   
+                                     bg_color=SetupManager.teste_color, 
+                                     hover_color=self.__assents.cor5).place(x=830, y=10)
+        
+        self.but_savec = ctk.CTkButton(self.frame,
+                                     height=35, 
+                                     width=110,
+                                     text='SAVE',
+                                     compound='right',  
+                                     corner_radius=13, 
+                                     font=('Arial', 15, 'bold'),
+                                     image=self.__assents.img_up,
+                                     command=self.open_directory, 
+                                     fg_color=self.__assents.cor4,    
+                                     bg_color='#fcf6f2', 
+                                     hover_color=self.__assents.cor5).place(x=765, y=435)
+        
+    # Método para escolher diretório de arquivos NC
+
+    def open_directory(self):
+
+        self.directory = filedialog.askdirectory(title='Selecione a sua pasta NC')
+        self.entry_prc.delete(0, END)
+        self.entry_prc.insert(0, self.directory)
+
+        print(f' - Pasta destina para os arquivos G-code: {self.directory}')
+
+if __name__ == "__main__":
+    app = SetupManager()
+    app.mainloop()
