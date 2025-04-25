@@ -48,7 +48,7 @@ class SetupManager(ctk.CTk):
         self.label_savp = self.__assents.criar_label('SALVAR EM PEN:', 37, 386, 'black', self.frame_file)
         self.label_styl = self.__assents.criar_label('SINTAXE GCODE:', 37, 318, 'black', self.frame_file)
 
-        self.label_supo = self.__assents.criar_label('TIPO DE SUPORTE:', 447, 94, 'black', self.frame_maq)
+        self.label_torr = self.__assents.criar_label('TIPO DE TORRE:', 447, 94, 'black', self.frame_maq)
         self.label_refe = self.__assents.criar_label('WORK OFFSET:', 447, 166, 'black', self.frame_maq)
         self.label_sent = self.__assents.criar_label('SENTIDO DE ROT:', 447, 130, 'black', self.frame_maq)
 
@@ -65,7 +65,7 @@ class SetupManager(ctk.CTk):
         self.com_contad = self.__assents.criar_combobox(200, 281, self.frame, 220, values=('Sim', 'Não'))
         self.com_estilo = self.__assents.criar_combobox(200, 318, self.frame, 220, values=('G0 - (Rápido)', 'G00 - (Detalhado)'))
 
-        self.com_cabeco = self.__assents.criar_combobox(625, 94, self.frame, 235, values=('Suporte Traseiro', 'Suporte Dianteiro'))
+        self.com_torres = self.__assents.criar_combobox(625, 94, self.frame, 235, values=('Sistema Fixo', 'Sistema Gang'))
         self.com_sentid = self.__assents.criar_combobox(625, 130, self.frame, 235, values=('Horário', 'Anti-Horário'))
         self.com_offset = self.__assents.criar_combobox(625, 166, self.frame, 235, values=('G54', 'G55', 'G56', 'G57', 'G58', 'G59'))
 
