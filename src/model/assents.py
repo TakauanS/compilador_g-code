@@ -110,17 +110,18 @@ class Assents:
                                 corner_radius=corner_radius,
                                 button_hover_color=Assents.cor5)
         self.combobox.place(x=x, y=y)
+        return self.combobox
 
     def criar_radionbutton(self, x, y, text, value, variable, width=100, frame=None):
 
         if frame is None:
             frame = self.master
 
-        self.rad_readm2 = ctk.CTkRadioButton(frame,
+        self.radiobutton = ctk.CTkRadioButton(frame,
                                              width=width, 
                                              text=text,
                                              value=value,  
                                              variable=variable,
                                              bg_color='#fcf6f2', 
                                              border_width_unchecked=1)                                     
-        self.rad_readm2.place(x=x, y=y)
+        self.radiobutton.place(x=x, y=y)
