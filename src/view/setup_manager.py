@@ -1,6 +1,7 @@
+import json
 import customtkinter as ctk
 from src.model.assents import Assents
-from tkinter import filedialog, END
+from tkinter import filedialog, messagebox, END
 
 class SetupManager(ctk.CTk):
 
@@ -22,7 +23,6 @@ class SetupManager(ctk.CTk):
 
         self.strv_read = ctk.StringVar(value='OP') # StringVar para o radiobutton (Criar Readme)
         self.strv_save = ctk.StringVar(value='OP') # StringVar para o radiobutton (Salvar Pen)
-        self.strv_prin = ctk.StringVar(value='OP') # StringVar para o radiobutton (Print User)
 
         # SEÇÃO DE FRAMEs e LABELFRAMEs
 
@@ -81,8 +81,8 @@ class SetupManager(ctk.CTk):
 
         # SEÇÃO DE ENTRYs
 
+        self.entry_empr = self.__assents.criar_entry(200, 130, 220, 1, self.frame_user)
         self.entry_user = self.__assents.criar_entry(200, 94, 220, 1, self.frame_user)
-        self.entry_emp = self.__assents.criar_entry(200, 130, 220, 1, self.frame)
 
         self.entry_posx = self.__assents.criar_entry(625, 245, 235, 1, self.frame_pos)
         self.entry_posz = self.__assents.criar_entry(625, 281, 235, 1, self.frame_pos)
@@ -124,12 +124,12 @@ class SetupManager(ctk.CTk):
                                      corner_radius=13, 
                                      font=('Arial', 15, 'bold'),
                                      image=self.__assents.img_up,
-                                     command=self.open_directory, 
+                                     command=self.capture_values, 
                                      fg_color=self.__assents.cor4,    
                                      bg_color='#fcf6f2', 
                                      hover_color=self.__assents.cor5).place(x=765, y=435)
-        
-    # Método para escolher diretório de arquivos NC
+
+    # SEÇÃO DE MÉTODOS (COMANDs) DOS BUTTONs
 
     def open_directory(self):
 
@@ -138,6 +138,53 @@ class SetupManager(ctk.CTk):
         self.entry_prc.insert(0, self.directory)
 
         print(f' - Pasta destina para os arquivos G-code: {self.directory}')
+
+    def capture_values(self):
+
+        self.dic_user = {
+            'usuário': self.entry_user.get(),
+            'empresa': self.entry_empr.get(),
+            'modelo': self.com_modelo.get()
+        }
+
+        self.dic_file = {
+            'diretório': self.entry_prc.get(),
+            'extensão': self.com_extens.get(),
+            'contador': self.com_contad.get(),
+            'estilo': self.com_estilo.get(),
+            'readme': self.strv_read.get(),
+            'save_p': self.strv_save.get(),
+        }
+
+        self.dic_mach = {
+            'sentido_rotação': self.com_sentid.get(),
+            'estilo_torre': self.com_torres.get(),
+            'offset': self.com_offset.get()
+        }
+
+        self.dic_padr = {
+            'posx': self.entry_posx.get(),
+            'posz': self.entry_posz.get(),
+            'rpm': self.entry_rpmn.get(),
+            'ava': self.entry_avan.get()
+        }
+
+        if '' in self.dic_user.values() or '' in self.dic_file.values() or '' in self.dic_mach.values() or '' in self.dic_padr:
+            messagebox.showerror('Compilador G-Code', 'Um ou mais campos estão vazios, preencha todos os campos para prosseguir com a operação.')
+        else:
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_usuario.json', 'w', encoding='utf-8') as arquivo:
+                json.dump(self.dic_user, arquivo, indent=4, ensure_ascii=False)
+
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_programa.json', 'w', encoding='utf-8') as arquivo:
+                json.dump(self.dic_file, arquivo, indent=4, ensure_ascii=False)
+
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_maquina.json', 'w', encoding='utf-8') as arquivo:
+                json.dump(self.dic_mach, arquivo, indent=4, ensure_ascii=False)
+
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_padrao.json', 'w', encoding='utf-8') as arquivo:
+                json.dump(self.dic_padr, arquivo, indent=4, ensure_ascii=False)
+
+            messagebox.showinfo('Compilador G-Code', 'Os dados foram compilados e armazenados com sucesso no sistema')
 
 if __name__ == "__main__":
     app = SetupManager()
