@@ -5,7 +5,7 @@ from tkinter import filedialog, messagebox, END
 
 class SetupManager(ctk.CTk):
 
-    teste_color = '#e3e2e1'
+    cor1 = '#E3E2E1' # Cor branca de FG-COLOR
 
     def __init__(self):
         super().__init__()
@@ -13,8 +13,8 @@ class SetupManager(ctk.CTk):
         self.__assents = Assents(self)
 
         self.geometry('900x500')
-        self.title('Compilador G-Code')
-        self.config(bg=SetupManager.teste_color)
+        self.title('Setup Compilador G-Code')
+        self.config(bg=SetupManager.cor1)
         self.resizable(False, False)
 
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
@@ -26,7 +26,7 @@ class SetupManager(ctk.CTk):
 
         # SEÇÃO DE FRAMEs e LABELFRAMEs
 
-        self.frame = ctk.CTkFrame(self, corner_radius=15, width=870, height=420, fg_color='#fcf6f2', bg_color=SetupManager.teste_color).place(x=15, y=60)
+        self.frame = ctk.CTkFrame(self, corner_radius=15, width=870, height=420, fg_color='#fcf6f2', bg_color=SetupManager.cor1).place(x=15, y=60)
 
         self.frame_file = self.__assents.criar_labelframe(30, 215, 400, 210, 'Dados de Programa', self.frame)
         self.frame_user = self.__assents.criar_labelframe(30, 65, 400, 145, 'Dados do Usuário', self.frame)
@@ -96,7 +96,7 @@ class SetupManager(ctk.CTk):
                                   border_width=0, 
                                   corner_radius=12, 
                                   font=('Corbel', 17),  
-                                  bg_color=SetupManager.teste_color, 
+                                  bg_color=SetupManager.cor1, 
                                   placeholder_text='Escolha a pasta para salvar os arquivos NC...')
         
         self.entry_prc.place(x=15, y=10)
@@ -113,7 +113,7 @@ class SetupManager(ctk.CTk):
                                      command=self.open_directory, 
                                      fg_color=self.__assents.cor4, 
                                      image=self.__assents.img_pasta,   
-                                     bg_color=SetupManager.teste_color, 
+                                     bg_color=SetupManager.cor1, 
                                      hover_color=self.__assents.cor5).place(x=830, y=10)
         
         self.but_savec = ctk.CTkButton(self.frame,

@@ -32,7 +32,7 @@ class System_Initializer(ctk.CTk):
         self.frame_later = ctk.CTkFrame(self, border_width=1, width=320, height=550, corner_radius=0)
         self.frame_later.place(x=0, y=0)
 
-        self.frame_rodap = ctk.CTkFrame(self, fg_color=System_Initializer.teste, border_width=1, width=900, height=40, corner_radius=0)
+        self.frame_rodap = ctk.CTkFrame(self, fg_color=System_Initializer.cor1, border_width=1, width=900, height=40, corner_radius=0)
         self.frame_rodap.place(x=0, y=460)
 
         # SEÇÃO DE BUTTONs
