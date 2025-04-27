@@ -7,7 +7,7 @@ class Assents:
     cor1 = '#1C1A1B' # Cor preta para bg_color - Mais Forte
     cor2 = '#333031' # Cor preta para fg_color - Mais fraca
     cor3 = '#737277' # Cor cinza para placeholder
-    cor4 = '#1A8AE5' # Cor azul para butões - fg color                      #2E53F2
+    cor4 = '#1A8AE5' # Cor azul para butões - fg color     
     cor5 = '#3757A0' # Cor azul para botões - hover color
     cor6 = 'white'   # Cor branca para textos
     cor7 = '#FAEFEB' # Cor branca para input dialog
@@ -23,12 +23,12 @@ class Assents:
 
         self.master = master
 
-    def criar_label(self, text, x, y, text_color='white', frame=None):
+    def criar_label(self, text, x, y, bg_color='#FCF6F2', fg_color='#F2F1F0', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
 
         if frame is None:
             frame = self.master
         
-        self.label = ctk.CTkLabel(master=frame, text=text, font=('Corbel', 20), text_color=text_color, bg_color='#fcf6f2')
+        self.label = ctk.CTkLabel(master=frame, text=text, font=font, fg_color=fg_color, text_color=text_color, bg_color=bg_color)
         self.label.place(x=x, y=y)
 
     def criar_labelframe(self, x, y, width, height, text, frame=None):
