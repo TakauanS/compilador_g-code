@@ -4,8 +4,7 @@ from src.view.setup_manager import SetupManager
 
 class System_Initializer(ctk.CTk):
 
-    teste_color = '#f2f1f0'
-    teste = '#E5E5E5'
+    cor1 = '#F2F1F0' # Cor cinza de FG-COLOR
 
     def __init__(self):
         super().__init__()
@@ -15,16 +14,16 @@ class System_Initializer(ctk.CTk):
         self.title('Instalação do Compilador G-Code 1.0')
         self.geometry('900x500')
         self.resizable(False, False)
-        self.config(bg=System_Initializer.teste_color)
+        self.config(bg=System_Initializer.cor1)
 
         # SEÇÃO DE COMMANDs DOS BUTTONs
 
-        def quit():
+        def quit_seup():
             self.quit()
 
         def call_setup():
 
-            quit()
+            self.destroy()
             self.setup = SetupManager()
             self.setup.mainloop()
 
@@ -38,71 +37,41 @@ class System_Initializer(ctk.CTk):
 
         # SEÇÃO DE BUTTONs
 
-        self.but_avancar = ctk.CTkButton(self.frame_rodap, command=call_setup, fg_color='#3294E3', width=100, corner_radius=5, text='AVANÇAR', font=('Arial', 14, 'bold'))
+        self.but_avancar = ctk.CTkButton(self.frame_rodap,
+                                         text='AVANÇAR', 
+                                         command=call_setup,
+                                         font=('Arial', 14, 'bold'), 
+                                         fg_color=self.assents.cor4, 
+                                         width=100, corner_radius=5)
         self.but_avancar.place(x=790, y=6)
 
-        self.but_cancelar = ctk.CTkButton(self.frame_rodap, command=quit, fg_color='#3294E3', width=100, corner_radius=5, text='CANCELAR', font=('Arial', 14, 'bold'))
+        self.but_cancelar = ctk.CTkButton(self.frame_rodap,
+                                          width=100,
+                                          text='CANCELAR',  
+                                          command=quit_seup,
+                                          font=('Arial', 14, 'bold'), 
+                                          fg_color=self.assents.cor4, 
+                                          corner_radius=5)
         self.but_cancelar.place(x=680, y=6)
 
         # SEÇÃO DE LABELs
 
-        self.label_img = ctk.CTkLabel(self.frame_later, text='', image=self.assents.img_ban)
+        self.label_img = ctk.CTkLabel(self.frame_later, text='', image=self.assents.img_ban) # Label que exibe a imagem do banner na lateral
         self.label_img.place(x=0, y=0)
 
-        self.label_title = ctk.CTkLabel(self, 
-                                        fg_color=System_Initializer.teste_color, 
-                                        text='Bem-Vindo ao Compilador G-Code', 
-                                        font=('Corbel', 26, 'bold')).place(x=340, y=15)
-        
-        self.label_title2 = ctk.CTkLabel(self, fg_color=System_Initializer.teste_color, 
-                                         text='Seja muito bem-vindo ao seu novo ambiente de programação CNC!', 
-                                         font=('Corbel', 18)).place(x=340, y=55)
+        self.label_title = self.assents.criar_label('Bem-Vindo ao Compilador G-Code', 340, 15, text_color='black', font=('Corbel', 26, 'bold'))
+        self.label_title2 = self.assents.criar_label('Seja muito bem-vindo ao seu novo ambiente de programação CNC!', 340, 55, text_color='black', font=('Corbel', 18, 'normal')) 
 
-        self.label_trecho1 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text=f'O Compilador G-code era de foi desenvolvido para tornar o seu trabalho', 
-                                          font=('Corbel', 18)).place(x=340, y=95)
+        self.label_trecho1 = self.assents.criar_label('O Compilador G-code era de foi desenvolvido para tornar o seu trabalho', 340, 95, text_color='black', font=('Corbel', 18, 'normal'))
+
+        self.label_trecho2 = self.assents.criar_label('mais rápido, preciso e eficiente.', 340, 120, text_color='black', font=('Corbel', 18))
+        self.label_trecho3 = self.assents.criar_label('Aqui, você pode escrever, compilar e simular comandos G-code com total', 340, 155, text_color='black', font=('Corbel', 18))
         
-        self.label_trecho2 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='mais rápido, preciso e eficiente.', 
-                                          font=('Corbel', 18)).place(x=340, y=120)
-        
-        self.label_trecho3 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='Aqui, você pode escrever, compilar e simular comandos G-code com total', 
-                                          font=('Corbel', 18)).place(x=340, y=155)
-        
-        self.label_trecho4 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='controle sobre seus projetos.', 
-                                          font=('Corbel', 18)).place(x=340, y=180)
-        
-        self.label_trecho5 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='💡 Recursos principais:', 
-                                          font=('Corbel', 18)).place(x=340, y=220)
-        
-        self.label_trecho6 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='• Interface intuitiva.', 
-                                          font=('Corbel', 18)).place(x=340, y=260)
-        
-        self.label_trecho7 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='• Suporte a múltiplas máquinas CNC.', 
-                                          font=('Corbel', 18)).place(x=340, y=285)
-    
-        self.label_trecho8 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='• Geração otimizada de trajetórias.', 
-                                          font=('Corbel', 18)).place(x=340, y=310)
-        self.label_trecho9 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='• Geração otimizada de trajetórias.', 
-                                          font=('Corbel', 18)).place(x=340, y=310)
-        
-        self.label_trecho10 = ctk.CTkLabel(self, 
-                                          fg_color=System_Initializer.teste_color, 
-                                          text='Vamos começar a programar?', 
-                                          font=('Corbel', 22, 'bold')).place(x=340, y=360)
+        self.label_trecho4 = self.assents.criar_label('controle sobre seus projetos.', 340, 180, text_color='black', font=('Corbel', 18))    
+        self.label_trecho5 = self.assents.criar_label('💡 Recursos principais:', 340, 220, text_color='black', font=('Corbel', 18))  
+              
+        self.label_trecho6 = self.assents.criar_label('• Interface intuitiva.', 340, 260, text_color='black', font=('Corbel', 18))        
+        self.label_trecho7 = self.assents.criar_label('• Suporte a múltiplas máquinas CNC.', 340, 310, text_color='black', font=('Corbel', 18))        
+         
+        self.label_trecho8 = self.assents.criar_label('• Geração otimizada de trajetórias.', 340, 285, text_color='black', font=('Corbel', 18))        
+        self.label_trecho9 = self.assents.criar_label('Vamos começar a programar?', 340, 360, text_color='black', font=('Corbel', 22, 'bold'))
