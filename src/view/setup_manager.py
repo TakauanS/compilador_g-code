@@ -6,6 +6,7 @@ from tkinter import filedialog, messagebox, END
 class SetupManager(ctk.CTk):
 
     cor1 = '#E3E2E1' # Cor branca de FG-COLOR
+    cor2 = '#FCF6F2' # Cor branca de FG-COLOR para textos
 
     def __init__(self):
         super().__init__()
@@ -26,7 +27,7 @@ class SetupManager(ctk.CTk):
 
         # SEÇÃO DE FRAMEs e LABELFRAMEs
 
-        self.frame = ctk.CTkFrame(self, corner_radius=15, width=870, height=420, fg_color='#fcf6f2', bg_color=SetupManager.cor1).place(x=15, y=60)
+        self.frame = ctk.CTkFrame(self, corner_radius=15, width=870, height=420, fg_color=SetupManager.cor2, bg_color=SetupManager.cor1).place(x=15, y=60)
 
         self.frame_file = self.__assents.criar_labelframe(30, 215, 400, 210, 'Dados de Programa', self.frame)
         self.frame_user = self.__assents.criar_labelframe(30, 65, 400, 145, 'Dados do Usuário', self.frame)
@@ -38,25 +39,25 @@ class SetupManager(ctk.CTk):
 
         # SEÇÃO DE LABELs
 
-        self.label_user = self.__assents.criar_label('PROGRAMADOR:', 37, 94, 'black', self.frame_user)
-        self.label_empr = self.__assents.criar_label('EMPRESA (OP):', 37, 130, 'black', self.frame)
-        self.label_mode = self.__assents.criar_label('MODELO MÁQ:', 37, 166, 'black', self.frame)
+        self.label_user = self.__assents.criar_label('PROGRAMADOR:', 37, 94, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_user)
+        self.label_empr = self.__assents.criar_label('EMPRESA (OP):', 37, 130, fg_color=SetupManager.cor2, text_color='black', frame=self.frame)
+        self.label_mode = self.__assents.criar_label('MODELO MÁQ:', 37, 166, fg_color=SetupManager.cor2, text_color='black', frame=self.frame)
 
-        self.label_exte = self.__assents.criar_label('EXTENSÃO FILE:', 37, 245, 'black', self.frame_file)
-        self.label_cont = self.__assents.criar_label('CONT. DE PASS:', 37, 281, 'black', self.frame_file)
-        self.label_read = self.__assents.criar_label('CRIAR README:', 37, 353, 'black', self.frame_file)
-        self.label_savp = self.__assents.criar_label('SALVAR EM PEN:', 37, 386, 'black', self.frame_file)
-        self.label_styl = self.__assents.criar_label('SINTAXE GCODE:', 37, 318, 'black', self.frame_file)
+        self.label_exte = self.__assents.criar_label('EXTENSÃO FILE:', 37, 245, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_cont = self.__assents.criar_label('CONT. DE PASS:', 37, 281, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_read = self.__assents.criar_label('CRIAR README:', 37, 353, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_savp = self.__assents.criar_label('SALVAR EM PEN:', 37, 386, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_styl = self.__assents.criar_label('SINTAXE GCODE:', 37, 318, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
 
-        self.label_torr = self.__assents.criar_label('TIPO DE TORRE:', 447, 94, 'black', self.frame_maq)
-        self.label_refe = self.__assents.criar_label('WORK OFFSET:', 447, 166, 'black', self.frame_maq)
-        self.label_sent = self.__assents.criar_label('SENTIDO DE ROT:', 447, 130, 'black', self.frame_maq)
+        self.label_torr = self.__assents.criar_label('TIPO DE TORRE:', 447, 94, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
+        self.label_refe = self.__assents.criar_label('WORK OFFSET:', 447, 166, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
+        self.label_sent = self.__assents.criar_label('SENTIDO DE ROT:', 447, 130, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
 
-        self.label_posx = self.__assents.criar_label('POSIÇÃO EM X:', 447, 245, 'black', self.frame_pos)
-        self.label_posz = self.__assents.criar_label('POSIÇÃO EM Z:', 447, 281, 'black', self.frame_pos)
+        self.label_posx = self.__assents.criar_label('POSIÇÃO EM X:', 447, 245, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pos)
+        self.label_posz = self.__assents.criar_label('POSIÇÃO EM Z:', 447, 281, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pos)
 
-        self.label_rpmn = self.__assents.criar_label('ROTAÇÕES P/MIN:', 447, 350, 'black', self.frame_pdr)
-        self.label_avan = self.__assents.criar_label('AVANÇO DE CORT:', 447, 386, 'black', self.frame_pdr)
+        self.label_rpmn = self.__assents.criar_label('ROTAÇÕES P/MIN:', 447, 350, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pdr)
+        self.label_avan = self.__assents.criar_label('AVANÇO DE CORT:', 447, 386, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pdr)
 
         # SEÇÃO DE COMBOBOXs
 
