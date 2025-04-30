@@ -12,28 +12,26 @@ class Assents:
     cor6 = 'white'   # Cor branca para textos
     cor7 = '#FAEFEB' # Cor branca para input dialog
 
-    img_cima = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/seta_cima.png'), size=(20, 20))
-    img_linha = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha.png'), size=(825, 20))
-    img_pasta = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/pasta.png'), size=(24, 24))
-    img_code = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/code.png'), size=(24, 24))
     img_up = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/upload.png'), size=(24, 24))
-    img_ban = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/banner.png'), size=(320, 550))
+    img_help = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ajuda.png'), size=(28, 28))
+    img_pasta = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/pasta.png'), size=(24, 24))
+    img_cycl = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/cycles.png'), size=(34, 32))
     img_conf = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/configs.png'), size=(30, 30))
-    img_linha_v = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_v.png'), size=(25, 46))
-    img_ferrame = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ferramentas.png'), size=(30, 30))  
-    img_advance = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/advance.png'), size=(36, 36))   
-    img_cycles = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/cycles.png'), size=(34, 32))
-    
+    img_linv = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_v.png'), size=(25, 46))
+    img_adva = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/advance.png'), size=(36, 36))
+    img_bann = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/banner.png'), size=(320, 550))
+    img_ferr = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ferramentas.png'), size=(30, 30))    
+
     def __init__(self, master):
 
         self.master = master
 
-    def criar_label(self, text, x, y, bg_color='#FCF6F2', fg_color='#F2F1F0', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
+    def criar_label(self, text, x, y, height=0, bg_color='#FCF6F2', fg_color='#F2F1F0', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
 
         if frame is None:
             frame = self.master
         
-        self.label = ctk.CTkLabel(master=frame, text=text, font=font, fg_color=fg_color, text_color=text_color, bg_color=bg_color)
+        self.label = ctk.CTkLabel(master=frame, height=height, text=text, font=font, fg_color=fg_color, text_color=text_color, bg_color=bg_color)
         self.label.place(x=x, y=y)
 
     def criar_labelframe(self, x, y, width, height, text, frame=None):
@@ -54,9 +52,12 @@ class Assents:
 
         return self.entry
 
-    def criar_linha(self, x, y):
+    def criar_linha(self, x, y, frame=None):
 
-        self.linha = ctk.CTkLabel(master=self.master, text='ㅤ', image=Assents.img_linha)
+        if frame is None:
+            frame = self.master
+
+        self.linha = ctk.CTkLabel(master=frame, width=10, text='', image=Assents.img_linv)
         self.linha.place(x=x, y=y)
 
     def criar_textbox(self, text):
