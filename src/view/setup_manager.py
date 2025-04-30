@@ -1,6 +1,7 @@
 import json
 import customtkinter as ctk
 from src.model.assents import Assents
+from src.view.main_screen import MainScreen
 from tkinter import filedialog, messagebox, END
 
 class SetupManager(ctk.CTk):
@@ -186,6 +187,10 @@ class SetupManager(ctk.CTk):
                 json.dump(self.dic_padr, arquivo, indent=4, ensure_ascii=False)
 
             messagebox.showinfo('Compilador G-Code', 'Os dados foram compilados e armazenados com sucesso no sistema')
+            
+            self.destroy()
+            self.main_screen = MainScreen()
+            self.main_screen.mainloop()
 
 if __name__ == "__main__":
     app = SetupManager()
