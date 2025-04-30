@@ -37,10 +37,10 @@ class System_Initializer(ctk.CTk):
 
         # SEÇÃO DE BUTTONs
 
-        self.but_avancar = ctk.CTkButton(self.frame_rodap, text='AVANÇAR', command=call_setup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, width=100, corner_radius=5)
+        self.but_avancar = ctk.CTkButton(self.frame_rodap, text='AVANÇAR', command=call_setup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, hover_color=self.assents.cor5, width=100, corner_radius=5)
         self.but_avancar.place(x=790, y=6)
 
-        self.but_cancelar = ctk.CTkButton(self.frame_rodap, width=100, text='CANCELAR', command=quit_seup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, corner_radius=5)
+        self.but_cancelar = ctk.CTkButton(self.frame_rodap, width=100, text='CANCELAR', command=quit_seup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, hover_color=self.assents.cor5, corner_radius=5)
         self.but_cancelar.place(x=680, y=6)
 
         # SEÇÃO DE LABELs
