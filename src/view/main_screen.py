@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from src.model.assents import Assents
+from src.model.json_handler import JsonHandler
 
 class MainScreen(ctk.CTk):
 
@@ -10,6 +11,9 @@ class MainScreen(ctk.CTk):
         super().__init__()
 
         self.__assents = Assents(self)
+
+        self.__json_handler = JsonHandler()
+        self.__json_handler.convert_files()
 
         self.geometry('900x500')
         self.title('Compilador G-Code')
@@ -94,6 +98,11 @@ class MainScreen(ctk.CTk):
         self.label_cycl = self.__assents.criar_label('CYCLES', 245, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
 
         self.label_help = self.__assents.criar_label('HELP', 316, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
+
+        self.label_mode = self.__assents.criar_label(f"model: {self.__json_handler.get_data(self.__json_handler.data_user, 'modelo')}", 5, 4,     
+                                                    frame=self.fra_rodp,
+                                                    font=('Arial', 13, 'normal'),
+                                                    text_color='#242322')
 
         # SEÇÃO DE LINHAs
 
