@@ -10,10 +10,7 @@ class JsonHandler():
         self.__data_machine = {}  # Retorna dicionário com os dados da máquina 
         self.__data_standard = {} # Retorna dicionário com os dados padrões
 
-    @property
-    def get_data_user(self):
-        return self.__data_user
-
+    # Método responsável por conveter os arquivos json em dicionários
     def convert_files(self):
 
         try:
@@ -32,6 +29,7 @@ class JsonHandler():
         except Exception as e:
             print(f'Erro: {e}')
 
+    # Método responsável por fazer o retorno de valores dos dicionários
     def get_data(self, dictionary: dict, data: str):
   
         if not isinstance(dictionary, dict):
@@ -39,10 +37,21 @@ class JsonHandler():
 
         if not isinstance(data, str):
             raise TypeError('O tipo de dado de para comando deve ser do tipo String!')
-
+        
         return dictionary[data]
 
-json_convert = JsonHandler()
-json_convert.convert_files()
+    @property
+    def data_user(self):
+        return self.__data_user
 
-print(json_convert.get_data(json_convert.get_data_user, 'usuário'))
+    @property
+    def data_file(self):
+        return self.__data_file
+    
+    @property
+    def data_machine(self):
+        return self.__data_machine
+    
+    @property
+    def data_standard(self):
+        return self.__data_standard
