@@ -44,26 +44,23 @@ class MainCycles(ctk.CTk):
         self.but_desp = ctk.CTkButton(self.fra_desb,
                                      height=28, 
                                      width=55,  
-                                     corner_radius=8,                           
-                                     compound='right',  
+                                     corner_radius=8,                             
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'),                                    
                                      fg_color=self.__assents.cor4,
-                                     text='Desbaste - Parametrizado     ',    
-                                     hover_color=self.__assents.cor5).place(x=30, y=70)
+                                     text='Desbaste - Parametrizado             ',    
+                                     hover_color=self.__assents.cor5)
+        self.but_desp.place(x=5, y=5)
         
         self.but_desf = ctk.CTkButton(self.fra_desb,
                                      height=28, 
                                      width=55,  
-                                     corner_radius=8,                           
-                                     compound='right',  
+                                     corner_radius=8,                             
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
-                                     text='Desbaste - Funcional             ',    
-                                     hover_color=self.__assents.cor5).place(x=30, y=110)
+                                     text='Desbaste - Funcional                     ',    
+                                     hover_color=self.__assents.cor5).place(x=5, y=45)
         
         self.but_facp = ctk.CTkButton(self.fra_face,
                                      height=28, 
@@ -71,11 +68,11 @@ class MainCycles(ctk.CTk):
                                      corner_radius=8,                           
                                      compound='right',  
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
-                                     text='Faceamento - Parametrizado',    
-                                     hover_color=self.__assents.cor5).place(x=30, y=190)
+                                     text='Faceamento - Parametrizado        ',    
+                                     hover_color=self.__assents.cor5)
+        self.but_facp.place(x=5, y=5)
         
         self.but_facf = ctk.CTkButton(self.fra_face,
                                      height=28, 
@@ -83,11 +80,11 @@ class MainCycles(ctk.CTk):
                                      corner_radius=8,                           
                                      compound='right',  
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
-                                     text='Faceamento - Funcional        ',    
-                                     hover_color=self.__assents.cor5).place(x=30, y=230)
+                                     text='Faceamento - Funcional                ',    
+                                     hover_color=self.__assents.cor5)
+        self.but_facf.place(x=5, y=45)
         
         self.but_furp = ctk.CTkButton(self.fra_fura,
                                      height=28, 
@@ -95,11 +92,11 @@ class MainCycles(ctk.CTk):
                                      corner_radius=8,                           
                                      compound='right',  
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
-                                     text='Furação - Parametrizado       ',    
-                                     hover_color=self.__assents.cor5).place(x=325, y=190)
+                                     text='Furação - Parametrizado               ',    
+                                     hover_color=self.__assents.cor5)
+        self.but_furp.place(x=5, y=5)
         
         self.but_furf = ctk.CTkButton(self.fra_fura,
                                      height=28, 
@@ -107,11 +104,11 @@ class MainCycles(ctk.CTk):
                                      corner_radius=8,                           
                                      compound='right',  
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
-                                     text='Furação - Funcional               ',    
-                                     hover_color=self.__assents.cor5).place(x=325, y=230)
+                                     text='Furação - Funcional                       ',    
+                                     hover_color=self.__assents.cor5)
+        self.but_furf.place(x=5, y=45)
         
         self.but_canp = ctk.CTkButton(self.fra_cana,
                                      height=28, 
@@ -119,11 +116,11 @@ class MainCycles(ctk.CTk):
                                      corner_radius=8,                           
                                      compound='right',  
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
-                                     text='Canal - Parametrizado            ',    
-                                     hover_color=self.__assents.cor5).place(x=325, y=70)
+                                     text='Canal - Parametrizado                    ',    
+                                     hover_color=self.__assents.cor5)
+        self.but_canp.place(x=5, y=5)
         
         self.but_canf = ctk.CTkButton(self.fra_cana,
                                      height=28, 
@@ -131,8 +128,8 @@ class MainCycles(ctk.CTk):
                                      corner_radius=8,                           
                                      compound='right',  
                                      bg_color=MainCycles.cor2, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up, 
+                                     font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
-                                     text='Canal - Funcional                    ',    
-                                     hover_color=self.__assents.cor5).place(x=325, y=110)
+                                     text='Canal - Funcional                            ',    
+                                     hover_color=self.__assents.cor5)
+        self.but_canf.place(x=5, y=45)

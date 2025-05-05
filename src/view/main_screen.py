@@ -2,6 +2,8 @@ import customtkinter as ctk
 from src.model.assents import Assents
 from src.model.json_handler import JsonHandler
 
+from src.controller.buttons_controller.main_screen_commands import MainScreenCommands
+
 class MainScreen(ctk.CTk):
 
     cor1 = '#F2F1F0' # Cor branca de FG-COLOR
@@ -11,6 +13,7 @@ class MainScreen(ctk.CTk):
         super().__init__()
 
         self.__assents = Assents(self)
+        self.__cmds = MainScreenCommands()
 
         self.__json_handler = JsonHandler()
         self.__json_handler.convert_files()
@@ -72,10 +75,11 @@ class MainScreen(ctk.CTk):
                                    width=34, 
                                    height=34,
                                    compound='top', 
-                                   corner_radius=8, 
+                                   corner_radius=8,
                                    fg_color=MainScreen.cor1,
                                    hover_color=MainScreen.cor1,
-                                   image=self.__assents.img_cycl)
+                                   image=self.__assents.img_cycl,
+                                   command=self.__cmds.call_maincycles)
         self.button_cycles.place(x=243, y=3)
 
         self.button_help = ctk.CTkButton(self.fra_menu,
