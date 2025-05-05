@@ -34,12 +34,12 @@ class Assents:
         self.label = ctk.CTkLabel(master=frame, height=height, text=text, font=font, fg_color=fg_color, text_color=text_color, bg_color=bg_color)
         self.label.place(x=x, y=y)
 
-    def criar_labelframe(self, x, y, width, height, text, frame=None):
+    def criar_labelframe(self, x, y, width, height, text, bg='#fcf6f2', frame=None):
 
         if frame is None:
             frame = self.master
 
-        self.labelframe = LabelFrame(master=frame, width=width, height=height, text=text, font=('Corbel', 13), bg='#fcf6f2')
+        self.labelframe = LabelFrame(master=frame, width=width, height=height, text=text, font=('Corbel', 13), bg=bg)
         self.labelframe.place(x=x, y=y)
 
     def criar_entry(self, x, y, width=200, border_width=2, frame=None):
