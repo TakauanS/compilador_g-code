@@ -1,14 +1,15 @@
 import customtkinter as ctk
 from src.model.assents import Assents
 
-class MainCycles(ctk.CTk):
+class MainCycles(ctk.CTkToplevel):
 
     cor1 = '#F2F1F0' # Cor branca de FG-COLOR
     cor2 = '#FCF6F2' # Cor branca de BG-COLOR
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, master):
+        super().__init__(master)
 
+        self.master = master
         self.__assents = Assents(self)
 
         self.geometry('610x300')
@@ -17,8 +18,11 @@ class MainCycles(ctk.CTk):
         self.config(bg=MainCycles.cor1)
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-code/assets/imgs/favicon.ico')
 
-        # SEÇÃO DE TABVIEWs
+        self.lift()
+        self.attributes("-topmost", True)
+        self.focus_force()
 
+        # SEÇÃO DE TABVIEWs
         self.tabview = ctk.CTkTabview(self, 
                                       width=590, 
                                       height=295,
@@ -32,7 +36,6 @@ class MainCycles(ctk.CTk):
         self.aba_cycles = self.tabview.add('CYCLES')
 
         # SEÇÃO DE LABELFRAMEs
-
         self.fra_desb = self.__assents.criar_labelframe(0, 0, 270, 110, 'Cycles Desbaste', MainCycles.cor1, self.aba_cycles)
         self.fra_cana = self.__assents.criar_labelframe(295, 0, 270, 110, 'Cycles Canal', MainCycles.cor1, self.aba_cycles)
 
@@ -60,7 +63,8 @@ class MainCycles(ctk.CTk):
                                      font=('Arial', 15, 'bold'), 
                                      fg_color=self.__assents.cor4,
                                      text='Desbaste - Funcional                     ',    
-                                     hover_color=self.__assents.cor5).place(x=5, y=45)
+                                     hover_color=self.__assents.cor5)
+        self.but_desf.place(x=5, y=45)
         
         self.but_facp = ctk.CTkButton(self.fra_face,
                                      height=28, 
