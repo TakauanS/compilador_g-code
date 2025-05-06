@@ -2,18 +2,19 @@ import customtkinter as ctk
 from src.model.assents import Assents
 from src.model.json_handler import JsonHandler
 
-from src.controller.buttons_controller.main_screen_commands import MainScreenCommands
+from src.controller.buttons_controller.main_screen_cmds import MainScreenCmds
 
 class MainScreen(ctk.CTk):
 
     cor1 = '#F2F1F0' # Cor branca de FG-COLOR
     cor2 = '#EBE8E8' # Cor branca de FG-COLOR (mais puxado para o cinza)
+    cor3 = '#242322' # Cor preta de TEXT-COLOR
 
     def __init__(self):
         super().__init__()
 
         self.__assents = Assents(self)
-        self.__cmds = MainScreenCommands()
+        self.__cmds = MainScreenCmds(self)
 
         self.__json_handler = JsonHandler()
         self.__json_handler.convert_files()
@@ -25,7 +26,6 @@ class MainScreen(ctk.CTk):
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
         # SEÇÃO DE FRAMEs
-
         self.fra_menu = ctk.CTkFrame(self, border_width=1, width=900, height=60, corner_radius=0, fg_color=MainScreen.cor1)
         self.fra_menu.place(x=0, y=0)
         
@@ -36,7 +36,6 @@ class MainScreen(ctk.CTk):
         self.fra_main.place(x=5, y=65)
 
         # SEÇÃO DE BUTTONs
-
         self.button_configs = ctk.CTkButton(self.fra_menu,
                                    text='', 
                                    width=34, 
@@ -94,7 +93,6 @@ class MainScreen(ctk.CTk):
         self.button_help.place(x=307, y=5)
 
         # SEÇÃO DE LABELs
-
         self.label_conf = self.__assents.criar_label('CONFIGS', 12, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
         self.label_tool = self.__assents.criar_label('TOOLS', 90, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
 
@@ -106,10 +104,9 @@ class MainScreen(ctk.CTk):
         self.label_mode = self.__assents.criar_label(f"model: {self.__json_handler.get_data(self.__json_handler.data_user, 'modelo')}", 5, 4,     
                                                     frame=self.fra_rodp,
                                                     font=('Arial', 13, 'normal'),
-                                                    text_color='#242322')
-
+                                                    text_color=MainScreen.cor3)
+        
         # SEÇÃO DE LINHAs
-
         self.linha1 = self.__assents.criar_linha(66, 7, self.fra_menu)
         self.linha2 = self.__assents.criar_linha(135, 7, self.fra_menu)
 
