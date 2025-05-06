@@ -1,8 +1,7 @@
-import json
 import customtkinter as ctk
 from src.model.assents import Assents
-from src.view.main_screen import MainScreen
-from tkinter import filedialog, messagebox, END
+
+from src.controller.buttons_controller.setup_manager_cmds import SetupManagerCmds
 
 class SetupManager(ctk.CTk):
 
@@ -13,6 +12,7 @@ class SetupManager(ctk.CTk):
         super().__init__()
 
         self.__assents = Assents(self)
+        self.__cmds = SetupManagerCmds(self)
 
         self.geometry('900x500')
         self.title('Compilador G-Code | Setup')
@@ -94,96 +94,31 @@ class SetupManager(ctk.CTk):
                                   font=('Corbel', 17),  
                                   bg_color=SetupManager.cor1, 
                                   placeholder_text='Escolha a pasta para salvar os arquivos NC...')
-        
         self.entry_prc.place(x=15, y=10)
 
         # SEÇÃO DE BUTTONs
         self.but_direc = ctk.CTkButton(self,
-                                     height=35, 
-                                     width=50,
-                                     text='',  
-                                     corner_radius=13,
-                                     compound='right', 
-                                     font=('Arial', 16, 'bold'),
-                                     command=self.open_directory, 
-                                     fg_color=self.__assents.cor4, 
-                                     image=self.__assents.img_pasta,   
-                                     bg_color=SetupManager.cor1, 
-                                     hover_color=self.__assents.cor5).place(x=830, y=10)
+                                       text='',
+                                       width=50,
+                                       height=35, 
+                                       compound='right',
+                                       corner_radius=13,
+                                       font=('Arial', 16, 'bold'), 
+                                       bg_color=SetupManager.cor1,
+                                       fg_color=self.__assents.cor4, 
+                                       image=self.__assents.img_pasta,
+                                       hover_color=self.__assents.cor5,
+                                       command=self.__cmds.open_directory).place(x=830, y=10)
         
         self.but_savec = ctk.CTkButton(self.frame,
-                                     height=35, 
-                                     width=110,
-                                     text='SAVE',
-                                     compound='right',  
-                                     corner_radius=13, 
-                                     font=('Arial', 15, 'bold'),
-                                     image=self.__assents.img_up,
-                                     command=self.capture_values, 
-                                     fg_color=self.__assents.cor4,    
-                                     bg_color='#fcf6f2', 
-                                     hover_color=self.__assents.cor5).place(x=765, y=435)
-
-    # SEÇÃO DE MÉTODOS (COMANDs) DOS BUTTONs
-    def open_directory(self):
-
-        self.directory = filedialog.askdirectory(title='Selecione a sua pasta NC')
-        self.entry_prc.delete(0, END)
-        self.entry_prc.insert(0, self.directory)
-
-        print(f' - Pasta destina para os arquivos G-code: {self.directory}')
-
-    def capture_values(self):
-
-        self.dic_user = {
-            'usuário': self.entry_user.get(),
-            'empresa': self.entry_empr.get(),
-            'modelo': self.com_modelo.get()
-        }
-
-        self.dic_file = {
-            'diretório': self.entry_prc.get(),
-            'extensão': self.com_extens.get(),
-            'contador': self.com_contad.get(),
-            'estilo': self.com_estilo.get(),
-            'readme': self.strv_read.get(),
-            'save_p': self.strv_save.get(),
-        }
-
-        self.dic_mach = {
-            'sentido_rotação': self.com_sentid.get(),
-            'estilo_torre': self.com_torres.get(),
-            'offset': self.com_offset.get()
-        }
-
-        self.dic_padr = {
-            'posx': self.entry_posx.get(),
-            'posz': self.entry_posz.get(),
-            'rpm': self.entry_rpmn.get(),
-            'ava': self.entry_avan.get()
-        }
-
-        if '' in self.dic_user.values() or '' in self.dic_file.values() or '' in self.dic_mach.values() or '' in self.dic_padr:
-            messagebox.showerror('Compilador G-Code', 'Um ou mais campos estão vazios, preencha todos os campos para prosseguir com a operação.')
-        else:
-            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_usuario.json', 'w', encoding='utf-8') as arquivo:
-                json.dump(self.dic_user, arquivo, indent=4, ensure_ascii=False)
-
-            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_programa.json', 'w', encoding='utf-8') as arquivo:
-                json.dump(self.dic_file, arquivo, indent=4, ensure_ascii=False)
-
-            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_maquina.json', 'w', encoding='utf-8') as arquivo:
-                json.dump(self.dic_mach, arquivo, indent=4, ensure_ascii=False)
-
-            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_padrao.json', 'w', encoding='utf-8') as arquivo:
-                json.dump(self.dic_padr, arquivo, indent=4, ensure_ascii=False)
-
-            messagebox.showinfo('Compilador G-Code', 'Os dados foram compilados e armazenados com sucesso no sistema')
-            
-            self.destroy()
-            self.main_screen = MainScreen()
-            self.main_screen.mainloop()
-
-if __name__ == "__main__":
-    app = SetupManager()
-    app.mainloop()
+                                       width=110,
+                                       height=35, 
+                                       text='SAVE',
+                                       compound='right',
+                                       corner_radius=13,
+                                       font=('Arial', 15, 'bold'), 
+                                       bg_color=SetupManager.cor2,
+                                       image=self.__assents.img_up,
+                                       fg_color=self.__assents.cor4, 
+                                       hover_color=self.__assents.cor5,
+                                       command=self.__cmds.capture_values).place(x=765, y=435)
