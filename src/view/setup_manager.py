@@ -15,82 +15,76 @@ class SetupManager(ctk.CTk):
         self.__assents = Assents(self)
 
         self.geometry('900x500')
-        self.title('Setup Compilador G-Code')
+        self.title('Compilador G-Code | Setup')
         self.config(bg=SetupManager.cor1)
         self.resizable(False, False)
 
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
         # SEÇÃO DE STRINGVARs
-
         self.strv_read = ctk.StringVar(value='OP') # StringVar para o radiobutton (Criar Readme)
         self.strv_save = ctk.StringVar(value='OP') # StringVar para o radiobutton (Salvar Pen)
 
         # SEÇÃO DE FRAMEs e LABELFRAMEs
-
         self.frame = ctk.CTkFrame(self, corner_radius=15, width=870, height=420, fg_color=SetupManager.cor2, bg_color=SetupManager.cor1).place(x=15, y=60)
 
-        self.frame_file = self.__assents.criar_labelframe(30, 215, 400, 210, 'Dados de Programa', self.frame)
-        self.frame_user = self.__assents.criar_labelframe(30, 65, 400, 145, 'Dados do Usuário', self.frame)
+        self.frame_file = self.__assents.criar_labelframe(30, 215, 400, 210, 'Dados de Programa', SetupManager.cor2, self.frame)
+        self.frame_user = self.__assents.criar_labelframe(30, 65, 400, 145, 'Dados do Usuário', SetupManager.cor2, self.frame)
 
-        self.frame_maq = self.__assents.criar_labelframe(440, 65, 430, 145, 'Dados da Máquina', self.frame)
-        self.frame_pos = self.__assents.criar_labelframe(440, 215, 430, 105, 'Dados de Posição de Segurança', self.frame)
+        self.frame_maq = self.__assents.criar_labelframe(440, 65, 430, 145, 'Dados da Máquina', SetupManager.cor2, self.frame)
+        self.frame_pos = self.__assents.criar_labelframe(440, 215, 430, 105, 'Dados de Posição de Segurança', SetupManager.cor2, self.frame)
 
-        self.frame_pdr = self.__assents.criar_labelframe(440, 320, 430, 105, 'Dados de Corte Padrão', self.frame)
+        self.frame_pdr = self.__assents.criar_labelframe(440, 320, 430, 105, 'Dados de Corte Padrão', SetupManager.cor2, self.frame)
 
         # SEÇÃO DE LABELs
+        self.label_user = self.__assents.criar_label('PROGRAMADOR:', 5, 5, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_user)
+        self.label_empr = self.__assents.criar_label('EMPRESA (OP):', 5, 40, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_user)
+        self.label_mode = self.__assents.criar_label('MODELO MÁQ:', 5, 75, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_user)
 
-        self.label_user = self.__assents.criar_label('PROGRAMADOR:', 37, 94, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_user)
-        self.label_empr = self.__assents.criar_label('EMPRESA (OP):', 37, 130, fg_color=SetupManager.cor2, text_color='black', frame=self.frame)
-        self.label_mode = self.__assents.criar_label('MODELO MÁQ:', 37, 166, fg_color=SetupManager.cor2, text_color='black', frame=self.frame)
+        self.label_exte = self.__assents.criar_label('EXTENSÃO FILE:', 5, 5, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_cont = self.__assents.criar_label('CONT. DE PASS:', 5, 40, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_read = self.__assents.criar_label('CRIAR README:', 5, 145, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_savp = self.__assents.criar_label('SALVAR EM PEN:', 5, 110, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_styl = self.__assents.criar_label('SINTAXE GCODE:', 5, 75, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
 
-        self.label_exte = self.__assents.criar_label('EXTENSÃO FILE:', 37, 245, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
-        self.label_cont = self.__assents.criar_label('CONT. DE PASS:', 37, 281, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
-        self.label_read = self.__assents.criar_label('CRIAR README:', 37, 353, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
-        self.label_savp = self.__assents.criar_label('SALVAR EM PEN:', 37, 386, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
-        self.label_styl = self.__assents.criar_label('SINTAXE GCODE:', 37, 318, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_file)
+        self.label_torr = self.__assents.criar_label('TIPO DE TORRE:', 5, 5, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
+        self.label_refe = self.__assents.criar_label('WORK OFFSET:', 5, 40, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
+        self.label_sent = self.__assents.criar_label('SENTIDO DE ROT:', 5, 75, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
 
-        self.label_torr = self.__assents.criar_label('TIPO DE TORRE:', 447, 94, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
-        self.label_refe = self.__assents.criar_label('WORK OFFSET:', 447, 166, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
-        self.label_sent = self.__assents.criar_label('SENTIDO DE ROT:', 447, 130, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_maq)
+        self.label_posx = self.__assents.criar_label('POSIÇÃO EM X:', 5, 5, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pos)
+        self.label_posz = self.__assents.criar_label('POSIÇÃO EM Z:', 5, 40, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pos)
 
-        self.label_posx = self.__assents.criar_label('POSIÇÃO EM X:', 447, 245, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pos)
-        self.label_posz = self.__assents.criar_label('POSIÇÃO EM Z:', 447, 281, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pos)
-
-        self.label_rpmn = self.__assents.criar_label('ROTAÇÕES P/MIN:', 447, 350, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pdr)
-        self.label_avan = self.__assents.criar_label('AVANÇO DE CORT:', 447, 386, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pdr)
+        self.label_rpmn = self.__assents.criar_label('ROTAÇÕES P/MIN:', 5, 5, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pdr)
+        self.label_avan = self.__assents.criar_label('AVANÇO DE CORT:', 5, 40, fg_color=SetupManager.cor2, text_color='black', frame=self.frame_pdr)
 
         # SEÇÃO DE COMBOBOXs
+        self.com_modelo = self.__assents.criar_combobox(165, 75, self.frame_user, 220, values=('Siemens 828D', 'Siemens 810D', 'Siemens 840Di'))
+        self.com_extens = self.__assents.criar_combobox(165, 5, self.frame_file, 220, values=('.txt', '.nc', '.mpf', '.spf'))
+        self.com_contad = self.__assents.criar_combobox(165, 40, self.frame_file, 220, values=('Sim', 'Não'))
+        self.com_estilo = self.__assents.criar_combobox(165, 75, self.frame_file, 220, values=('G0 - (Rápido)', 'G00 - (Detalhado)'))
 
-        self.com_modelo = self.__assents.criar_combobox(200, 168, self.frame, 220, values=('Siemens 828D', 'Siemens 810D', 'Siemens 840Di'))
-        self.com_extens = self.__assents.criar_combobox(200, 245, self.frame, 220, values=('.txt', '.nc', '.mpf', '.spf'))
-        self.com_contad = self.__assents.criar_combobox(200, 281, self.frame, 220, values=('Sim', 'Não'))
-        self.com_estilo = self.__assents.criar_combobox(200, 318, self.frame, 220, values=('G0 - (Rápido)', 'G00 - (Detalhado)'))
-
-        self.com_torres = self.__assents.criar_combobox(625, 94, self.frame, 235, values=('Sistema Fixo', 'Sistema Gang'))
-        self.com_sentid = self.__assents.criar_combobox(625, 130, self.frame, 235, values=('Horário', 'Anti-Horário'))
-        self.com_offset = self.__assents.criar_combobox(625, 166, self.frame, 235, values=('G54', 'G55', 'G56', 'G57', 'G58', 'G59'))
+        self.com_torres = self.__assents.criar_combobox(175, 5, self.frame_maq, 245, values=('Sistema Fixo', 'Sistema Gang'))
+        self.com_sentid = self.__assents.criar_combobox(175, 40, self.frame_maq, 245, values=('Horário', 'Anti-Horário'))
+        self.com_offset = self.__assents.criar_combobox(175, 75, self.frame_maq, 245, values=('G54', 'G55', 'G56', 'G57', 'G58', 'G59'))
 
         # SEÇÃO DE RADIOBUTTONs
+        self.rad_readm1 = self.__assents.criar_radionbutton(165, 145, 'SIM', 'SIM', self.strv_read, frame=self.frame_file)
+        self.rad_readm2 = self.__assents.criar_radionbutton(250, 145, 'NÃO', 'NÃO', self.strv_read, width=60, frame=self.frame_file)
+        self.rad_readm3 = self.__assents.criar_radionbutton(335, 145, 'OP', 'OP', self.strv_read, width=60, frame=self.frame_file)
 
-        self.rad_readm1 = self.__assents.criar_radionbutton(200, 358, 'SIM', 'SIM', self.strv_read, frame=self.frame_file)
-        self.rad_readm2 = self.__assents.criar_radionbutton(278, 358, 'NÃO', 'NÃO', self.strv_read, width=60, frame=self.frame_file)
-        self.rad_readm3 = self.__assents.criar_radionbutton(355, 358, 'OP', 'OP', self.strv_read, width=60, frame=self.frame_file)
-
-        self.rad_savep1 = self.__assents.criar_radionbutton(200, 391, 'SIM', 'SIM', self.strv_save, frame=self.frame_file)
-        self.rad_savep2 = self.__assents.criar_radionbutton(278, 391, 'NÃO', 'NÃO', self.strv_save, width=60, frame=self.frame_file)
-        self.rad_savep3 = self.__assents.criar_radionbutton(355, 391, 'OP', 'OP', self.strv_save, width=60, frame=self.frame_file)
+        self.rad_savep1 = self.__assents.criar_radionbutton(165, 110, 'SIM', 'SIM', self.strv_save, frame=self.frame_file)
+        self.rad_savep2 = self.__assents.criar_radionbutton(250, 110, 'NÃO', 'NÃO', self.strv_save, width=60, frame=self.frame_file)
+        self.rad_savep3 = self.__assents.criar_radionbutton(335, 110, 'OP', 'OP', self.strv_save, width=60, frame=self.frame_file)
 
         # SEÇÃO DE ENTRYs
+        self.entry_empr = self.__assents.criar_entry(165, 40, 220, 1, self.frame_user)
+        self.entry_user = self.__assents.criar_entry(165, 5, 220, 1, self.frame_user)
 
-        self.entry_empr = self.__assents.criar_entry(200, 130, 220, 1, self.frame_user)
-        self.entry_user = self.__assents.criar_entry(200, 94, 220, 1, self.frame_user)
+        self.entry_posx = self.__assents.criar_entry(175, 5, 245, 1, self.frame_pos)
+        self.entry_posz = self.__assents.criar_entry(175, 40, 245, 1, self.frame_pos)
 
-        self.entry_posx = self.__assents.criar_entry(625, 245, 235, 1, self.frame_pos)
-        self.entry_posz = self.__assents.criar_entry(625, 281, 235, 1, self.frame_pos)
-
-        self.entry_rpmn = self.__assents.criar_entry(625, 350, 235, 1, self.frame_pdr)
-        self.entry_avan = self.__assents.criar_entry(625, 386, 235, 1, self.frame_pdr)
+        self.entry_rpmn = self.__assents.criar_entry(175, 5, 245, 1, self.frame_pdr)
+        self.entry_avan = self.__assents.criar_entry(175, 40, 245, 1, self.frame_pdr)
 
         self.entry_prc = ctk.CTkEntry(self,
                                   height=35, 
@@ -104,7 +98,6 @@ class SetupManager(ctk.CTk):
         self.entry_prc.place(x=15, y=10)
 
         # SEÇÃO DE BUTTONs
-
         self.but_direc = ctk.CTkButton(self,
                                      height=35, 
                                      width=50,
@@ -132,7 +125,6 @@ class SetupManager(ctk.CTk):
                                      hover_color=self.__assents.cor5).place(x=765, y=435)
 
     # SEÇÃO DE MÉTODOS (COMANDs) DOS BUTTONs
-
     def open_directory(self):
 
         self.directory = filedialog.askdirectory(title='Selecione a sua pasta NC')
