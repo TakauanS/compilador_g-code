@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from src.model.assents import Assents
 
+from src.controller.buttons_controller.main_cycles_cmds import MainCyclesCmds
+
 class MainCycles(ctk.CTkToplevel):
 
     cor1 = '#F2F1F0' # Cor branca de FG-COLOR
@@ -9,8 +11,9 @@ class MainCycles(ctk.CTkToplevel):
     def __init__(self, master):
         super().__init__(master)
 
-        self.master = master
+        self.__master = master
         self.__assents = Assents(self)
+        self.__cmds = MainCyclesCmds(self.__master, self)
 
         self.geometry('610x300')
         self.title('Compilador G-Code | Cycles')
@@ -43,7 +46,6 @@ class MainCycles(ctk.CTkToplevel):
         self.fra_fura = self.__assents.criar_labelframe(295, 120, 270, 110, 'Cycles Furação', MainCycles.cor1, self.aba_cycles)
 
         # SEÇÃO DE BUTTONs
-
         self.but_desp = ctk.CTkButton(self.fra_desb,
                                      height=28, 
                                      width=55,  
@@ -52,7 +54,8 @@ class MainCycles(ctk.CTkToplevel):
                                      font=('Arial', 15, 'bold'),                                    
                                      fg_color=self.__assents.cor4,
                                      text='Desbaste - Parametrizado             ',    
-                                     hover_color=self.__assents.cor5)
+                                     hover_color=self.__assents.cor5,
+                                     command=self.__cmds.call_cycle_desbastep)
         self.but_desp.place(x=5, y=5)
         
         self.but_desf = ctk.CTkButton(self.fra_desb,
