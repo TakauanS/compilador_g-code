@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from src.model.assents import Assents
 
-from src.controller.buttons_controller.main_cycles_cmds import MainCyclesCmds
+from src.controller.buttons_cmds.cycles_cmds.main_cycles_cmds import MainCyclesCmds
 
 class MainCycles(ctk.CTkToplevel):
 
@@ -55,7 +55,7 @@ class MainCycles(ctk.CTkToplevel):
                                      fg_color=self.__assents.cor4,
                                      text='Desbaste - Parametrizado             ',    
                                      hover_color=self.__assents.cor5,
-                                     command=self.__cmds.call_cycle_desbastep)
+                                     command=self.__cmds.call_desbastep)
         self.but_desp.place(x=5, y=5)
         
         self.but_desf = ctk.CTkButton(self.fra_desb,
