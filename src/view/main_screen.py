@@ -2,7 +2,7 @@ import customtkinter as ctk
 from src.model.assents import Assents
 from src.model.json_handler import JsonHandler
 
-from src.controller.buttons_controller.main_screen_cmds import MainScreenCmds
+from src.controller.buttons_cmds.main_screen_cmds import MainScreenCmds
 
 class MainScreen(ctk.CTk):
 

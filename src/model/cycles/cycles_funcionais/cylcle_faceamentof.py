@@ -1,4 +1,4 @@
-from src.model.cycles.cycle_base import CycleBase
+from src.model.cycles.cy_base import CycleBase
 from tkinter.filedialog import asksaveasfilename
 from tkinter import messagebox
 import textwrap

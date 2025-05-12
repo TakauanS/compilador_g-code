@@ -1,7 +1,7 @@
 import textwrap
 from tkinter import messagebox
 from tkinter.filedialog import asksaveasfilename
-from src.model.cycles.cycle_base import CycleBase
+from src.model.cycles.cy_base import CycleBase
 
 class Furacao_Funcional(CycleBase):
 

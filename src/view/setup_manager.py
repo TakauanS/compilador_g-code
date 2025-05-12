@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from src.model.assents import Assents
 
-from src.controller.buttons_controller.setup_manager_cmds import SetupManagerCmds
+from src.controller.buttons_cmds.setup_manager_cmds import SetupManagerCmds
 
 class SetupManager(ctk.CTk):
 
