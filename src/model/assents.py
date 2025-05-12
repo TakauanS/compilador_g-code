@@ -26,7 +26,7 @@ class Assents:
 
         self.master = master
 
-    def criar_label(self, text, x, y, height=0, bg_color='#FCF6F2', fg_color='#F2F1F0', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
+    def criar_label(self, text, x, y, height=0, bg_color='#FCF6F2', fg_color='#FCF6F2', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
 
         if frame is None:
             frame = self.master
@@ -114,7 +114,7 @@ class Assents:
                                 justify=justify,
                                 state='readonly',
                                 bg_color='#fcf6f2',
-                                font=('Arial', 16),
+                                font=('Arial', 14),
                                 button_color=Assents.cor4,
                                 corner_radius=corner_radius,
                                 button_hover_color=Assents.cor5)

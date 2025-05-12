@@ -15,5 +15,5 @@ class MainScreenCmds:
             self.main_cycles.mainloop()
 
         except Exception as e:
-            messagebox.showerror('Compilador G-Code', f'Ocorreu um erro ao chamar a tela de ciclos de usinagem:\n{e}')
-            print(f'Erro! {e}')
+            messagebox.showerror('Compilador G-Code', f'Ocorreu um erro ao chamar a tela de ciclos de usinagem:\n\n{e}')
+            print(f'Erro: {e}')

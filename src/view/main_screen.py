@@ -6,7 +6,7 @@ from src.controller.buttons_cmds.main_screen_cmds import MainScreenCmds
 
 class MainScreen(ctk.CTk):
 
-    cor1 = '#F2F1F0' # Cor branca de FG-COLOR
+    cor1 = '#FCF6F2' # Cor branca de FG-COLOR
     cor2 = '#EBE8E8' # Cor branca de FG-COLOR (mais puxado para o cinza)
     cor3 = '#242322' # Cor preta de TEXT-COLOR
 
