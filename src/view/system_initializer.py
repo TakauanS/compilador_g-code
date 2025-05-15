@@ -1,26 +1,30 @@
+from PIL import Image
 import customtkinter as ctk
 from src.model.assents import Assents
 from src.view.setup_manager import SetupManager
 
 class System_Initializer(ctk.CTk):
 
-    cor1 = '#F2F1F0' # Cor cinza de FG-COLOR
+    cor1 = '#FCF6F2' # Cor cinza de FG-COLOR
+
+    img_ban = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/banner.png'), size=(320, 550)) # Imagem de banner lateral
 
     def __init__(self):
         super().__init__()
 
         self.assents = Assents(self)
 
-        self.title('Instalação do Compilador G-Code 1.0')
+        self.title('Compilador G-Code | Inicialização')
         self.geometry('900x500')
         self.resizable(False, False)
         self.config(bg=System_Initializer.cor1)
+        self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
-        # SEÇÃO DE COMMANDs DOS BUTTONs
-
+        # Método responsável por sair do software
         def quit_seup():
             self.destroy()
 
+        # Método responsável por chamar a tela de setup manager
         def call_setup():
 
             self.destroy()
@@ -28,7 +32,6 @@ class System_Initializer(ctk.CTk):
             self.setup.mainloop()
 
         # SEÇÃO DE FRAMEs
-
         self.frame_later = ctk.CTkFrame(self, border_width=1, width=320, height=550, corner_radius=0)
         self.frame_later.place(x=0, y=0)
 
@@ -36,7 +39,6 @@ class System_Initializer(ctk.CTk):
         self.frame_rodap.place(x=0, y=460)
 
         # SEÇÃO DE BUTTONs
-
         self.but_avancar = ctk.CTkButton(self.frame_rodap, text='AVANÇAR', command=call_setup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, hover_color=self.assents.cor5, width=100, corner_radius=5)
         self.but_avancar.place(x=790, y=6)
 
@@ -44,8 +46,7 @@ class System_Initializer(ctk.CTk):
         self.but_cancelar.place(x=680, y=6)
 
         # SEÇÃO DE LABELs
-
-        self.label_img = ctk.CTkLabel(self.frame_later, text='', image=self.assents.img_ban) # Label que exibe a imagem do banner na lateral
+        self.label_img = ctk.CTkLabel(self.frame_later, text='', image=System_Initializer.img_ban) # Label que exibe a imagem do banner na lateral
         self.label_img.place(x=0, y=0)
 
         self.label_title = self.assents.criar_label('Bem-Vindo ao Compilador G-Code', 340, 15, text_color='black', font=('Corbel', 26, 'bold'))
