@@ -3,6 +3,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 
 from src.model.assents import Assents
+from src.controller.buttons_cmds.parameters_cmds import ParametersCmds
 
 class Parameters(ctk.CTkToplevel):
 
@@ -19,15 +20,16 @@ class Parameters(ctk.CTkToplevel):
             super().__init__()
 
             self.__assents = Assents(self)
+            self.__cmds = ParametersCmds(self)
 
             self.title('Compilador G-Code | Parâmetros de Corte')
             self.geometry('720x300')
             self.resizable(False, False)
             self.config(bg=Parameters.cor1)
 
-            self.lift()
-            self.attributes('-topmost', True)
-            self.focus_force()
+            #self.lift()
+            #self.attributes('-topmost', True)
+            #self.focus_force()
 
             # SEÇÃO DE LABELFRAMEs
             self.fra_m = self.__assents.criar_labelframe(10, 5, 700, 285, 'Parâmetros de Corte:', frame=self)
@@ -48,7 +50,7 @@ class Parameters(ctk.CTkToplevel):
             # SEÇÃO DE COMBOBOXs
             self.combo_se = self.__assents.criar_combobox(175, 110, self.fra_m, 190, values=('SENTIDO - HR', 'SENTIDO - AHR'))
             self.combo_md = self.__assents.criar_combobox(175, 10, self.fra_m, 190, values=('G96 - VCC', 'G97 - RPM FIXO'))
-            self.combo_fr = self.__assents.criar_combobox(175, 45, self.fra_m, 190, values=())
+            self.combo_fr = self.__assents.criar_combobox(175, 45, self.fra_m, 190, values=('T10D1', 'T11D1'))
 
             # SEÇÃO DE LINHAs
             self.linha1 = ctk.CTkLabel(self.fra_m, text='', image=Parameters.img_ln)
@@ -64,7 +66,8 @@ class Parameters(ctk.CTkToplevel):
                                            fg_color=Parameters.cor2,
                                            bg_color=Parameters.cor1,
                                            font=('Arial', 15, 'bold'), 
-                                           hover_color=Parameters.cor3).place(x=580, y=220)
+                                           hover_color=Parameters.cor3,
+                                           command=self.__cmds.save_parameters).place(x=580, y=220)
 
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro na geração da tela de parâmetros de corte:\n\n{e}')

@@ -1,4 +1,5 @@
-test.py
+src/configs
+
 __pycache__
 src/__pycache__/
 src/view/__pycache__/
