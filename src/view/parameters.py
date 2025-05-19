@@ -27,10 +27,6 @@ class Parameters(ctk.CTkToplevel):
             self.resizable(False, False)
             self.config(bg=Parameters.cor1)
 
-            #self.lift()
-            #self.attributes('-topmost', True)
-            #self.focus_force()
-
             # SEÇÃO DE LABELFRAMEs
             self.fra_m = self.__assents.criar_labelframe(10, 5, 700, 285, 'Parâmetros de Corte:', frame=self)
 

@@ -10,10 +10,14 @@ class JsonHandler():
         self.__data_machine = {}  # Retorna dicionário com os dados da máquina 
         self.__data_standard = {} # Retorna dicionário com os dados padrões
 
+        self.__data_parameters = {} # Retorna dicionário com os dados de parâmetros de corte
+
     # Método responsável por conveter os arquivos json em dicionários
     def convert_files(self):
-
         try:
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_parametros.json', 'r', encoding='utf-8') as file:
+                self.__data_parameters = json.load(file)
+
             with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_usuario.json', 'r', encoding='utf-8') as file:
                 self.__data_user = json.load(file)
 
@@ -31,7 +35,7 @@ class JsonHandler():
 
     # Método responsável por fazer o retorno de valores dos dicionários
     def get_data(self, dictionary: dict, data: str):
-  
+        
         if not isinstance(dictionary, dict):
             raise TypeError('O tipo de dado para especificar o dicionário deve ser do tipo Dict!')
 
@@ -55,3 +59,7 @@ class JsonHandler():
     @property
     def data_standard(self):
         return self.__data_standard
+    
+    @property
+    def data_parameters(self):
+        return self.__data_parameters
