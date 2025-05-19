@@ -7,10 +7,10 @@ class Assents:
     cor1 = '#1C1A1B' # Cor preta para bg_color - Mais Forte
     cor2 = '#333031' # Cor preta para fg_color - Mais fraca
     cor3 = '#737277' # Cor cinza para placeholder
-    cor4 = '#1A8AE5' # Cor azul para butões - fg color     
-    cor5 = '#3757A0' # Cor azul para botões - hover color
-    cor6 = 'white'   # Cor branca para textos
-    cor7 = '#FAEFEB' # Cor branca para input dialog
+    cor4 = '#1A8AE5' # Cor azul para butões fg_color     
+    cor5 = '#3757A0' # Cor azul para botões hover_color
+    cor6 = '#FCF6F2' # Cor branco para fg_color
+    cor7 = '#FAEFEB' # Cor branca para inputdialog
 
     img_up = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/upload.png'), size=(24, 24))
     img_help = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ajuda.png'), size=(28, 28))
@@ -49,7 +49,7 @@ class Assents:
         if frame is None:
             frame = self.master
 
-        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=width, border_width=border_width, justify='center', bg_color='#fcf6f2', font=('Consola', 16))
+        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=width, border_width=border_width, justify='center', bg_color=Assents.cor6, font=('Consola', 16))
         self.entry.place(x=x, y=y)    
 
         return self.entry
@@ -80,12 +80,17 @@ class Assents:
 
     def criar_inputdialog(self, title, text):
 
-        self.input_dialog = ctk.CTkInputDialog(text=text,
-                                                    title=title,
-                                                        fg_color=Assents.cor7,
-                                                            button_fg_color=Assents.cor4,
-                                                                button_hover_color=Assents.cor5)
+        self.input_dialog = ctk.CTkInputDialog(title=title, text=text, font=('Arial', 15, 'normal'), fg_color=Assents.cor6, button_fg_color=Assents.cor4, button_hover_color=Assents.cor5)
         return self.input_dialog
+
+    #def criar_inputdialog(self, title, text):
+
+     #   self.input_dialog = ctk.CTkInputDialog(text=text,
+      #                                              title=title,
+       #                                                 fg_color=Assents.cor7,
+        #                                                    button_fg_color=Assents.cor4,
+         #                                                       button_hover_color=Assents.cor5)
+        #return self.input_dialog
 
     def criar_button(self, text, command, image, x, y):
 
@@ -113,8 +118,8 @@ class Assents:
                                 border_width=1,
                                 justify=justify,
                                 state='readonly',
-                                bg_color='#fcf6f2',
                                 font=('Arial', 14),
+                                bg_color=Assents.cor6,
                                 button_color=Assents.cor4,
                                 corner_radius=corner_radius,
                                 button_hover_color=Assents.cor5)
@@ -127,10 +132,10 @@ class Assents:
             frame = self.master
 
         self.radiobutton = ctk.CTkRadioButton(frame,
-                                             width=width, 
                                              text=text,
+                                             width=width, 
                                              value=value,  
                                              variable=variable,
-                                             bg_color='#fcf6f2', 
+                                             bg_color=Assents.cor6, 
                                              border_width_unchecked=1)                                     
         self.radiobutton.place(x=x, y=y)
