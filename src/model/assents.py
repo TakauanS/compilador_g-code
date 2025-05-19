@@ -80,17 +80,13 @@ class Assents:
 
     def criar_inputdialog(self, title, text):
 
-        self.input_dialog = ctk.CTkInputDialog(title=title, text=text, font=('Arial', 15, 'normal'), fg_color=Assents.cor6, button_fg_color=Assents.cor4, button_hover_color=Assents.cor5)
+        self.input_dialog = ctk.CTkInputDialog(text=text,
+                                               title=title,                                       
+                                               fg_color=Assents.cor6,
+                                               font=('Arial', 15, 'normal'), 
+                                               button_fg_color=Assents.cor4, 
+                                               button_hover_color=Assents.cor5)
         return self.input_dialog
-
-    #def criar_inputdialog(self, title, text):
-
-     #   self.input_dialog = ctk.CTkInputDialog(text=text,
-      #                                              title=title,
-       #                                                 fg_color=Assents.cor7,
-        #                                                    button_fg_color=Assents.cor4,
-         #                                                       button_hover_color=Assents.cor5)
-        #return self.input_dialog
 
     def criar_button(self, text, command, image, x, y):
 

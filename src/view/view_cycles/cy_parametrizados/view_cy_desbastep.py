@@ -27,12 +27,12 @@ class ViewCyDesbasteP(ctk.CTkFrame):
 
             self.__master = master
             self.__toplevel = toplevel
-
+    
             self.__json = JsonHandler()
             self.__json.convert_files()
 
-            self.__cmds = DesbastePCmds()
             self.__assents = Assents(self.__master)
+            self.__cmds = DesbastePCmds(self.__master)
 
             # SEÇÃO DE FRAMEs
             self.__master.fra_code = ctk.CTkFrame(self.__master.fra_main, width=880, height=320, corner_radius=8, border_width=1, fg_color=ViewCyDesbasteP.cor1)
@@ -83,7 +83,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__master.but_pen = ctk.CTkButton(self.__master.fra_menu, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_pen, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
             self.__master.but_pen.place(x=4, y=60)
 
-            self.__master.but_sav = ctk.CTkButton(self.__master.fra_menu, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_rea, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
+            self.__master.but_sav = ctk.CTkButton(self.__master.fra_menu, command=self.__cmds.up_gcode, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_rea, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
             self.__master.but_sav.place(x=4, y=115)
 
             # SEÇÃO DE TEXTBOXs

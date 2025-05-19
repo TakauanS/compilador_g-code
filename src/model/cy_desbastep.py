@@ -169,9 +169,6 @@ class CyDesbasteP(CyBase):
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro na geração do g-code, verifique o seguinte problema:\n\n{e}')
             print(f'Erro: {e}')
-        else:
-            messagebox.showinfo('Compilador G-Code', f'Ciclo de desbaste parametrizado gerado com sucesso e salvo nos seus arquivos.')
-            print(f' - O projeto: {name_directory}, foi criado com sucesso!')
 
     @property
     def diametro_inicial(self):
