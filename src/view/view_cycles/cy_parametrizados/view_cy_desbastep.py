@@ -47,9 +47,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
 
             self.__master.label_dii = self.__assents.criar_label('Ø DIÂMETRO INICIAL:', 10, 10, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
             self.__master.label_dif = self.__assents.criar_label('Ø DIÂMETRO FINAL:', 10, 46, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
-
             self.__master.label_esp = self.__assents.criar_label('ESPESSURA:', 480, 10, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
-            self.__master.label_pas = self.__assents.criar_label('PASSE:', 480, 46, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
 
             self.__master.label_prp = self.__assents.criar_label('PREVIEW - CODE', 10, 110, text_color=ViewCyDesbasteP.cor2, font=('Corbel', 23, 'bold'), frame=self.__master.fra_code)
             self.__master.label_prt = self.__assents.criar_label(ViewCyDesbasteP.pre, 10, 140, text_color=ViewCyDesbasteP.cor3, font=('Corbel', 18, 'normal'), frame=self.__master.fra_code)
@@ -74,8 +72,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__master.entry_dii = self.__assents.criar_entry(210, 11, 220, 1, self.__master.fra_code)
             self.__master.entry_dif = self.__assents.criar_entry(210, 47, 220, 1, self.__master.fra_code)
             self.__master.entry_esp = self.__assents.criar_entry(600, 11, 220, 1, self.__master.fra_code)
-            self.__master.entry_pas = self.__assents.criar_entry(600, 47, 220, 1, self.__master.fra_code)
-
+        
             # SEÇÃO DE BUTTONs
             self.__master.but_par = ctk.CTkButton(self.__master.fra_menu, command=self.__cmds.call_parameters, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_par, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
             self.__master.but_par.place(x=4, y=5)

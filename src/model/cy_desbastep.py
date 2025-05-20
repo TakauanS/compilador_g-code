@@ -64,7 +64,7 @@ class CyDesbasteP(CyBase):
             N20 G18 G40 G90 G95;
 
             ; Tool and rpm senttings
-            N30 G97 S{self.get_rotacao};
+            N30 G97 S{self.__json.get_data(self.__json.data_standard, 'rpm')};
             N40 {self.__json.get_data(self.__json.data_parameters, 'ferramenta')};
             N50 M3;
 

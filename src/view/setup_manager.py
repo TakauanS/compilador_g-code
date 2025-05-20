@@ -64,8 +64,8 @@ class SetupManager(ctk.CTk):
         self.com_estilo = self.__assents.criar_combobox(165, 75, self.frame_file, 220, values=('G0 - (Rápido)', 'G00 - (Detalhado)'))
 
         self.com_torres = self.__assents.criar_combobox(175, 5, self.frame_maq, 245, values=('Sistema Fixo', 'Sistema Gang'))
-        self.com_sentid = self.__assents.criar_combobox(175, 40, self.frame_maq, 245, values=('Horário', 'Anti-Horário'))
-        self.com_offset = self.__assents.criar_combobox(175, 75, self.frame_maq, 245, values=('G54', 'G55', 'G56', 'G57', 'G58', 'G59'))
+        self.com_sentid = self.__assents.criar_combobox(175, 75, self.frame_maq, 245, values=('Horário', 'Anti-Horário'))
+        self.com_offset = self.__assents.criar_combobox(175, 40, self.frame_maq, 245, values=('G54', 'G55', 'G56', 'G57', 'G58', 'G59'))
 
         # SEÇÃO DE RADIOBUTTONs
         self.rad_readm1 = self.__assents.criar_radionbutton(165, 145, 'SIM', 'SIM', self.strv_read, frame=self.frame_file)
