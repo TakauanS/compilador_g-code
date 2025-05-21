@@ -38,8 +38,7 @@ class DesbastePCmds:
                 return
             else:
                 self.__desbastep = CyDesbasteP(self._dii, self._dif, self._esp)
-                self.__desbastep.rotacao(100.0)
-
+                
                 self.__desbastep.initialize_files()
                 self.__desbastep.generate_gcode(self._name_project)
 

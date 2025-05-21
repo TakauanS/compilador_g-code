@@ -146,7 +146,7 @@ class CyDesbasteP(CyBase):
     def generate_gcode(self, name_directory: str):
         try:
             self.__imp = self.__json.get_data(self.__json.data_file, 'diretório') # Importa o caminho do diretório que o usuário escolheu
-            self.__directory = f'{self.__imp}/{name_directory}' # Concatena o nome da pasta com o caminho do diretório
+            self.__directory = f'{self.__imp}/{name_directory}.WPD' # Concatena o nome da pasta com o caminho do diretório
 
             if os.path.exists(self.__directory):
                 messagebox.showerror('Compilador G-Code', f'Erro na geração do g-code, pois o nome de projeto:\n\n{name_directory}, já é existente!')
@@ -154,16 +154,16 @@ class CyDesbasteP(CyBase):
             else:
                 os.mkdir(self.__directory)
 
-                with open(f'{self.__directory}/CMP_MAIN.mpf', 'w') as f:
+                with open(f'{self.__directory}/CMP_MAIN.MPF', 'w') as f:
                     f.write(self.file_main)
 
-                with open(f'{self.__directory}/CMP_CONFIGS.spf', 'w') as f:
+                with open(f'{self.__directory}/CMP_CONFIGS.SPF', 'w') as f:
                     f.write(self.file_configs)
 
-                with open(f'{self.__directory}/CMP_CONTROLS.spf', 'w') as f:
+                with open(f'{self.__directory}/CMP_CONTROLS.SPF', 'w') as f:
                     f.write(self.file_controls)
 
-                with open(f'{self.__directory}/CMP_MACVARS.spf', 'w') as f:
+                with open(f'{self.__directory}/CMP_MACVARS.SPF', 'w') as f:
                     f.write(self.file_macvars)
 
         except Exception as e:
