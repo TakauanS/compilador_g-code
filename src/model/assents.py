@@ -1,6 +1,7 @@
 from PIL import Image
 import customtkinter as ctk
 from tkinter import LabelFrame
+from idlelib.tooltip import Hovertip
 
 class Assents:
 
@@ -26,13 +27,15 @@ class Assents:
 
         self.master = master
 
-    def criar_label(self, text, x, y, height=0, bg_color='#FCF6F2', fg_color='#FCF6F2', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
+    def criar_label(self, text, x, y, height=0, tooltip='', bg_color='#FCF6F2', fg_color='#FCF6F2', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
 
         if frame is None:
             frame = self.master
         
         self.label = ctk.CTkLabel(master=frame, height=height, text=text, font=font, fg_color=fg_color, text_color=text_color, bg_color=bg_color)
         self.label.place(x=x, y=y)
+
+        Hovertip(self.label, tooltip)
 
     def criar_labelframe(self, x, y, width, height, text, bg='#FCF6F2', frame=None):
 
