@@ -40,61 +40,40 @@ class MainScreen(ctk.CTk):
         self.entry_en.place(x=5, y=65)
 
         # SEÇÃO DE BUTTONs
-        self.button_configs = ctk.CTkButton(self.fra_menu,
-                                   text='', 
-                                   width=34, 
-                                   height=34,
-                                   compound='top', 
-                                   corner_radius=8, 
-                                   fg_color=MainScreen.cor1,
-                                   hover_color=MainScreen.cor1,
-                                   image=self.__assents.img_conf)
-        self.button_configs.place(x=15, y=3)
-
-        self.button_ferrame = ctk.CTkButton(self.fra_menu,
-                                   text='', 
-                                   width=34, 
-                                   height=34,
-                                   compound='top', 
-                                   corner_radius=8, 
-                                   fg_color=MainScreen.cor1,
-                                   hover_color=MainScreen.cor1,
-                                   image=self.__assents.img_ferr)
-        self.button_ferrame.place(x=92, y=5)
-
-        self.button_advances = ctk.CTkButton(self.fra_menu,
-                                   text='', 
-                                   width=34, 
-                                   height=34,
-                                   compound='top', 
-                                   corner_radius=8, 
-                                   fg_color=MainScreen.cor1,
-                                   hover_color=MainScreen.cor1,
-                                   image=self.__assents.img_adva)
-        self.button_advances.place(x=168, y=3)
-
-        self.button_cycles = ctk.CTkButton(self.fra_menu,
-                                   text='', 
-                                   width=34, 
-                                   height=34,
-                                   compound='top', 
-                                   corner_radius=8,
-                                   fg_color=MainScreen.cor1,
-                                   hover_color=MainScreen.cor1,
-                                   image=self.__assents.img_cycl,
-                                   command=self.__cmds.call_maincycles)
-        self.button_cycles.place(x=243, y=3)
-
-        self.button_help = ctk.CTkButton(self.fra_menu,
-                                   text='', 
-                                   width=34, 
-                                   height=34,
-                                   compound='top', 
-                                   corner_radius=8, 
-                                   fg_color=MainScreen.cor1,
-                                   hover_color=MainScreen.cor1,
-                                   image=self.__assents.img_help)
-        self.button_help.place(x=307, y=5)
+        self.but_con = self.__assents.criar_button(15, 3, 34, 34, '', self.__cmds.call_maincycles, 
+                                                       self.__assents.img_conf, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1,
+                                                       8, 'CONFIGURAÇÕES', 'top', fr=self.fra_menu)
+        
+        self.but_fer = self.__assents.criar_button(92, 5, 34, 34, '', self.__cmds.call_maincycles, 
+                                                       self.__assents.img_ferr, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1,
+                                                       8, 'FERRAMENTAS', 'top', fr=self.fra_menu)
+        
+        self.but_ava = self.__assents.criar_button(168, 3, 34, 34, '', self.__cmds.call_maincycles, 
+                                                       self.__assents.img_adva, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1,
+                                                       8, 'AVANÇOS', 'top', fr=self.fra_menu)
+        
+        self.but_cyc = self.__assents.criar_button(243, 3, 34, 34, '', self.__cmds.call_maincycles, 
+                                                       self.__assents.img_cycl, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1,
+                                                       8, 'CICLOS DE USINAGEM', 'top', fr=self.fra_menu)
+        
+        self.but_hel = self.__assents.criar_button(307, 5, 34, 34, '', self.__cmds.call_maincycles, 
+                                                       self.__assents.img_help, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1, 
+                                                       MainScreen.cor1,
+                                                       8, 'AJUDA', 'top', fr=self.fra_menu)
 
         # SEÇÃO DE LABELs
         self.label_conf = self.__assents.criar_label('CONFIGS', 12, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
