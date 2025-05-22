@@ -32,8 +32,12 @@ class MainScreen(ctk.CTk):
         self.fra_rodp = ctk.CTkFrame(self, border_width=1, width=902, height=25, corner_radius=0, fg_color=MainScreen.cor1)
         self.fra_rodp.place(x=-1, y=477)
 
-        self.fra_main = ctk.CTkFrame(self, border_width=1, width=890, height=407, corner_radius=0, fg_color=MainScreen.cor1)
-        self.fra_main.place(x=5, y=65)
+        self.fra_main = ctk.CTkFrame(self, border_width=1, width=890, height=378, corner_radius=8, fg_color=MainScreen.cor1)
+        self.fra_main.place(x=5, y=95)
+
+        # SEÇÃO DE ENTRYs
+        self.entry_en = ctk.CTkEntry(self, height=25, width=890, border_width=1, corner_radius=8, font=('Corbel', 17), bg_color=MainScreen.cor1)
+        self.entry_en.place(x=5, y=65)
 
         # SEÇÃO DE BUTTONs
         self.button_configs = ctk.CTkButton(self.fra_menu,
@@ -104,8 +108,8 @@ class MainScreen(ctk.CTk):
         self.label_mode = self.__assents.criar_label(f"model: {self.__json_handler.get_data(self.__json_handler.data_user, 'modelo')}", 5, 4,     
                                                     frame=self.fra_rodp,
                                                     font=('Arial', 13, 'normal'),
-                                                    text_color=MainScreen.cor3)
-        
+                                                    text_color=MainScreen.cor3) 
+          
         # SEÇÃO DE LINHAs
         self.linha1 = self.__assents.criar_linha(66, 7, self.fra_menu)
         self.linha2 = self.__assents.criar_linha(135, 7, self.fra_menu)

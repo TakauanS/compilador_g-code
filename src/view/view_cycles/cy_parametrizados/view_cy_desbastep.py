@@ -35,7 +35,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__cmds = DesbastePCmds(self.__master)
 
             # SEÇÃO DE FRAMEs
-            self.__master.fra_code = ctk.CTkFrame(self.__master.fra_main, width=880, height=320, corner_radius=8, border_width=1, fg_color=ViewCyDesbasteP.cor1)
+            self.__master.fra_code = ctk.CTkFrame(self.__master.fra_main, width=880, height=295, corner_radius=8, border_width=1, fg_color=ViewCyDesbasteP.cor1)
             self.__master.fra_code.place(x=5, y=70)
 
             self.__master.fra_menu = ctk.CTkFrame(self.__master.fra_code, width=40, height=155, corner_radius=8, border_width=1, fg_color=ViewCyDesbasteP.cor1)
@@ -51,12 +51,6 @@ class ViewCyDesbasteP(ctk.CTkFrame):
 
             self.__master.label_prp = self.__assents.criar_label('PREVIEW - CODE', 10, 110, text_color=ViewCyDesbasteP.cor2, font=('Corbel', 23, 'bold'), frame=self.__master.fra_code)
             self.__master.label_prt = self.__assents.criar_label(ViewCyDesbasteP.pre, 10, 140, text_color=ViewCyDesbasteP.cor3, font=('Corbel', 18, 'normal'), frame=self.__master.fra_code)
-
-            self.__master.label_man = ctk.CTkLabel(self.__master.fra_main, font=('Corbel', 18, 'normal'), text_color=ViewCyDesbasteP.cor2, text=f'CMP_MAIN{self.__json.get_data(self.__json.data_file, 'extensão')}')
-            self.__master.label_man.place(x=15, y=240)
-
-            self.__master.label_con = ctk.CTkLabel(self.__master.fra_main, font=('Corbel', 18, 'normal'), text_color=ViewCyDesbasteP.cor2, text=f'CMP_CONTROLS{self.__json.get_data(self.__json.data_file, 'extensão')}')
-            self.__master.label_con.place(x=455, y=240)
 
             # SEÇÃO DE LINHAs
             self.__master.linha1 = ctk.CTkLabel(self.__master.fra_menu, image=ViewCyDesbasteP.img_lih, text='')
@@ -82,10 +76,6 @@ class ViewCyDesbasteP(ctk.CTkFrame):
 
             self.__master.but_sav = ctk.CTkButton(self.__master.fra_menu, command=self.__cmds.up_gcode, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_rea, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
             self.__master.but_sav.place(x=4, y=115)
-
-            # SEÇÃO DE TEXTBOXs
-            self.__master.preview_code1 = ctk.CTkTextbox(self.__master.fra_main, width=430, height=100, corner_radius=8, border_width=1).place(x=15, y=275)
-            self.__master.preview_code2 = ctk.CTkTextbox(self.__master.fra_main, width=420, height=100, corner_radius=8, border_width=1).place(x=455, y=275)
 
             self.__toplevel.destroy()
 

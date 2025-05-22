@@ -1,10 +1,28 @@
 import json
 from tkinter import messagebox
 
+from src.model.json_handler import JsonHandler
+
 class ParametersCmds:
 
     def __init__(self, master):
         self.__master = master
+        self.__json = JsonHandler()
+        self.__json.convert_files()
+
+    # Método responsável por inserir os parâmetros de corte padrão
+    def insert_parameters(self):
+        try:
+            self.__master.entry_rp.delete(0, 'end')
+            self.__master.entry_av.delete(0, 'end')
+
+            self.__master.combo_se.set(self.__json.get_data(self.__json.data_machine, 'sentido_rotação'))
+            self.__master.entry_rp.insert(0, self.__json.get_data(self.__json.data_standard, 'rpm'))
+            self.__master.entry_av.insert(0, self.__json.get_data(self.__json.data_standard, 'ava'))
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro na implementação dos parâmetros de corte padrão:\n\n{e}')
+            raise ValueError(f'Erro na implementação dos parâmetros de corte padrão: {e}!')
 
     # Método responsável por salvar os parâmetros de corte do usuário em json
     def save_parameters(self):
@@ -14,7 +32,7 @@ class ParametersCmds:
                 "sentido": self.__master.combo_se.get(),
                 "avanco": self.__master.entry_av.get(),
                 "passe": self.__master.entry_ps.get(),
-                "modo": self.__master.combo_md.get() 
+                "rpm": self.__master.entry_rp.get() 
             }
 
             if '' in self.dic_parameters.values():

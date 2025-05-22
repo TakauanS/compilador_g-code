@@ -64,7 +64,7 @@ class Parameters(ctk.CTkToplevel):
                                                         Parameters.cor1,
                                                         ti='salvar parâmetros', fr=self.fra_m)
   
-            self.but_padrao = self.__assents.criar_button(530, 220, 5, 5, '', self.__cmds.save_parameters, 
+            self.but_padrao = self.__assents.criar_button(530, 220, 5, 5, '', self.__cmds.insert_parameters, 
                                                           Parameters.img_pr, 
                                                           Parameters.cor1, 
                                                           Parameters.cor1, 
