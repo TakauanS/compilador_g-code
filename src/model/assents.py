@@ -27,6 +27,7 @@ class Assents:
 
         self.master = master
 
+    # Método responsável por criar label
     def criar_label(self, text, x, y, height=0, tooltip='', bg_color='#FCF6F2', fg_color='#FCF6F2', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
 
         if frame is None:
@@ -37,6 +38,7 @@ class Assents:
 
         Hovertip(self.label, tooltip)
 
+    # Método responsável por criar labelframe
     def criar_labelframe(self, x, y, width, height, text, bg='#FCF6F2', frame=None):
 
         if frame is None: 
@@ -47,6 +49,7 @@ class Assents:
 
         return self.labelframe
 
+    # Método responsável por criar entry
     def criar_entry(self, x, y, width=200, border_width=2, frame=None):
 
         if frame is None:
@@ -57,6 +60,7 @@ class Assents:
 
         return self.entry
 
+    # Método responsável por criar linha
     def criar_linha(self, x, y, frame=None):
 
         if frame is None:
@@ -65,6 +69,7 @@ class Assents:
         self.linha = ctk.CTkLabel(master=frame, width=10, text='', image=Assents.img_linv)
         self.linha.place(x=x, y=y)
 
+    # Método responsável por criar textbox
     def criar_textbox(self, text):
 
         self.textbox = ctk.CTkTextbox(self.master, 
@@ -81,6 +86,7 @@ class Assents:
         self.textbox.insert(index='1.0', text=text)
         self.textbox.configure(state='disabled')
 
+    # Método responsável por criar inputdialog
     def criar_inputdialog(self, title, text):
 
         self.input_dialog = ctk.CTkInputDialog(text=text,
@@ -91,21 +97,30 @@ class Assents:
                                                button_hover_color=Assents.cor5)
         return self.input_dialog
 
-    def criar_button(self, text, command, image, x, y):
+    # Método responsável por criar button
+    def criar_button(self, x, y, al, lg, txt, cmd, img, hv, fg, bg, cr=12, ti='', cp='right', ft=('Arial', 15, 'bold'), fr=None):
 
-        self.button = ctk.CTkButton(master=self.master,
-                                    height=35,
-                                    text=text,
-                                    image=image, 
-                                    command=command, 
-                                    corner_radius=12,   
-                                    bg_color=Assents.cor2, 
-                                    fg_color=Assents.cor4, 
-                                    hover_color=Assents.cor5,
-                                    font=('Arial', 15, 'bold'))
+        if fr is None:
+            fr = self.master
+
+        self.button = ctk.CTkButton(master=fr,
+                                    font=ft,
+                                    width=lg,
+                                    text=txt,
+                                    height=al,
+                                    image=img, 
+                                    bg_color=bg, 
+                                    fg_color=fg,
+                                    command=cmd,
+                                    compound=cp,     
+                                    hover_color=hv,
+                                    corner_radius=cr,)
         self.button.place(x=x, y=y) 
+        Hovertip(self.button, ti)
+
         return self.button
     
+    # Método responsável por criar combobox
     def criar_combobox(self, x, y, frame=None, width=200, corner_radius=10, values=(), justify='center'):
 
         if frame is None:
@@ -125,6 +140,7 @@ class Assents:
         self.combobox.place(x=x, y=y)
         return self.combobox
 
+    # Método responsável por criar radiobutton
     def criar_radionbutton(self, x, y, text, value, variable, width=100, frame=None):
 
         if frame is None:
