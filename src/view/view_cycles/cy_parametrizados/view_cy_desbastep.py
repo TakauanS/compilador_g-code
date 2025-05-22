@@ -68,15 +68,26 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__master.entry_esp = self.__assents.criar_entry(600, 11, 220, 1, self.__master.fra_code)
         
             # SEÇÃO DE BUTTONs
-            self.__master.but_par = ctk.CTkButton(self.__master.fra_menu, command=self.__cmds.call_parameters, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_par, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
-            self.__master.but_par.place(x=4, y=5)
-
-            self.__master.but_pen = ctk.CTkButton(self.__master.fra_menu, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_pen, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
-            self.__master.but_pen.place(x=4, y=60)
-
-            self.__master.but_sav = ctk.CTkButton(self.__master.fra_menu, command=self.__cmds.up_gcode, width=15, height=15, text='', corner_radius=0, image=ViewCyDesbasteP.img_rea, fg_color=ViewCyDesbasteP.cor1, hover_color=ViewCyDesbasteP.cor1)
-            self.__master.but_sav.place(x=4, y=115)
-
+            self.__master.but_par = self.__assents.criar_button(4, 5, 15, 15, '', self.__cmds.call_parameters,
+                                                                ViewCyDesbasteP.img_par,
+                                                                ViewCyDesbasteP.cor1,
+                                                                ViewCyDesbasteP.cor1,
+                                                                ViewCyDesbasteP.cor1,
+                                                                0, 'PARÂMETROS DE CORTE', 'top', fr=self.__master.fra_menu)
+            
+            self.__master.but_pen = self.__assents.criar_button(4, 60, 15, 15, '', self.__cmds.call_parameters,
+                                                                ViewCyDesbasteP.img_pen,
+                                                                ViewCyDesbasteP.cor1,
+                                                                ViewCyDesbasteP.cor1,
+                                                                ViewCyDesbasteP.cor1,
+                                                                0, 'SALVAR EM PENDRIVE', 'top', fr=self.__master.fra_menu)
+            
+            self.__master.but_sav = self.__assents.criar_button(4, 115, 15, 15, '', self.__cmds.up_gcode,
+                                                                ViewCyDesbasteP.img_rea,
+                                                                ViewCyDesbasteP.cor1,
+                                                                ViewCyDesbasteP.cor1,
+                                                                ViewCyDesbasteP.cor1,
+                                                                0, 'SALVAR EM DIRETÓRIO', 'top', fr=self.__master.fra_menu)
             self.__toplevel.destroy()
 
         except Exception as e:
