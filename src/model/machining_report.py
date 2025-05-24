@@ -26,6 +26,7 @@ class MachiningReport:
                 'FERRAMENTA': self.__json.get_data(self.__json.data_parameters, 'ferramenta'),
                 'SPINDLE': self.__json.get_data(self.__json.data_parameters, 'rpm'),
                 'PASSE': self.__json.get_data(self.__json.data_parameters, 'passe'),
+                'AVANÇO': self.__json.get_data(self.__json.data_parameters, 'avanco')
                 }
 
         except Exception as e:
