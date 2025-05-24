@@ -13,7 +13,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
     cor3 = 'black'   # Cor preta para TEXT-COLOR
 
     sub = 'Insira as informações em todos os campos abaixo para compilar o ciclo de desbaste parametrizado.'
-    pre = 'Veja o preview do seu G-code para conferir se os parâmetros estão corretos antes de enviar para a máquina.'
+    pre = 'Insira as informações abaixo para gerar um relatório de usinagem completo e fiel ao processo executado.'
 
     img_par = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/parametros.png'), size=(25, 25))
     img_pen = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/pendrive.png'), size=(25, 25))
@@ -49,7 +49,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__master.label_dif = self.__assents.criar_label('Ø DIÂMETRO FINAL:', 10, 46, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
             self.__master.label_esp = self.__assents.criar_label('ESPESSURA:', 480, 10, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
 
-            self.__master.label_prp = self.__assents.criar_label('PREVIEW - CODE', 10, 110, text_color=ViewCyDesbasteP.cor2, font=('Corbel', 23, 'bold'), frame=self.__master.fra_code)
+            self.__master.label_prp = self.__assents.criar_label('Relatório de Usinagem', 10, 110, text_color=ViewCyDesbasteP.cor2, font=('Corbel', 23, 'bold'), frame=self.__master.fra_code)
             self.__master.label_prt = self.__assents.criar_label(ViewCyDesbasteP.pre, 10, 140, text_color=ViewCyDesbasteP.cor3, font=('Corbel', 18, 'normal'), frame=self.__master.fra_code)
 
             # SEÇÃO DE LINHAs
