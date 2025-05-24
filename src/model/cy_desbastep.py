@@ -149,8 +149,7 @@ class CyDesbasteP(CyBase):
             self.__directory = f'{self.__imp}/{name_directory}.WPD' # Concatena o nome da pasta com o caminho do diretório
 
             if os.path.exists(self.__directory):
-                messagebox.showerror('Compilador G-Code', f'Erro na geração do g-code, pois o nome de projeto:\n\n{name_directory}, já é existente!')
-                return
+                raise ValueError('Erro na geração do g-code')
             else:
                 os.mkdir(self.__directory)
 

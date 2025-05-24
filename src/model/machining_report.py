@@ -1,5 +1,6 @@
 from docx import Document
 from datetime import date
+from tkinter import messagebox
 
 from src.model.json_handler import JsonHandler
 
@@ -33,15 +34,17 @@ class MachiningReport:
     # Método responsável por gerar o relatório de usinagem cnc
     def create_report(self, directoy: str):
         try:
-            for paragraphs in self._doc.paragraphs:
-                for run in paragraphs.runs:
-                    for key, value in self._references.items():
-                        if key in run.text:
-                            run.text = run.text.replace(key, value)
-
+            if '' in self._references.values():
+                messagebox.showerror('Compilador G-Code', 'Erro na geração do relatório de usinagem: observe se todos os campos estão preenchidos')
+                raise ValueError('Erro na geração do relatório de usinagem.')
+            else:
+                for paragraphs in self._doc.paragraphs:
+                    for run in paragraphs.runs:
+                        for key, value in self._references.items():
+                            if key in run.text:
+                                run.text = run.text.replace(key, value)
         except Exception as e:
-            raise ValueError(f'Erro no momento da geração do relatório de usinagem cnc:{e}')
-        
+            raise ValueError(f'Erro no momento da geração do relatório de usinagem cnc:{e}')           
         else:
             self._doc.save(f'{directoy}/Relatório de Usinagem CNC.docx')
             print(' - O Relatório de Usinagem CNC foi gerado com sucesso!')
