@@ -23,12 +23,17 @@ class DesbastePCmds:
         try:
             from src.model.assents import Assents
             from src.model.cy_desbastep import CyDesbasteP
-
-            self.__assents = Assents(self.__master)
+            from src.model.machining_report import MachiningReport
 
             self._dii = float(self.__master.entry_dii.get()) # Conversão do campo de entry - diâmetro inicial
             self._dif = float(self.__master.entry_dif.get()) # Conversão do campo de entry - diâmetro final
             self._esp = float(self.__master.entry_esp.get()) # Conversão do campo de entry - espessura
+
+            self._mat = str(self.__master.entry_mat.get()) # Conversão do campo de entry - Material de peça
+            self._ord = str(self.__master.entry_ord.get()) # Conversão de campo de entry - Ordem de serviço
+
+            self.__assents = Assents(self.__master)
+            self.__report = MachiningReport(self._ord, self._mat)
 
             self._ip = self.__assents.criar_inputdialog('Compilador G-Code', DesbastePCmds.txt) # Abre a tela de inputdialog para informar o nome do projeto/ciclo
             self._name_project = self._ip.get_input() # Retorna o nome do projeto/ciclo
@@ -38,9 +43,10 @@ class DesbastePCmds:
                 return
             else:
                 self.__desbastep = CyDesbasteP(self._dii, self._dif, self._esp)
-                
+
                 self.__desbastep.initialize_files()
                 self.__desbastep.generate_gcode(self._name_project)
+                self.__report.create_report(self.__desbastep.directory_project)
 
                 messagebox.showinfo('Compilador G-Code', f'Ciclo de desbaste parametrizado gerado com sucesso e salvo nos seus arquivos.')
                 print(' - Ciclo de desbaste parametrizado gerado com sucesso e salvo nos seus arquivos.')

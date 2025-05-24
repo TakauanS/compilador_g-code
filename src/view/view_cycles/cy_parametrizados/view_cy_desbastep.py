@@ -52,6 +52,9 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__master.label_prp = self.__assents.criar_label('Relatório de Usinagem', 10, 110, text_color=ViewCyDesbasteP.cor2, font=('Corbel', 23, 'bold'), frame=self.__master.fra_code)
             self.__master.label_prt = self.__assents.criar_label(ViewCyDesbasteP.pre, 10, 140, text_color=ViewCyDesbasteP.cor3, font=('Corbel', 18, 'normal'), frame=self.__master.fra_code)
 
+            self.__master.label_mat = self.__assents.criar_label('MATERIAL DA PEÇA:', 10, 216, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
+            self.__master.label_ord = self.__assents.criar_label('NÚMERO DE ORDEM:', 10, 180, text_color=ViewCyDesbasteP.cor3, frame=self.__master.fra_code)
+
             # SEÇÃO DE LINHAs
             self.__master.linha1 = ctk.CTkLabel(self.__master.fra_menu, image=ViewCyDesbasteP.img_lih, text='')
             self.__master.linha1.place(x=7, y=35)
@@ -66,6 +69,8 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__master.entry_dii = self.__assents.criar_entry(210, 11, 220, 1, self.__master.fra_code)
             self.__master.entry_dif = self.__assents.criar_entry(210, 47, 220, 1, self.__master.fra_code)
             self.__master.entry_esp = self.__assents.criar_entry(600, 11, 220, 1, self.__master.fra_code)
+            self.__master.entry_mat = self.__assents.criar_entry(205, 216, 220, 1, self.__master.fra_code)
+            self.__master.entry_ord = self.__assents.criar_entry(205, 180, 220, 1, self.__master.fra_code)
         
             # SEÇÃO DE BUTTONs
             self.__master.but_par = self.__assents.criar_button(4, 5, 15, 15, '', self.__cmds.call_parameters,

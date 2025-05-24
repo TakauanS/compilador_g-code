@@ -5,7 +5,7 @@ from src.model.json_handler import JsonHandler
 
 class MachiningReport:
     
-    def __init__(self, ordem, material):
+    def __init__(self, ordem: str, material: str):
         try:
             self._ordem = ordem
             self._material = material
@@ -13,7 +13,7 @@ class MachiningReport:
             self.__json = JsonHandler()
             self.__json.convert_files()
 
-            self._doc = Document('C:/Users/USUARIO/Documents/Compilador G-Code/Relatório de Usinagem CNC.docx')
+            self._doc = Document('C:/Users/USUARIO/Documents/Compilador G-Code/docs/Relatório de Usinagem CNC.docx')
 
             self._references = {
                 'DD/MM/AAAA': str(date.today()),
@@ -31,7 +31,7 @@ class MachiningReport:
             raise ValueError(f'Erro na importação dos dados necessários para o relatório de usinagem cnc:{e}')
         
     # Método responsável por gerar o relatório de usinagem cnc
-    def create_report(self):
+    def create_report(self, directoy: str):
         try:
             for paragraphs in self._doc.paragraphs:
                 for run in paragraphs.runs:
@@ -43,5 +43,5 @@ class MachiningReport:
             raise ValueError(f'Erro no momento da geração do relatório de usinagem cnc:{e}')
         
         else:
-            self._doc.save(f'{self.__json.get_data(self.__json.data_file, 'diretório')}/Relatório de Usinagem CNC.docx')
-            print('Tudo rodou redondinho!')
+            self._doc.save(f'{directoy}/Relatório de Usinagem CNC.docx')
+            print(' - O Relatório de Usinagem CNC foi gerado com sucesso!')

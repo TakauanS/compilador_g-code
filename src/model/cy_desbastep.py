@@ -197,3 +197,7 @@ class CyDesbasteP(CyBase):
     @property
     def file_macvars(self):
         return self.__file_macvars
+    
+    @property
+    def directory_project(self):
+        return self.__directory
