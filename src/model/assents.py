@@ -50,6 +50,8 @@ class Assents:
         self.frame = ctk.CTkFrame(master=fr, width=lg, height=al, corner_radius=cr, border_width=br, fg_color=fg)
         self.frame.place(x=x, y=y)
 
+        return self.frame
+
     # Método responsável por criar labelframe
     def criar_labelframe(self, x, y, width, height, text, bg='#FCF6F2', frame=None):
 
