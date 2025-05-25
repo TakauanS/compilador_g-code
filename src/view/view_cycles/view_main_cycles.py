@@ -1,4 +1,8 @@
+from PIL import Image
+from customtkinter import CTkImage
+
 from src.model.assents import Assents
+from src.controller.buttons_cmds.cycles_cmds.main_cycles_cmds import MainCyclesCmds
 
 class ViewMainCycles:
 
@@ -8,196 +12,92 @@ class ViewMainCycles:
 
     sub = 'Abaixo estão listados todos os ciclos de usinagem disponíveis, prontos para parametrização e uso funcional:'
 
+    img_up = CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/up_cycle.png'))
+    img_help = CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ajuda.png'))
+
     def __init__(self, master):
 
         self.__master = master
         self.__asssents = Assents(self.__master)
+        self.__cmds = MainCyclesCmds(self.__master)
 
         # SEÇÃO DE FRAMEs E LABELFRAMEs
 
-        self.__master.fra_cycles = self.__asssents.criar_frame(5, 70, 295, 880, 8, 1, fr=self.__master.fra_main)
+        self.__master.fra_cycl = self.__asssents.criar_frame(5, 70, 295, 880, 8, 1, fr=self.__master.fra_main)
+        
+        self.__master.fra_desb = self.__asssents.criar_labelframe(10, 5, 340, 100, 'Cycles de Desbaste', ViewMainCycles.cor2, self.__master.fra_cycl)
+        self.__master.fra_fura = self.__asssents.criar_labelframe(10, 120, 340, 100, 'Cycles de Furação', ViewMainCycles.cor2, self.__master.fra_cycl)
+        self.__master.fra_face = self.__asssents.criar_labelframe(530, 5, 340, 100, 'Cycles de Faceamento', ViewMainCycles.cor2, self.__master.fra_cycl)
+        self.__master.fra_cana = self.__asssents.criar_labelframe(530, 120, 340, 100, 'Cycles de Canal', ViewMainCycles.cor2, self.__master.fra_cycl)
 
         # SEÇÃO DE LABELs
         self.__master.label_title = self.__asssents.criar_label('Ciclos de Usinagem | Parametrizados - Funcionais', 10, 5, text_color=ViewMainCycles.cor1, font=('Corbel', 22, 'bold'), frame=self.__master.fra_main,)
         self.__master.label_sub = self.__asssents.criar_label(ViewMainCycles.sub, 10, 35, text_color=ViewMainCycles.cor3, font=('Corbel', 18, 'normal'), frame=self.__master.fra_main)
 
+        self.__master.label_desbp = self.__asssents.criar_label('Desbaste Parametrizado:', 10, 5, text_color=ViewMainCycles.cor3, frame=self.__master.fra_desb)
+        self.__master.label_desbf = self.__asssents.criar_label('Desbaste Funcional:', 10, 40, text_color=ViewMainCycles.cor3, frame=self.__master.fra_desb)
+
+        self.__master.label_furap = self.__asssents.criar_label('Furação Parametrizado:', 10, 5, text_color=ViewMainCycles.cor3, frame=self.__master.fra_fura)
+        self.__master.label_furaf = self.__asssents.criar_label('Furação Funcional:', 10, 40, text_color=ViewMainCycles.cor3, frame=self.__master.fra_fura)
+
+        self.__master.label_facep = self.__asssents.criar_label('Faceamento Parametrizado:', 10, 5, text_color=ViewMainCycles.cor3, frame=self.__master.fra_face)
+        self.__master.label_facef = self.__asssents.criar_label('Faceamento Funcional:', 10, 40, text_color=ViewMainCycles.cor3, frame=self.__master.fra_face)
+
+        self.__master.label_canap = self.__asssents.criar_label('Canal Parametrizado:', 10, 5, text_color=ViewMainCycles.cor3, frame=self.__master.fra_cana)
+        self.__master.label_canaf = self.__asssents.criar_label('Canal Funcional:', 10, 40, text_color=ViewMainCycles.cor3, frame=self.__master.fra_cana)
+
         # SEÇÃO DE ENTRYs
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-#import customtkinter as ctk
-#from src.model.assents import Assents
-
-#from src.controller.buttons_cmds.cycles_cmds.main_cycles_cmds import MainCyclesCmds
-
-#class MainCycles(ctk.CTkToplevel):
-
-    #cor1 = '#F2F1F0' # Cor branca de FG-COLOR
-    #cor2 = '#FCF6F2' # Cor branca de BG-COLOR
-
-    #def __init__(self, master):
-     #   super().__init__(master)
-
-       # self.__master = master
-       # self.__assents = Assents(self)
-       # self.__cmds = MainCyclesCmds(self.__master, self)
-
-      #  self.geometry('610x300')
-      #  self.title('Compilador G-Code | Cycles')
-     #   self.resizable(False, False)
-     #   self.config(bg=MainCycles.cor1)
-     #   self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-code/assets/imgs/favicon.ico')
-
-     #   self.lift()
-     #   self.attributes("-topmost", True)
-     #   self.focus_force()
-
-        # SEÇÃO DE TABVIEWs
-       # self.tabview = ctk.CTkTabview(self, 
-       #                               width=590, 
-      #                                height=295,
-        #                              border_width=1, 
-         #                             corner_radius=12,           
-          #                            bg_color=MainCycles.cor1,
-           #                           fg_color=MainCycles.cor1,
-            #                          segmented_button_selected_color=self.__assents.cor4)
-        #self.tabview.place(x=10, y=-5)
-
-       # self.aba_cycles = self.tabview.add('CYCLES')
-
-        # SEÇÃO DE LABELFRAMEs
-       # self.fra_desb = self.__assents.criar_labelframe(0, 0, 270, 110, 'Cycles Desbaste', MainCycles.cor1, self.aba_cycles)
-       # self.fra_cana = self.__assents.criar_labelframe(295, 0, 270, 110, 'Cycles Canal', MainCycles.cor1, self.aba_cycles)
-
-       # self.fra_face = self.__assents.criar_labelframe(0, 120, 270, 110, 'Cycles Faceamento', MainCycles.cor1, self.aba_cycles)
-      #  self.fra_fura = self.__assents.criar_labelframe(295, 120, 270, 110, 'Cycles Furação', MainCycles.cor1, self.aba_cycles)
-
         # SEÇÃO DE BUTTONs
-      #  self.but_desp = ctk.CTkButton(self.fra_desb,
-      #                               height=28, 
-       #                              width=55,  
-        #                             corner_radius=8,                             
-         #                            bg_color=MainCycles.cor2, 
-          #                           font=('Arial', 15, 'bold'),                                    
-           #                          fg_color=self.__assents.cor4,
-            #                         text='Desbaste - Parametrizado             ',    
-             #                        hover_color=self.__assents.cor5,
-              #                       command=self.__cmds.call_desbastep)
-        #self.but_desp.place(x=5, y=5)
+        self.__master.but_help_desb = self.__asssents.criar_button(305, -8, 0, 0, '', 'teste', ViewMainCycles.img_help, ViewMainCycles.cor2, ViewMainCycles.cor2, ViewMainCycles.cor2, ti='HELP', fr=self.__master.fra_desb)
+        self.__master.but_help_fura = self.__asssents.criar_button(305, -8, 0, 0, '', 'teste', ViewMainCycles.img_help, ViewMainCycles.cor2, ViewMainCycles.cor2, ViewMainCycles.cor2, ti='HELP', fr=self.__master.fra_fura)
+        self.__master.but_help_face = self.__asssents.criar_button(305, -8, 0, 0, '', 'teste', ViewMainCycles.img_help, ViewMainCycles.cor2, ViewMainCycles.cor2, ViewMainCycles.cor2, ti='HELP', fr=self.__master.fra_face)
+        self.__master.but_help_cana = self.__asssents.criar_button(305, -8, 0, 0, '', 'teste', ViewMainCycles.img_help, ViewMainCycles.cor2, ViewMainCycles.cor2, ViewMainCycles.cor2, ti='HELP', fr=self.__master.fra_cana)
+
+        self.__master.but_desbp = self.__asssents.criar_button(225, 5, 0, 0, '', self.__cmds.call_desbastep, 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - DESBASTE PARAMETRIZADO', fr=self.__master.fra_desb)
         
-        #self.but_desf = ctk.CTkButton(self.fra_desb,
-                #                     height=28, 
-               #                      width=55,  
-              #                       corner_radius=8,                             
-             #                        bg_color=MainCycles.cor2, 
-            #                         font=('Arial', 15, 'bold'), 
-           #                          fg_color=self.__assents.cor4,
-          #                           text='Desbaste - Funcional                     ',    
-         #                            hover_color=self.__assents.cor5)
-        #self.but_desf.place(x=5, y=45)
+        self.__master.but_desbf = self.__asssents.criar_button(185, 40, 0, 0, '', 'teste', 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - DESBASTE FUNCIONAL', fr=self.__master.fra_desb)
         
-        #self.but_facp = ctk.CTkButton(self.fra_face,
-                 #                    height=28, 
-                #                     width=55,  
-               #                      corner_radius=8,                           
-              #                       compound='right',  
-             #                        bg_color=MainCycles.cor2, 
-            #                         font=('Arial', 15, 'bold'), 
-           #                          fg_color=self.__assents.cor4,
-          #                           text='Faceamento - Parametrizado        ',    
-         #                            hover_color=self.__assents.cor5)
-        #self.but_facp.place(x=5, y=5)
+        self.__master.but_furap = self.__asssents.criar_button(215, 5, 0, 0, '', 'teste', 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - FURAÇÃO PARAMETRIZADO', fr=self.__master.fra_fura)
         
-        #self.but_facf = ctk.CTkButton(self.fra_face,
-                 #                    height=28, 
-                #                     width=55,  
-               #                      corner_radius=8,                           
-              #                       compound='right',  
-             #                        bg_color=MainCycles.cor2, 
-            #                         font=('Arial', 15, 'bold'), 
-           #                          fg_color=self.__assents.cor4,
-          #                           text='Faceamento - Funcional                ',    
-         #                            hover_color=self.__assents.cor5)
-        #self.but_facf.place(x=5, y=45)
+        self.__master.but_furaf = self.__asssents.criar_button(175, 40, 0, 0, '', 'teste', 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - FURAÇÃO FUNCIONAL', fr=self.__master.fra_fura)
         
-        #self.but_furp = ctk.CTkButton(self.fra_fura,
-                 #                    height=28, 
-                #                     width=55,  
-               #                      corner_radius=8,                           
-              #                       compound='right',  
-             #                        bg_color=MainCycles.cor2, 
-            #                         font=('Arial', 15, 'bold'), 
-           #                          fg_color=self.__assents.cor4,
-          #                           text='Furação - Parametrizado               ',    
-         #                            hover_color=self.__assents.cor5)
-        #self.but_furp.place(x=5, y=5)
+        self.__master.but_facep = self.__asssents.criar_button(255, 5, 0, 0, '', 'teste', 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - FACEAMENTO PARAMETRIZADO', fr=self.__master.fra_face)
         
-        #self.but_furf = ctk.CTkButton(self.fra_fura,
-                 #                    height=28, 
-                #                     width=55,  
-               #                      corner_radius=8,                           
-              #                       compound='right',  
-             #                        bg_color=MainCycles.cor2, 
-            #                         font=('Arial', 15, 'bold'), 
-           #                          fg_color=self.__assents.cor4,
-          #                           text='Furação - Funcional                       ',    
-         #                            hover_color=self.__assents.cor5)
-        #self.but_furf.place(x=5, y=45)
+        self.__master.but_facef = self.__asssents.criar_button(210, 40, 0, 0, '', 'teste', 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - FACEAMENTO FUNCIONAL', fr=self.__master.fra_face)
         
-        #self.but_canp = ctk.CTkButton(self.fra_cana,
-                 #                    height=28, 
-                #                     width=55,  
-               #                      corner_radius=8,                           
-              #                       compound='right',  
-             #                        bg_color=MainCycles.cor2, 
-            #                         font=('Arial', 15, 'bold'), 
-           #                          fg_color=self.__assents.cor4,
-          #                           text='Canal - Parametrizado                    ',    
-         #                            hover_color=self.__assents.cor5)
-        #self.but_canp.place(x=5, y=5)
+        self.__master.but_canap = self.__asssents.criar_button(195, 5, 0, 0, '', 'teste', 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - CANAL PARAMETRIZADO', fr=self.__master.fra_cana)
         
-        #self.but_canf = ctk.CTkButton(self.fra_cana,
-                 #                    height=28, 
-                #                     width=55,  
-               #                      corner_radius=8,                           
-              #                       compound='right',  
-             #                        bg_color=MainCycles.cor2, 
-            #                         font=('Arial', 15, 'bold'), 
-           #                          fg_color=self.__assents.cor4,
-          #                           text='Canal - Funcional                            ',    
-         #                            hover_color=self.__assents.cor5)
-        #self.but_canf.place(x=5, y=45)
+        self.__master.but_canaf = self.__asssents.criar_button(155, 40, 0, 0, '', 'teste', 
+                                                               ViewMainCycles.img_up, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, 
+                                                               ViewMainCycles.cor2, ti='UP - CANAL FUNCIONAL', fr=self.__master.fra_cana)

@@ -1,7 +1,7 @@
 import json
 from tkinter import filedialog, messagebox, END
 
-from src.view.main_screen import MainScreen
+from src.view.view_main_screen import MainScreen
 
 class SetupManagerCmds:
 

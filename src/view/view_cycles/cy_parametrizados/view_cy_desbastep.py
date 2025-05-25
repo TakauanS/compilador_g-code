@@ -21,16 +21,15 @@ class ViewCyDesbasteP(ctk.CTkFrame):
     img_lih = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(25, 25))
     img_rea = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/readme.png'), size=(25, 25))
 
-    def __init__(self, master, toplevel):
+    def __init__(self, master):
         try:
             super().__init__(master)
 
             self.__master = master
-            self.__toplevel = toplevel
-    
+
             self.__json = JsonHandler()
             self.__json.convert_files()
-
+            
             self.__assents = Assents(self.__master)
             self.__cmds = DesbastePCmds(self.__master)
 
@@ -93,8 +92,6 @@ class ViewCyDesbasteP(ctk.CTkFrame):
                                                                 ViewCyDesbasteP.cor1,
                                                                 ViewCyDesbasteP.cor1,
                                                                 0, 'SALVAR EM DIRETÓRIO', 'top', fr=self.__master.fra_menu)
-            self.__toplevel.destroy()
-
         except Exception as e:
             messagebox.showerror('Compilador G-Code | Cycles', f'Ocorreu um erro ao chamar o ciclo de desbaste parametrizado:\n\n{e}')
             print(f'Erro! {e}')

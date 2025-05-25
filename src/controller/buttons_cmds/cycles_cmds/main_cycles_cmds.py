@@ -4,15 +4,13 @@ from src.view.view_cycles.cy_parametrizados.view_cy_desbastep import ViewCyDesba
 
 class MainCyclesCmds:
 
-    def __init__(self, mtr, tpl):
-        
+    def __init__(self, mtr):
         self.__mtr = mtr
-        self.__tpl = tpl
 
     # Método responsável por fazer a chamada do ciclo de desbaste parametrizado
     def call_desbastep(self):
         try:
-            self.__desbastep = ViewCyDesbasteP(self.__mtr, self.__tpl)
+            self.__desbastep = ViewCyDesbasteP(self.__mtr)
             self.__desbastep.mainloop()
         
         except Exception as e:

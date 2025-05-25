@@ -26,18 +26,12 @@ class ViewMainScreen(ctk.CTk):
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
         # SEÇÃO DE FRAMEs
-        self.fra_menu = ctk.CTkFrame(self, border_width=1, width=900, height=60, corner_radius=0, fg_color=ViewMainScreen.cor1)
-        self.fra_menu.place(x=0, y=0)
-        
-        self.fra_rodp = ctk.CTkFrame(self, border_width=1, width=902, height=25, corner_radius=0, fg_color=ViewMainScreen.cor1)
-        self.fra_rodp.place(x=-1, y=477)
-
-        self.fra_main = ctk.CTkFrame(self, border_width=1, width=890, height=378, corner_radius=8, fg_color=ViewMainScreen.cor1)
-        self.fra_main.place(x=5, y=95)
+        self.fra_menu = self.__assents.criar_frame(0, 0, 60, 900, 0, 1, ViewMainScreen.cor1, self)
+        self.fra_rodp = self.__assents.criar_frame(-1, 477, 25, 902, 0, 1, ViewMainScreen.cor1, self)
+        self.fra_main = self.__assents.criar_frame(5, 95, 378, 890, 8, 1, ViewMainScreen.cor1, self)
 
         # SEÇÃO DE ENTRYs
-        self.entry_en = ctk.CTkEntry(self, height=25, width=890, border_width=1, corner_radius=8, font=('Corbel', 17), bg_color=ViewMainScreen.cor1)
-        self.entry_en.place(x=5, y=65)
+        self.entry_cmd = self.__assents.criar_entry(5, 65, 890, 1, self)
 
         # SEÇÃO DE BUTTONs
         self.but_con = self.__assents.criar_button(15, 3, 34, 34, '', self.__cmds.call_maincycles, 
@@ -88,7 +82,6 @@ class ViewMainScreen(ctk.CTk):
                                                     frame=self.fra_rodp,
                                                     font=('Arial', 13, 'normal'),
                                                     text_color=ViewMainScreen.cor3) 
-          
         # SEÇÃO DE LINHAs
         self.linha1 = self.__assents.criar_linha(66, 7, self.fra_menu)
         self.linha2 = self.__assents.criar_linha(135, 7, self.fra_menu)
