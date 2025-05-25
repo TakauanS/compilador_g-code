@@ -4,7 +4,7 @@ from src.model.json_handler import JsonHandler
 
 from src.controller.buttons_cmds.main_screen_cmds import MainScreenCmds
 
-class MainScreen(ctk.CTk):
+class ViewMainScreen(ctk.CTk):
 
     cor1 = '#FCF6F2' # Cor branca de FG-COLOR
     cor2 = '#EBE8E8' # Cor branca de FG-COLOR (mais puxado para o cinza)
@@ -21,58 +21,58 @@ class MainScreen(ctk.CTk):
 
         self.geometry('900x500')
         self.title('Compilador G-Code')
-        self.config(bg=MainScreen.cor1)
+        self.config(bg=ViewMainScreen.cor1)
         self.resizable(False, False)
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
         # SEÇÃO DE FRAMEs
-        self.fra_menu = ctk.CTkFrame(self, border_width=1, width=900, height=60, corner_radius=0, fg_color=MainScreen.cor1)
+        self.fra_menu = ctk.CTkFrame(self, border_width=1, width=900, height=60, corner_radius=0, fg_color=ViewMainScreen.cor1)
         self.fra_menu.place(x=0, y=0)
         
-        self.fra_rodp = ctk.CTkFrame(self, border_width=1, width=902, height=25, corner_radius=0, fg_color=MainScreen.cor1)
+        self.fra_rodp = ctk.CTkFrame(self, border_width=1, width=902, height=25, corner_radius=0, fg_color=ViewMainScreen.cor1)
         self.fra_rodp.place(x=-1, y=477)
 
-        self.fra_main = ctk.CTkFrame(self, border_width=1, width=890, height=378, corner_radius=8, fg_color=MainScreen.cor1)
+        self.fra_main = ctk.CTkFrame(self, border_width=1, width=890, height=378, corner_radius=8, fg_color=ViewMainScreen.cor1)
         self.fra_main.place(x=5, y=95)
 
         # SEÇÃO DE ENTRYs
-        self.entry_en = ctk.CTkEntry(self, height=25, width=890, border_width=1, corner_radius=8, font=('Corbel', 17), bg_color=MainScreen.cor1)
+        self.entry_en = ctk.CTkEntry(self, height=25, width=890, border_width=1, corner_radius=8, font=('Corbel', 17), bg_color=ViewMainScreen.cor1)
         self.entry_en.place(x=5, y=65)
 
         # SEÇÃO DE BUTTONs
         self.but_con = self.__assents.criar_button(15, 3, 34, 34, '', self.__cmds.call_maincycles, 
                                                        self.__assents.img_conf, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1,
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1,
                                                        8, 'CONFIGURAÇÕES', 'top', fr=self.fra_menu)
         
         self.but_fer = self.__assents.criar_button(92, 5, 34, 34, '', self.__cmds.call_maincycles, 
                                                        self.__assents.img_ferr, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1,
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1,
                                                        8, 'FERRAMENTAS', 'top', fr=self.fra_menu)
         
         self.but_ava = self.__assents.criar_button(168, 3, 34, 34, '', self.__cmds.call_maincycles, 
                                                        self.__assents.img_adva, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1,
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1,
                                                        8, 'AVANÇOS', 'top', fr=self.fra_menu)
         
         self.but_cyc = self.__assents.criar_button(243, 3, 34, 34, '', self.__cmds.call_maincycles, 
                                                        self.__assents.img_cycl, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1,
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1,
                                                        8, 'CICLOS DE USINAGEM', 'top', fr=self.fra_menu)
         
         self.but_hel = self.__assents.criar_button(307, 5, 34, 34, '', self.__cmds.call_maincycles, 
                                                        self.__assents.img_help, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1, 
-                                                       MainScreen.cor1,
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1, 
+                                                       ViewMainScreen.cor1,
                                                        8, 'AJUDA', 'top', fr=self.fra_menu)
 
         # SEÇÃO DE LABELs
@@ -87,7 +87,7 @@ class MainScreen(ctk.CTk):
         self.label_mode = self.__assents.criar_label(f"model: {self.__json_handler.get_data(self.__json_handler.data_user, 'modelo')}", 5, 4,     
                                                     frame=self.fra_rodp,
                                                     font=('Arial', 13, 'normal'),
-                                                    text_color=MainScreen.cor3) 
+                                                    text_color=ViewMainScreen.cor3) 
           
         # SEÇÃO DE LINHAs
         self.linha1 = self.__assents.criar_linha(66, 7, self.fra_menu)

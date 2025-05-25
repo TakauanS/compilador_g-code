@@ -1,7 +1,7 @@
 from PIL import Image
 import customtkinter as ctk
 from src.model.assents import Assents
-from src.view.setup_manager import SetupManager
+from src.view.view_setup_manager import SetupManager
 
 class System_Initializer(ctk.CTk):
 
