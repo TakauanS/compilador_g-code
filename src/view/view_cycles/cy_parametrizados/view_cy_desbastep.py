@@ -65,11 +65,11 @@ class ViewCyDesbasteP(ctk.CTkFrame):
             self.__master.linha3.place(x=10, y=85)
 
             # SEÇÃO DE ENTRYs
-            self.__master.entry_dii = self.__assents.criar_entry(210, 11, 220, 1, self.__master.fra_code)
-            self.__master.entry_dif = self.__assents.criar_entry(210, 47, 220, 1, self.__master.fra_code)
-            self.__master.entry_esp = self.__assents.criar_entry(600, 11, 220, 1, self.__master.fra_code)
-            self.__master.entry_mat = self.__assents.criar_entry(205, 216, 220, 1, self.__master.fra_code)
-            self.__master.entry_ord = self.__assents.criar_entry(205, 180, 220, 1, self.__master.fra_code)
+            self.__master.entry_dii = self.__assents.criar_entry(210, 11, 220, 1, frame=self.__master.fra_code)
+            self.__master.entry_dif = self.__assents.criar_entry(210, 47, 220, 1, frame=self.__master.fra_code)
+            self.__master.entry_esp = self.__assents.criar_entry(600, 11, 220, 1, frame=self.__master.fra_code)
+            self.__master.entry_mat = self.__assents.criar_entry(205, 216, 220, 1, frame=self.__master.fra_code)
+            self.__master.entry_ord = self.__assents.criar_entry(205, 180, 220, 1, frame=self.__master.fra_code)
         
             # SEÇÃO DE BUTTONs
             self.__master.but_par = self.__assents.criar_button(4, 5, 15, 15, '', self.__cmds.call_parameters,
