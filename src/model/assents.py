@@ -64,12 +64,12 @@ class Assents:
         return self.labelframe
 
     # Método responsável por criar entry
-    def criar_entry(self, x, y, width=200, border_width=2, frame=None):
+    def criar_entry(self, x, y, js='center', width=200, border_width=2, frame=None):
 
         if frame is None:
             frame = self.master
 
-        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=width, border_width=border_width, justify='center', bg_color=Assents.cor6, font=('Consola', 16))
+        self.entry = ctk.CTkEntry(master=frame, corner_radius=10, width=width, border_width=border_width, justify=js, bg_color=Assents.cor6, font=('Consola', 16))
         self.entry.place(x=x, y=y)    
 
         return self.entry
