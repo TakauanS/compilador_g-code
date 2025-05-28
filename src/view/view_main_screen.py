@@ -93,7 +93,7 @@ class ViewMainScreen(ctk.CTk):
         self.label_help = self.__assents.criar_label('HELP', 316, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
 
         self.label_mode = self.__assents.criar_label(f"model: {self.__json_handler.get_data(self.__json_handler.data_user, 'modelo')}", 5, 4,     
-                                                    frame=self.fra_rodp,
+                                                    tooltip='MODELO DE MÁQUINA', frame=self.fra_rodp,
                                                     font=('Arial', 13, 'normal'),
                                                     text_color=ViewMainScreen.cor3) 
         # SEÇÃO DE LINHAs

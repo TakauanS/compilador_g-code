@@ -38,7 +38,11 @@ class EventsCmds:
         
     # Método responsável por chamar o ciclo de desbaste parametrizado
     def call_desbastep(self):
+        try:
+            self.clean_screen()
+            self._desbast = ViewCyDesbasteP(self.__master)
+            self._desbast.mainloop()
         
-        self.clean_screen()
-        self._desbast = ViewCyDesbasteP(self.__master)
-        self._desbast.mainloop()
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de chamar a tela de ciclo de desbaste parametrizado:\n\n{e}')
+            raise ValueError(f'Erro no momento de chamar a tela de ciclo de desbaste parametrizado: {e}')

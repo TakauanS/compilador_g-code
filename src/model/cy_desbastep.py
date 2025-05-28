@@ -58,17 +58,26 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo configs em atributo
     def create_configs(self):
         try:
+            self.sentido = self.__json.get_data(self.__json.data_parameters, 'sentido') # Retorna o valor do sentido de rotação
+
+            if self.sentido == 'SENTIDO - HR':
+                self.sentido = 'M3'
+            
+            elif self.sentido == 'SENTIDO - AHR':
+                self.sentido = 'M4'
+
             self.__file_configs = textwrap.dedent(f'''
-            ; G-Code configuration
-            N10 G290;
-            N20 G18 G40 G90 G95;
+            ; G-Code Configurações
+            N10 MSG("CARREGANDO PARÂMETROS DE CORTE...")
 
-            ; Tool and rpm senttings
-            N30 G97 S{self.__json.get_data(self.__json.data_standard, 'rpm')};
-            N40 {self.__json.get_data(self.__json.data_parameters, 'ferramenta')};
-            N50 M3;
+            N20 G290;
+            N30 G18 G40 G90 G95;
 
-            N60 RET;''')
+            N40 G97 S{self.__json.get_data(self.__json.data_parameters, 'rpm')};
+            N50 {self.__json.get_data(self.__json.data_parameters, 'ferramenta')};
+            N60 {self.sentido};
+
+            N70 RET;''')
             
             return self.__file_configs
         
@@ -80,14 +89,20 @@ class CyDesbasteP(CyBase):
     def create_controls(self):
         try:
             self.__file_controls = textwrap.dedent(f'''
-            ; Macro configuration section
-            N10 DEFINE POS_SEG AS G0 {self.__json.get_data(self.__json.data_machine, 'offset')} X{self.__json.get_data(self.__json.data_standard, 'posx')} Z{self.__json.get_data(self.__json.data_standard, 'posz')}; Safety positions macro
-            N20 DEFINE APROX AS G0 X=R1 Z0; X approximation macro
+            ; Seção de Configurações de Macros
+            N10 DEFINE POS_SEG AS G0 {self.__json.get_data(self.__json.data_machine, 'offset')} X{self.__json.get_data(self.__json.data_standard, 'posx')} Z{self.__json.get_data(self.__json.data_standard, 'posz')}; Posicionamento de Segurança
+            N20 DEFINE AFAST AS G90 G0 X{self.__json.get_data(self.__json.data_standard, 'posx')} Z{self.__json.get_data(self.__json.data_standard, 'posz')}; Afastamento da Peça
 
-            N30 POS_SEG;
-            N40 APROX;
+            N30 DEFINE APROX_D AS G0 X=R1 Z0; Aproximação da Peça - Desbaste
+            N40 DEFINE APROX_A AS G0 X=R2 Z0; Aproximação da peça - Acabamento
 
-            ; Repeating structure section
+            N50 POS_SEG;
+            N60 APROX_D;
+
+            N70 MSG("CARREGANDO MACROS...");
+            N80 MSG("");
+
+            ; Estrutura de repetição - Desbaste
             FOR R8 = 1 TO R7
                 G91
                 G1 X=R4 F{self.__json.get_data(self.__json.data_parameters, 'avanco')}
@@ -96,7 +111,22 @@ class CyDesbasteP(CyBase):
                 G1 X=R4
             ENDFOR
 
-            N50 RET;''')
+            N90 AFAST;
+
+            ; Seção de Acabamento da Peça
+            N100 MSG("INICIAR ACABAMENTO? - CYCLE START!");
+            N110 M00;
+            N120 MSG("PASSE DE ACABAMENTO: 1 DE 1");
+
+            N130 APROX_A;
+            N140 G1 Z=R3;
+            N150 G1 X=R1;
+            N160 APROX_D;
+
+            N170 MSG("");
+            N180 AFAST;
+
+            N190 RET;''')
 
             return self.__file_controls
         
@@ -108,22 +138,23 @@ class CyDesbasteP(CyBase):
     def create_macvars(self):
         try:
             self.__file_macvars = textwrap.dedent(f'''
-            ; Secondary variable section
-            N10 R5 = ABS(R4); Pass variable conversion
-            N20 R6 = (R1 - R2) / R5; Number of passes variable
+            ; Seção de Variáveis Secudárias
+            N10 R5 = ABS(R4); Conversão da var de passe
+            N20 R6 = (R1 - R2) / R5; Número de passes
+            N30 R7 = R6 - 1; Variável de condicional para desbaste 
+            N40 DIAMON; Programação em diâmetro
 
-            N30 R7 = (R6 / 2) - 0.5;
-
-            ; Control structure section
-            IF R5 > 1.5
+            ; Estrutura de Controle - Passe
+            IF R5 > 4
                 MSG("- OCORREU UM ERRO NA INSERÇÃO DO VALOR DO PASSE. TENTE NOVAMENTE!");
                 M00;
                 M30;
             ELSE
+                MSG("CARREGANDO LÓGICAS DE VARIÁVEIS...")
                 _N_CMP_CONTROLS_SPF; 
             ENDIF
 
-            N40 RET;''')
+            N50 RET;''')
         
             return self.__file_macvars
         
