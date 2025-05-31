@@ -18,7 +18,7 @@ class MachiningReport:
 
             self._references = {
                 'DD/MM/AAAA': str(date.today()),
-                'NOME': self.__json.get_data(self.__json.data_user, 'usuário'),
+                'NOME': self.__json.get_data(self.__json.data_user, 'usuario'),
                 'EMPRESA': self.__json.get_data(self.__json.data_user, 'empresa'),
                 'MAQUINA': self.__json.get_data(self.__json.data_user, 'modelo'),
                 'ORDEM': self._ordem,

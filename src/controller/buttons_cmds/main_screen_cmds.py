@@ -19,3 +19,13 @@ class MainScreenCmds:
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Ocorreu um erro ao chamar a tela de ciclos de usinagem:\n\n{e}')
             print(f'Erro: {e}')
+
+    # Método responsável por chamar a tela de parâmetros de corte
+    def call_parameters(self):
+        try:
+            from src.view.view_parameters import ViewParameters
+            self.parameters = ViewParameters()
+        
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de chamar a tela de parâmetros de corte:\n\n{e}')
+            raise ValueError(f'Erro no momento de chamar a tela de parâmetros de corte: {e}')

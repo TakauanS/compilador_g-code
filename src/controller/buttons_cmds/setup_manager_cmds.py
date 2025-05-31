@@ -1,8 +1,6 @@
 import json
 from tkinter import filedialog, messagebox, END
 
-from src.view.view_main_screen import MainScreen
-
 class SetupManagerCmds:
 
     def __init__(self, master):
@@ -24,15 +22,17 @@ class SetupManagerCmds:
     # Método responsável por capturar valores dos entrys e gerar os json
     def capture_values(self):
         try:
+            from src.view.view_main_screen import ViewMainScreen
+
             self.__master.dic_user = {
-                'usuário': self.__master.entry_user.get(),
+                'usuario': self.__master.entry_user.get(),
                 'empresa': self.__master.entry_empr.get(),
                 'modelo': self.__master.com_modelo.get()
             }
 
             self.__master.dic_file = {
-                'diretório': self.__master.entry_prc.get(),
-                'extensão': self.__master.com_extens.get(),
+                'diretorio': self.__master.entry_prc.get(),
+                'extensao': self.__master.com_extens.get(),
                 'contador': self.__master.com_contad.get(),
                 'estilo': self.__master.com_estilo.get(),
                 'readme': self.__master.strv_read.get(),
@@ -40,7 +40,7 @@ class SetupManagerCmds:
             }
 
             self.__master.dic_mach = {
-                'sentido_rotação': self.__master.com_sentid.get(),
+                'sentido_rotacao': self.__master.com_sentid.get(),
                 'estilo_torre': self.__master.com_torres.get(),
                 'offset': self.__master.com_offset.get()
             }
@@ -70,7 +70,7 @@ class SetupManagerCmds:
                 messagebox.showinfo('Compilador G-Code', 'Os dados foram compilados e armazenados com sucesso no sistema')
 
             self.__master.destroy()
-            self.__mainscreen = MainScreen()
+            self.__mainscreen = ViewMainScreen()
             self.__mainscreen.mainloop()
 
         except Exception as e:

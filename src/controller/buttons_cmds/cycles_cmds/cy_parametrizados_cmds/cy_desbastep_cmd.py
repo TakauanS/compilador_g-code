@@ -6,14 +6,18 @@ class DesbastePCmds:
 
     def __init__(self, master):
         self.__master = master
+        self.__widgtes = self.__master.winfo_children()
 
     # Método responsável por fazer a chamada da tela de parâmetros de corte
     def call_parameters(self):
         try:
-            from src.view.view_parameters import Parameters
+            from src.view.view_parameters import ViewParameters
+            from src.controller.buttons_cmds.events_cmds import EventsCmds
 
-            self.__parameters = Parameters()
-            self.__parameters.mainloop()
+            self.__events = EventsCmds(self.__master)
+
+            self.__events.clean_screen()
+            self.__parameters = ViewParameters(self.__master)
 
         except Exception as e:
             print(f'Erro na chamada da tela de parâmetros de corte:\n\n{e}')

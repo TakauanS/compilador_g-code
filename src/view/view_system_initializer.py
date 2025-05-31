@@ -1,7 +1,8 @@
 from PIL import Image
 import customtkinter as ctk
+
 from src.model.assents import Assents
-from src.view.view_setup_manager import SetupManager
+from src.controller.buttons_cmds.system_initializer_cmds import SystemInitializerCmds
 
 class System_Initializer(ctk.CTk):
 
@@ -13,23 +14,13 @@ class System_Initializer(ctk.CTk):
         super().__init__()
 
         self.assents = Assents(self)
+        self.__cmds = SystemInitializerCmds(self)
 
         self.title('Compilador G-Code | Inicialização')
         self.geometry('900x500')
         self.resizable(False, False)
         self.config(bg=System_Initializer.cor1)
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
-
-        # Método responsável por sair do software
-        def quit_seup():
-            self.destroy()
-
-        # Método responsável por chamar a tela de setup manager
-        def call_setup():
-
-            self.destroy()
-            self.setup = SetupManager()
-            self.setup.mainloop()
 
         # SEÇÃO DE FRAMEs
         self.frame_later = ctk.CTkFrame(self, border_width=1, width=320, height=550, corner_radius=0)
@@ -39,10 +30,10 @@ class System_Initializer(ctk.CTk):
         self.frame_rodap.place(x=0, y=460)
 
         # SEÇÃO DE BUTTONs
-        self.but_avancar = ctk.CTkButton(self.frame_rodap, text='AVANÇAR', command=call_setup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, hover_color=self.assents.cor5, width=100, corner_radius=5)
+        self.but_avancar = ctk.CTkButton(self.frame_rodap, text='AVANÇAR', command=self.__cmds.call_setup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, hover_color=self.assents.cor5, width=100, corner_radius=5)
         self.but_avancar.place(x=790, y=6)
 
-        self.but_cancelar = ctk.CTkButton(self.frame_rodap, width=100, text='CANCELAR', command=quit_seup, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, hover_color=self.assents.cor5, corner_radius=5)
+        self.but_cancelar = ctk.CTkButton(self.frame_rodap, width=100, text='CANCELAR', command=self.__cmds.quit_system, font=('Arial', 14, 'bold'), fg_color=self.assents.cor4, hover_color=self.assents.cor5, corner_radius=5)
         self.but_cancelar.place(x=680, y=6)
 
         # SEÇÃO DE LABELs

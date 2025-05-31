@@ -60,10 +60,10 @@ class CyDesbasteP(CyBase):
         try:
             self.sentido = self.__json.get_data(self.__json.data_parameters, 'sentido') # Retorna o valor do sentido de rotação
 
-            if self.sentido == 'SENTIDO - HR':
+            if self.sentido == 'HORÁRIO':
                 self.sentido = 'M3'
             
-            elif self.sentido == 'SENTIDO - AHR':
+            elif self.sentido == 'ANTI-HORÁRIO':
                 self.sentido = 'M4'
 
             self.__file_configs = textwrap.dedent(f'''
@@ -176,7 +176,7 @@ class CyDesbasteP(CyBase):
     # Método responsável por gerar o g-code do ciclo de desbaste parametrizado
     def generate_gcode(self, name_directory: str):
         try:
-            self.__imp = self.__json.get_data(self.__json.data_file, 'diretório') # Importa o caminho do diretório que o usuário escolheu
+            self.__imp = self.__json.get_data(self.__json.data_file, 'diretorio') # Importa o caminho do diretório que o usuário escolheu
             self.__directory = f'{self.__imp}/{name_directory}.WPD' # Concatena o nome da pasta com o caminho do diretório
 
             if os.path.exists(self.__directory):

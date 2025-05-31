@@ -64,7 +64,7 @@ class SetupManager(ctk.CTk):
         self.com_estilo = self.__assents.criar_combobox(165, 75, self.frame_file, 220, values=('G0 - (Rápido)', 'G00 - (Detalhado)'))
 
         self.com_torres = self.__assents.criar_combobox(175, 5, self.frame_maq, 245, values=('SISTEMA FIXO', 'SISTEMA GANG'))
-        self.com_sentid = self.__assents.criar_combobox(175, 75, self.frame_maq, 245, values=('SENTIDO - HR', 'SENTIDO - AHR'))
+        self.com_sentid = self.__assents.criar_combobox(175, 75, self.frame_maq, 245, values=('HORARIO', 'ANTI-HORARIO'))
         self.com_offset = self.__assents.criar_combobox(175, 40, self.frame_maq, 245, values=('G54', 'G55', 'G56', 'G57', 'G58', 'G59'))
 
         # SEÇÃO DE RADIOBUTTONs
@@ -77,14 +77,14 @@ class SetupManager(ctk.CTk):
         self.rad_savep3 = self.__assents.criar_radionbutton(335, 110, 'OP', 'OP', self.strv_save, width=60, frame=self.frame_file)
 
         # SEÇÃO DE ENTRYs
-        self.entry_empr = self.__assents.criar_entry(165, 40, 220, 1, self.frame_user)
-        self.entry_user = self.__assents.criar_entry(165, 5, 220, 1, self.frame_user)
+        self.entry_empr = self.__assents.criar_entry(165, 40, 220, 1, 'center', self.frame_user)
+        self.entry_user = self.__assents.criar_entry(165, 5, 220, 1, 'center', self.frame_user)
 
-        self.entry_posx = self.__assents.criar_entry(175, 5, 245, 1, self.frame_pos)
-        self.entry_posz = self.__assents.criar_entry(175, 40, 245, 1, self.frame_pos)
+        self.entry_posx = self.__assents.criar_entry(175, 5, 245, 1, 'center', self.frame_pos)
+        self.entry_posz = self.__assents.criar_entry(175, 40, 245, 1, 'center', self.frame_pos)
 
-        self.entry_rpmn = self.__assents.criar_entry(175, 5, 245, 1, self.frame_pdr)
-        self.entry_avan = self.__assents.criar_entry(175, 40, 245, 1, self.frame_pdr)
+        self.entry_rpmn = self.__assents.criar_entry(175, 5, 245, 1, 'center', self.frame_pdr)
+        self.entry_avan = self.__assents.criar_entry(175, 40, 245, 1, 'center', self.frame_pdr)
 
         self.entry_prc = ctk.CTkEntry(self,
                                   height=35, 

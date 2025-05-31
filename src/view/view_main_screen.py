@@ -33,9 +33,9 @@ class ViewMainScreen(ctk.CTk):
         self.iconbitmap('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/favicon.ico')
 
         # SEÇÃO DE FRAMEs
-        self.fra_menu = self.__assents.criar_frame(0, 0, 60, 900, 0, 1, ViewMainScreen.cor1, self)
-        self.fra_rodp = self.__assents.criar_frame(-1, 477, 25, 902, 0, 1, ViewMainScreen.cor1, self)
-        self.fra_main = self.__assents.criar_frame(5, 98, 375, 890, 8, 1, ViewMainScreen.cor1, self)
+        self.fra_menu = self.__assents.criar_frame(0, 0, 60, 900, 0, 1, ViewMainScreen.cor1, ViewMainScreen.cor1, self)
+        self.fra_rodp = self.__assents.criar_frame(-1, 477, 25, 902, 0, 1, ViewMainScreen.cor1, ViewMainScreen.cor1, self)
+        self.fra_main = self.__assents.criar_frame(5, 98, 375, 890, 8, 1, ViewMainScreen.cor1, ViewMainScreen.cor1, self)
 
         # SEÇÃO DE BUTTONs
         self._but_cmd = self.__assents.criar_button(850, 65, 28, 45, '', self.__even.call_cycles,
@@ -59,12 +59,12 @@ class ViewMainScreen(ctk.CTk):
                                                        ViewMainScreen.cor1,
                                                        8, 'FERRAMENTAS', 'top', fr=self.fra_menu)
         
-        self.but_ava = self.__assents.criar_button(168, 3, 34, 34, '', self.__cmds.call_maincycles, 
+        self.but_ava = self.__assents.criar_button(168, 3, 34, 34, '', self.__cmds.call_parameters, 
                                                        self.__assents.img_adva, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1,
-                                                       8, 'AVANÇOS', 'top', fr=self.fra_menu)
+                                                       8, 'PARÂMETROS DE CORTE', 'top', fr=self.fra_menu)
         
         self.but_cyc = self.__assents.criar_button(243, 3, 34, 34, '', self.__cmds.call_maincycles, 
                                                        self.__assents.img_cycl, 

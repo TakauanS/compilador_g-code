@@ -22,8 +22,7 @@ class ViewMainCycles:
         self.__cmds = MainCyclesCmds(self.__master)
 
         # SEÇÃO DE FRAMEs E LABELFRAMEs
-
-        self.__master.fra_cycl = self.__asssents.criar_frame(5, 70, 295, 880, 8, 1, fr=self.__master.fra_main)
+        self.__master.fra_cycl = self.__asssents.criar_frame(5, 70, 295, 880, 8, 1, ViewMainCycles.cor2, ViewMainCycles.cor2, fr=self.__master.fra_main)
         
         self.__master.fra_desb = self.__asssents.criar_labelframe(10, 5, 340, 100, 'Cycles de Desbaste', ViewMainCycles.cor2, self.__master.fra_cycl)
         self.__master.fra_fura = self.__asssents.criar_labelframe(10, 120, 340, 100, 'Cycles de Furação', ViewMainCycles.cor2, self.__master.fra_cycl)
@@ -31,7 +30,7 @@ class ViewMainCycles:
         self.__master.fra_cana = self.__asssents.criar_labelframe(530, 120, 340, 100, 'Cycles de Canal', ViewMainCycles.cor2, self.__master.fra_cycl)
 
         # SEÇÃO DE LABELs
-        self.__master.label_title = self.__asssents.criar_label('Ciclos de Usinagem | Parametrizados - Funcionais', 10, 5, text_color=ViewMainCycles.cor1, font=('Corbel', 22, 'bold'), frame=self.__master.fra_main,)
+        self.__master.label_title = self.__asssents.criar_label('Ciclos de Usinagem | Parametrizados - Funcionais', 10, 5, text_color=ViewMainCycles.cor1, font=('Corbel', 22, 'bold'), frame=self.__master.fra_main)
         self.__master.label_sub = self.__asssents.criar_label(ViewMainCycles.sub, 10, 35, text_color=ViewMainCycles.cor3, font=('Corbel', 18, 'normal'), frame=self.__master.fra_main)
 
         self.__master.label_desbp = self.__asssents.criar_label('Desbaste Parametrizado:', 10, 5, text_color=ViewMainCycles.cor3, frame=self.__master.fra_desb)

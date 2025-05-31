@@ -39,7 +39,7 @@ class Assents:
         Hovertip(self.label, tooltip)
 
     # Método responsável por criar frame
-    def criar_frame(self, x, y, al, lg, cr, br, fg=None, fr=None):
+    def criar_frame(self, x, y, al, lg, cr, br, bg=None, fg=None, fr=None):
 
         if fr is None:
             fr = self.master
@@ -47,7 +47,7 @@ class Assents:
         if fg is None:
             fg = Assents.cor6
 
-        self.frame = ctk.CTkFrame(master=fr, width=lg, height=al, corner_radius=cr, border_width=br, fg_color=fg)
+        self.frame = ctk.CTkFrame(master=fr, width=lg, height=al, corner_radius=cr, border_width=br, bg_color=bg, fg_color=fg)
         self.frame.place(x=x, y=y)
 
         return self.frame
