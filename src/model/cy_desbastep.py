@@ -60,10 +60,10 @@ class CyDesbasteP(CyBase):
         try:
             self.sentido = self.__json.get_data(self.__json.data_parameters, 'sentido') # Retorna o valor do sentido de rotação
 
-            if self.sentido == 'HORÁRIO':
+            if self.sentido == 'HORARIO':
                 self.sentido = 'M3'
             
-            elif self.sentido == 'ANTI-HORÁRIO':
+            elif self.sentido == 'ANTI-HORARIO':
                 self.sentido = 'M4'
 
             self.__file_configs = textwrap.dedent(f'''
@@ -145,7 +145,7 @@ class CyDesbasteP(CyBase):
             N40 DIAMON; Programação em diâmetro
 
             ; Estrutura de Controle - Passe
-            IF R5 > 4
+            IF R5 <= 0
                 MSG("- OCORREU UM ERRO NA INSERÇÃO DO VALOR DO PASSE. TENTE NOVAMENTE!");
                 M00;
                 M30;

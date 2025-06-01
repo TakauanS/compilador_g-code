@@ -14,14 +14,8 @@ class Assents:
     cor7 = '#FAEFEB' # Cor branca para inputdialog
 
     img_up = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/upload.png'), size=(24, 24))
-    img_help = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ajuda.png'), size=(28, 28))
     img_pasta = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/pasta.png'), size=(24, 24))
-    img_cycl = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/cycles.png'), size=(34, 32))
-    img_conf = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/configs.png'), size=(30, 30))
     img_linv = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_v.png'), size=(25, 46))
-    img_adva = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/advance.png'), size=(36, 36))
-    img_bann = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/banner.png'), size=(320, 550))
-    img_ferr = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ferramentas.png'), size=(30, 30))    
 
     def __init__(self, master):
 

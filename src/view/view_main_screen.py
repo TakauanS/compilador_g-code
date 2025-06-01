@@ -14,6 +14,12 @@ class ViewMainScreen(ctk.CTk):
     cor4 = '#1A8AE5' # Cor azul de FG-COLOR
 
     img_up = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/upload.png'))
+    img_hel = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ajuda.png'), size=(28, 28))
+    img_cyl = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/cycles.png'), size=(34, 32))
+    img_con = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/configs.png'), size=(30, 30))
+    img_bann = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/banner.png'), size=(320, 550))
+    img_par = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/parametros.png'), size=(31, 31))
+    img_fer = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ferramentas.png'), size=(30, 30))    
 
     def __init__(self):
         super().__init__()
@@ -38,7 +44,7 @@ class ViewMainScreen(ctk.CTk):
         self.fra_main = self.__assents.criar_frame(5, 98, 375, 890, 8, 1, ViewMainScreen.cor1, ViewMainScreen.cor1, self)
 
         # SEÇÃO DE BUTTONs
-        self._but_cmd = self.__assents.criar_button(850, 65, 28, 45, '', self.__even.call_cycles,
+        self._but_cmd = self.__assents.criar_button(850, 65, 28, 45, '', self.__even.call_commands,
                                                     ViewMainScreen.img_up,
                                                     ViewMainScreen.cor4,
                                                     ViewMainScreen.cor4,
@@ -46,35 +52,35 @@ class ViewMainScreen(ctk.CTk):
                                                     10, ti='BUSCAR COMANDO...', fr=self)
 
         self.but_con = self.__assents.criar_button(15, 3, 34, 34, '', self.__cmds.call_maincycles, 
-                                                       self.__assents.img_conf, 
+                                                       ViewMainScreen.img_con, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1,
                                                        8, 'CONFIGURAÇÕES', 'top', fr=self.fra_menu)
         
         self.but_fer = self.__assents.criar_button(92, 5, 34, 34, '', self.__cmds.call_maincycles, 
-                                                       self.__assents.img_ferr, 
+                                                       ViewMainScreen.img_fer, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1,
                                                        8, 'FERRAMENTAS', 'top', fr=self.fra_menu)
         
-        self.but_ava = self.__assents.criar_button(168, 3, 34, 34, '', self.__cmds.call_parameters, 
-                                                       self.__assents.img_adva, 
+        self.but_par = self.__assents.criar_button(165, 3, 34, 34, '', self.__cmds.call_parameters, 
+                                                       ViewMainScreen.img_par, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1,
                                                        8, 'PARÂMETROS DE CORTE', 'top', fr=self.fra_menu)
         
         self.but_cyc = self.__assents.criar_button(243, 3, 34, 34, '', self.__cmds.call_maincycles, 
-                                                       self.__assents.img_cycl, 
+                                                       ViewMainScreen.img_cyl, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1,
                                                        8, 'CICLOS DE USINAGEM', 'top', fr=self.fra_menu)
         
         self.but_hel = self.__assents.criar_button(307, 5, 34, 34, '', self.__cmds.call_maincycles, 
-                                                       self.__assents.img_help, 
+                                                       ViewMainScreen.img_hel, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1, 
                                                        ViewMainScreen.cor1,
@@ -87,7 +93,7 @@ class ViewMainScreen(ctk.CTk):
         self.label_conf = self.__assents.criar_label('CONFIGS', 12, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
         self.label_tool = self.__assents.criar_label('TOOLS', 90, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
 
-        self.label_adva = self.__assents.criar_label('ADVANCES', 160, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
+        self.label_parc = self.__assents.criar_label('PARAMET', 160, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
         self.label_cycl = self.__assents.criar_label('CYCLES', 245, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
 
         self.label_help = self.__assents.criar_label('HELP', 316, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
@@ -100,7 +106,7 @@ class ViewMainScreen(ctk.CTk):
         self.linha1 = self.__assents.criar_linha(66, 7, self.fra_menu)
         self.linha2 = self.__assents.criar_linha(135, 7, self.fra_menu)
 
-        self.linha3 = self.__assents.criar_linha(220, 7, self.fra_menu)
+        self.linha3 = self.__assents.criar_linha(218, 7, self.fra_menu)
         self.linha4 = self.__assents.criar_linha(290, 7, self.fra_menu)
 
         self.linha5 = self.__assents.criar_linha(346, 7, self.fra_menu)
