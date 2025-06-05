@@ -33,6 +33,7 @@ class ParametersCmds:
                 "sentido": self.__master.com_sent.get(),
                 "avanco": self.__master.entry_avan.get(),
                 "passe": self.__master.entry_pass.get(),
+                "modo": self.__master.com_modo.get(),
                 "rpm": self.__master.entry_rpm.get() 
             }
 

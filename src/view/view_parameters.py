@@ -39,15 +39,16 @@ class ViewParameters(ctk.CTkToplevel):
             self.label_sub = self.__assents.criar_label(ViewParameters.sub, 10, 35, text_color=ViewParameters.cor4, font=('Corbel', 18, 'normal'), frame=self.fra_p)
 
             self.label_sent = self.__assents.criar_label('SENT ROT.SPDL:', 10, 75, 0, 'SENTIDO DE ROTAÇÃO DO SPINDLE', text_color=ViewParameters.cor4, frame=self.fra_p)
-            self.label_ferr = self.__assents.criar_label('FERRAMENTA:', 10, 111, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
-            self.label_rpm = self.__assents.criar_label('ROTAÇÃO | RPM:', 10, 180, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
+            self.label_modo = self.__assents.criar_label('MODO DE VELO:', 10, 111, 0, 'MODO DE VELOCIDADE', text_color=ViewParameters.cor4, frame=self.fra_p)
+            self.label_ferr = self.__assents.criar_label('FERRAMENTA:', 10, 180, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
+            self.label_rpm = self.__assents.criar_label('ROTAÇÃO | RPM:', 10, 216, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
             self.label_avan = self.__assents.criar_label('AVANÇO:', 550, 75, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
             self.label_pass = self.__assents.criar_label('PASSE:', 550, 111, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
 
             # SEÇÃO DE ENTRYs
             self.entry_avan = self.__assents.criar_entry(645, 75, 205, 1, frame=self.fra_p)
             self.entry_pass = self.__assents.criar_entry(645, 111, 205, 1, frame=self.fra_p)
-            self.entry_rpm = self.__assents.criar_entry(170, 180, 200, 1, frame=self.fra_p)
+            self.entry_rpm = self.__assents.criar_entry(170, 216, 200, 1, frame=self.fra_p)
 
             # SEÇÃO DE LINHAs
             self.linha1 = ctk.CTkLabel(self.fra_p, 0, 0, text='', image=ViewParameters.img_lh)
@@ -58,7 +59,8 @@ class ViewParameters(ctk.CTkToplevel):
 
             # SEÇÃO DE COMBOBOXs
             self.com_sent = self.__assents.criar_combobox(170, 75, self.fra_p, 200, 10, ('HORÁRIO', 'ANTI-HORÁRIO'))
-            self.com_ferr = self.__assents.criar_combobox(170, 111, self.fra_p, 200, 10, ('T10D1', 'T11D1'))
+            self.com_modo = self.__assents.criar_combobox(170, 111, self.fra_p, 200, 10, ('G96', 'G97'))
+            self.com_ferr = self.__assents.criar_combobox(170, 180, self.fra_p, 200, 10, ('T10D1', 'T11D1'))
 
             # SEÇÃO DE BUTTONs
             self.but_save = self.__assents.criar_button(740, 260, 20, 110, 'SAVE', self.__cmds.save_parameters,

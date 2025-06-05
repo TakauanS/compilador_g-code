@@ -37,17 +37,47 @@ class CyDesbasteP(CyBase):
     def create_main(self):
         try:
             self.__file_main = textwrap.dedent(f'''
-            N10 _N_CMP_CONFIGS_SPF;
+            ; Seção de Definição de Variáveis de Usuário - PUDs
+            DEF REAL DIAMETRO_INICIAL;
+            DEF REAL DIAMETRO_FINAL;
+            DEF REAL ESPESSURA;
 
-            N20 R1 = {self.diametro_inicial} 
-            N30 R2 = {self.diametro_final}
+            DEF REAL X_POS; 
+            DEF REAL Z_POS; 
+            DEF REAL APZ_D; 
+            DEF REAL APZ_A;
 
-            N40 R3 = -{self.espessura}
-            N50 R4 = -{self.__json.get_data(self.__json.data_parameters, 'passe')}
+            DEF REAL AVANCO;
+            DEF REAL PASSE;
+            DEF INT RPM;
 
-            N60 _N_CMP_MACVARS_SPF;
+            DEF STRING [80] ESTILO;
+            DEF STRING [1] FORMA;
 
-            N70 M30;''')
+            ; Seção de Inserção de Parâmetros da Peça
+            DIAMETRO_INICIAL = {self.diametro_inicial};
+            DIAMETRO_FINAL = {self.diametro_final};
+            ESPESSURA = -{self.espessura};
+
+            ; Seção de Inserção de Parâmetros de Corte
+            AVANCO = {self.__json.get_data(self.__json.data_parameters, 'avanco')};
+            PASSE = -{self.__json.get_data(self.__json.data_parameters, 'passe')};
+            RPM = {self.__json.get_data(self.__json.data_parameters, 'rpm')};
+
+            ; Seção de Inserção de valores de Posicionamentos
+            X_POS = 500;
+            Z_POS = 500;
+            
+            APZ_D = 10;
+            APZ_A = 10;
+
+            ; Estilo de Usinagem
+            ESTILO = "desbaste-padrao";
+            FORMA = "d";
+
+            _N_CMP_CONFIGS_SPF;
+            
+            M30;''')
 
             return self.__file_main
 
@@ -58,26 +88,29 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo configs em atributo
     def create_configs(self):
         try:
+            self.modo = self.__json.get_data(self.__json.data_parameters, 'modo') # Retorna o valor do modo de corte
             self.sentido = self.__json.get_data(self.__json.data_parameters, 'sentido') # Retorna o valor do sentido de rotação
 
-            if self.sentido == 'HORARIO':
+            if self.sentido == 'HORÁRIO':
                 self.sentido = 'M3'
             
-            elif self.sentido == 'ANTI-HORARIO':
+            elif self.sentido == 'ANTI-HORÁRIO':
                 self.sentido = 'M4'
 
             self.__file_configs = textwrap.dedent(f'''
-            ; G-Code Configurações
-            N10 MSG("CARREGANDO PARÂMETROS DE CORTE...")
-
-            N20 G290;
-            N30 G18 G40 G90 G95;
-
-            N40 G97 S{self.__json.get_data(self.__json.data_parameters, 'rpm')};
+            ; Seção de Carregamento de Parâmetros
+            N10 G290;
+            N20 G18 G40 G90 G95;
+                            
+            N30 {self.modo} S=RPM;
+            N40 LIMS=200;
             N50 {self.__json.get_data(self.__json.data_parameters, 'ferramenta')};
             N60 {self.sentido};
 
-            N70 RET;''')
+            _N_CMP_INIT_SPF;
+                                            
+            N70 RET;
+            ''')
             
             return self.__file_configs
         
@@ -85,90 +118,159 @@ class CyDesbasteP(CyBase):
             messagebox.showerror('Compilador G-Code', f'Erro: ao gerar o arquivo configs, revise os campos de entrada e tente novamente!\n\n{e}')
             raise ValueError(e)
 
-    # Método responsável por armazenar o arquivo controls em atributo
-    def create_controls(self):
+    # Método responsável por armazenar o arquivo init em atributo
+    def create_init(self):
         try:
-            self.__file_controls = textwrap.dedent(f'''
-            ; Seção de Configurações de Macros
-            N10 DEFINE POS_SEG AS G0 {self.__json.get_data(self.__json.data_machine, 'offset')} X{self.__json.get_data(self.__json.data_standard, 'posx')} Z{self.__json.get_data(self.__json.data_standard, 'posz')}; Posicionamento de Segurança
-            N20 DEFINE AFAST AS G90 G0 X{self.__json.get_data(self.__json.data_standard, 'posx')} Z{self.__json.get_data(self.__json.data_standard, 'posz')}; Afastamento da Peça
+            self.__file_init = textwrap.dedent(f'''
+            ; Seção de Variáveis de Usuário - LUDs
+            N10 DEF STRING [30] _RESULT; Var que retorna o valor da forma de usinagem
+                        
+            ; Seção de Variáveis Secundárias
+            N20 R1 = ABS(PASSE); Conversão da var passe
+            N30 R2 = (DIAMETRO_INICIAL - DIAMETRO_FINAL) / R1; Número de passes
+            N40 R3 = R2 - 1; Condicional para desbaste padrao
+            N50 R4 = R2 - R1; Condicional para desbaste zig-zag
 
-            N30 DEFINE APROX_D AS G0 X=R1 Z0; Aproximação da Peça - Desbaste
-            N40 DEFINE APROX_A AS G0 X=R2 Z0; Aproximação da peça - Acabamento
+            N60 _RESULT = TOUPPER(ESTILO);
+            N70 DIAMON; Programação em diâmetro
 
-            N50 POS_SEG;
-            N60 APROX_D;
-
-            N70 MSG("CARREGANDO MACROS...");
-            N80 MSG("");
-
-            ; Estrutura de repetição - Desbaste
-            FOR R8 = 1 TO R7
-                G91
-                G1 X=R4 F{self.__json.get_data(self.__json.data_parameters, 'avanco')}
-                G1 Z=R3
-                G0 X=R5 Z=ABS(R3)
-                G1 X=R4
-            ENDFOR
-
-            N90 AFAST;
-
-            ; Seção de Acabamento da Peça
-            N100 MSG("INICIAR ACABAMENTO? - CYCLE START!");
-            N110 M00;
-            N120 MSG("PASSE DE ACABAMENTO: 1 DE 1");
-
-            N130 APROX_A;
-            N140 G1 Z=R3;
-            N150 G1 X=R1;
-            N160 APROX_D;
-
-            N170 MSG("");
-            N180 AFAST;
-
-            N190 RET;''')
-
-            return self.__file_controls
-        
-        except Exception as e:
-            messagebox.showerror('Compilador G-Code', f'Erro: ao gerar o arquivo controls, revise os campos de entrada e tente novamente!\n\n{e}')
-            raise ValueError(e)
-
-    # Método responsável por armazenar o arquivo macvars em atributo
-    def create_macvars(self):
-        try:
-            self.__file_macvars = textwrap.dedent(f'''
-            ; Seção de Variáveis Secudárias
-            N10 R5 = ABS(R4); Conversão da var de passe
-            N20 R6 = (R1 - R2) / R5; Número de passes
-            N30 R7 = R6 - 1; Variável de condicional para desbaste 
-            N40 DIAMON; Programação em diâmetro
-
-            ; Estrutura de Controle - Passe
-            IF R5 <= 0
-                MSG("- OCORREU UM ERRO NA INSERÇÃO DO VALOR DO PASSE. TENTE NOVAMENTE!");
+            ; Estruturas de Controles
+            IF R1 <= 0
+                MSG("- ERRO NA INSERÇÃO DO VALOR DO PASSE. TENTE NOVAMENTE!");
                 M00;
                 M30;
-            ELSE
-                MSG("CARREGANDO LÓGICAS DE VARIÁVEIS...")
-                _N_CMP_CONTROLS_SPF; 
             ENDIF
 
-            N50 RET;''')
-        
-            return self.__file_macvars
+            IF (_RESULT=="DESBASTE-PADRAO")
+                MSG("- CARREGANDO CICLO DE DEBSASTE PADRÃO...");
+                _N_CMP_DESB_PADRAO_SPF;
+            ENDIF
+
+            IF (_RESULT=="DESBASTE-ZIG")
+                MSG("- CARREGANDO CICLO DE DESBASTE ZIG-ZAG...");
+                _N_CMP_DESB_ZIG_SPF;
+            ENDIF
+
+            N80 RET;''')
+
+            return self.__file_init
         
         except Exception as e:
-            messagebox.showerror('Compilador G-Code', f'Erro: ao gerar o arquivo macvars, revise os campos de entrada e tente novamente!\n\n{e}')
+            messagebox.showerror('Compilador G-Code', f'Erro: ao gerar o arquivo init, revise os campos de entrada e tente novamente!\n\n{e}')
+            raise ValueError(e)
+
+    # Método responsável por armazenar o arquivo de ciclo de desbaste padrão em atributo
+    def create_desbaste_padrao(self):
+        try:
+            self.__file_desbastep = textwrap.dedent(f'''
+            N10 G0 G54 X=X_POS Z=Z_POS;
+
+            ; Estrutura de Controle - Desbaste & Acabamento
+            IF (FORMA=="d")
+                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE DESBASTE - PADRÃO...");
+                MSG("");
+                GOTO N20;
+            ENDIF
+
+            IF (FORMA=="a")
+                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE ACABAMENTO - PADRÃO...")
+                MSG("");
+                GOTO N70;
+            ENDIF
+
+            N20 G0 X=DIAMETRO_INICIAL;
+            N30 G0 Z=APZ_D;
+
+            WHILE R0 <= R3
+                G91 G1 X=PASSE F=AVANCO
+                G90 G1 Z=ESPESSURA
+                G91 G0 X=ABS(PASSE)
+                G90 G0 Z=APZ_D
+                G91 G1 X=PASSE
+                R0 = R0 + 1
+            ENDWHILE
+
+            N50 G90;
+            N60 G0 G54 X=X_POS Z=Z_POS;
+
+            ; Seção de Acabamento
+            MSG("- INICIAR CICLO DE ACABAMENTO? CYCLE START!");
+            M00;
+            MSG("");
+
+            N70 G0 X=DIAMETRO_FINAL Z=APZ_A;
+            N80 G1 Z=ESPESSURA;
+            N90 G1 X=DIAMETRO_INICIAL;
+
+            N100 G0 G54 X=X_POS Z=Z_POS;
+            N110 RET;''')
+        
+            return self.__file_desbastep
+        
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro: ao gerar o arquivo de ciclo de desbaste padrão, revise os campos de entrada e tente novamente!\n\n{e}')
+            raise ValueError(e)
+        
+    # Método responsável por armazenar o arquivo de ciclo de desbaste zigzag em atributo
+    def create_desbaste_zig(self):
+        try:
+            self.__file_desbastez = textwrap.dedent(f'''
+            N10 G0 G54 X=X_POS Z=Z_POS;
+
+            ; Estrutura de Controle - Desbaste & Acabamento
+            IF (FORMA=="d")
+                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE DESBASTE - PADRÃO...");
+                MSG("");
+                GOTO N20;
+            ENDIF
+
+            IF (FORMA=="a")
+                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE ACABAMENTO - PADRÃO...")
+                MSG("");
+                GOTO N70;
+            ENDIF
+
+            N20 G0 X=DIAMETRO_INICIAL;
+            N30 G0 Z=APZ_D;
+
+            WHILE R0 <= R3
+                G91 G1 X=PASSE F=AVANCO
+                G90 G1 Z=ESPESSURA
+                G91 G0 X=ABS(PASSE)
+                G90 G0 Z=APZ_D
+                G91 G1 X=PASSE
+                R0 = R0 + 1
+            ENDWHILE
+
+            N50 G90;
+            N60 G0 G54 X=X_POS Z=Z_POS;
+
+            ; Seção de Acabamento
+            MSG("- INICIAR CICLO DE ACABAMENTO? CYCLE START!");
+            M00;
+            MSG("");
+
+            N70 G0 X=DIAMETRO_FINAL Z=APZ_A;
+            N80 G1 Z=ESPESSURA;
+            N90 G1 X=DIAMETRO_INICIAL;
+
+            N100 G0 G54 X=X_POS Z=Z_POS;
+            N110 RET;''')
+        
+            return self.__file_desbastez
+        
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro: ao gerar o arquivo de ciclo de desbaste zigzag, revise os campos de entrada e tente novamente!\n\n{e}')
             raise ValueError(e)
 
     # Método responsável por inicializar os arquivos g-codes
     def initialize_files(self):
         try:
             self.create_main()
-            self.create_macvars()
+            self.create_init()
             self.create_configs()
-            self.create_controls()
+            self.create_desbaste_zig()
+            self.create_desbaste_padrao()
         
         except Exception as e:
             raise ValueError(f'Erro na inicialização dos arquivos g-code:\n\n{e}')
@@ -190,11 +292,14 @@ class CyDesbasteP(CyBase):
                 with open(f'{self.__directory}/CMP_CONFIGS.SPF', 'w') as f:
                     f.write(self.file_configs)
 
-                with open(f'{self.__directory}/CMP_CONTROLS.SPF', 'w') as f:
-                    f.write(self.file_controls)
+                with open(f'{self.__directory}/CMP_INIT.SPF', 'w') as f:
+                    f.write(self.file_init)
 
-                with open(f'{self.__directory}/CMP_MACVARS.SPF', 'w') as f:
-                    f.write(self.file_macvars)
+                with open(f'{self.__directory}/CMP_DESB_PADRAO.SPF', 'w') as f:
+                    f.write(self.file_desbastep)
+
+                with open(f'{self.__directory}/CMP_DESB_ZIG.SPF', 'w') as f:
+                    f.write(self.file_desbastez)
 
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro na geração do g-code, verifique o seguinte problema:\n\n{e}')
@@ -221,12 +326,16 @@ class CyDesbasteP(CyBase):
         return self.__file_configs
     
     @property
-    def file_controls(self):
-        return self.__file_controls
+    def file_init(self):
+        return self.__file_init
     
     @property
-    def file_macvars(self):
-        return self.__file_macvars
+    def file_desbastep(self):
+        return self.__file_desbastep
+    
+    @property
+    def file_desbastez(self):
+        return self.__file_desbastez
     
     @property
     def directory_project(self):
