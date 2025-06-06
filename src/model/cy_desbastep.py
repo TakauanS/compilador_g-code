@@ -47,6 +47,7 @@ class CyDesbasteP(CyBase):
             DEF REAL APZ_D; 
             DEF REAL APZ_A;
 
+            DEF REAL LIMIT_RPM;
             DEF REAL AVANCO;
             DEF REAL PASSE;
             DEF INT RPM;
@@ -63,6 +64,7 @@ class CyDesbasteP(CyBase):
             AVANCO = {self.__json.get_data(self.__json.data_parameters, 'avanco')};
             PASSE = -{self.__json.get_data(self.__json.data_parameters, 'passe')};
             RPM = {self.__json.get_data(self.__json.data_parameters, 'rpm')};
+            LIMIT_RPM = 100;
 
             ; Seção de Inserção de valores de Posicionamentos
             X_POS = 500;
@@ -99,14 +101,17 @@ class CyDesbasteP(CyBase):
 
             self.__file_configs = textwrap.dedent(f'''
             ; Seção de Carregamento de Parâmetros
+            MSG("- CARREGANDO PARAMETROS G-CODES...");                                
+                                                  
             N10 G290;
             N20 G18 G40 G90 G95;
                             
             N30 {self.modo} S=RPM;
-            N40 LIMS=200;
+            N40 LIMS=LIMIT_RPM;
             N50 {self.__json.get_data(self.__json.data_parameters, 'ferramenta')};
             N60 {self.sentido};
 
+            MSG("");
             _N_CMP_INIT_SPF;
                                             
             N70 RET;
@@ -182,6 +187,7 @@ class CyDesbasteP(CyBase):
             N30 G0 Z=APZ_D;
 
             WHILE R0 <= R3
+                MSG("- DESBASTE EM ANDAMENTO...")
                 G91 G1 X=PASSE F=AVANCO
                 G90 G1 Z=ESPESSURA
                 G91 G0 X=ABS(PASSE)
@@ -196,12 +202,13 @@ class CyDesbasteP(CyBase):
             ; Seção de Acabamento
             MSG("- INICIAR CICLO DE ACABAMENTO? CYCLE START!");
             M00;
-            MSG("");
+            MSG("PASSE DE ACABAMENTO: 1 DE 1");
 
             N70 G0 X=DIAMETRO_FINAL Z=APZ_A;
             N80 G1 Z=ESPESSURA;
             N90 G1 X=DIAMETRO_INICIAL;
 
+            MSG("");
             N100 G0 G54 X=X_POS Z=Z_POS;
             N110 RET;''')
         
