@@ -1,8 +1,8 @@
 import os
 import textwrap
 from tkinter import messagebox
-from src.model.cycles.cy_base import CyBase
 
+from src.model.cycles.cy_base import CyBase
 from src.model.json_handler import JsonHandler
 
 class CyDesbasteP(CyBase):
@@ -64,7 +64,7 @@ class CyDesbasteP(CyBase):
             AVANCO = {self.__json.get_data(self.__json.data_parameters, 'avanco')};
             PASSE = -{self.__json.get_data(self.__json.data_parameters, 'passe')};
             RPM = {self.__json.get_data(self.__json.data_parameters, 'rpm')};
-            LIMIT_RPM = 100;
+            LIMIT_RPM = {self.__json.get_data(self.__json.data_parameters, 'lim')};
 
             ; Seção de Inserção de valores de Posicionamentos
             X_POS = 500;
@@ -99,12 +99,20 @@ class CyDesbasteP(CyBase):
             elif self.sentido == 'ANTI-HORÁRIO':
                 self.sentido = 'M4'
 
+            if self.modo == 'VC - COSTANTE (G96)':
+                self.modo = 'G96'
+                self.modo_avanco = 'G94'
+            
+            elif self.modo == 'VC - FIXA (G97)':
+                self.modo = 'G97'
+                self.modo_avanco = 'G95'
+
             self.__file_configs = textwrap.dedent(f'''
             ; Seção de Carregamento de Parâmetros
             MSG("- CARREGANDO PARAMETROS G-CODES...");                                
                                                   
             N10 G290;
-            N20 G18 G40 G90 G95;
+            N20 G18 G40 G90 {self.modo_avanco};
                             
             N30 {self.modo} S=RPM;
             N40 LIMS=LIMIT_RPM;

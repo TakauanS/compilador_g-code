@@ -34,7 +34,8 @@ class ParametersCmds:
                 "avanco": self.__master.entry_avan.get(),
                 "passe": self.__master.entry_pass.get(),
                 "modo": self.__master.com_modo.get(),
-                "rpm": self.__master.entry_rpm.get() 
+                "rpm": self.__master.entry_rpm.get(),
+                "lim": self.__master.entry_lim.get() 
             }
 
             if '' in self.dic_parameters.values():

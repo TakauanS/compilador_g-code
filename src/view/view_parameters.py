@@ -30,6 +30,7 @@ class ViewParameters(ctk.CTkToplevel):
             self.title('Compilador G-Code | Parâmetros de Corte')
             self.resizable(False, False)
             self.config(bg=ViewParameters.cor1)
+            self.grab_set() # Dar foco máximo a tela de parâmetros de corte
 
             # SEÇÃO DE FRAMES
             self.fra_p = self.__assents.criar_frame(10, 10, 300, 860, 10, 1, ViewParameters.cor1, ViewParameters.cor1, self)
@@ -40,15 +41,17 @@ class ViewParameters(ctk.CTkToplevel):
 
             self.label_sent = self.__assents.criar_label('SENT ROT.SPDL:', 10, 75, 0, 'SENTIDO DE ROTAÇÃO DO SPINDLE', text_color=ViewParameters.cor4, frame=self.fra_p)
             self.label_modo = self.__assents.criar_label('MODO DE VELO:', 10, 111, 0, 'MODO DE VELOCIDADE', text_color=ViewParameters.cor4, frame=self.fra_p)
-            self.label_ferr = self.__assents.criar_label('FERRAMENTA:', 10, 180, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
-            self.label_rpm = self.__assents.criar_label('ROTAÇÃO | RPM:', 10, 216, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
+            self.label_ferr = self.__assents.criar_label('FERRAMENTA:', 10, 252, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
+            self.label_rpm = self.__assents.criar_label('ROTAÇÃO | RPM:', 10, 180, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
+            self.label_lim = self.__assents.criar_label('LIMITE | RPM:', 10, 216, 0, 'LIMITE DE ROTAÇÃO DO SPINDLE', text_color=ViewParameters.cor4, frame=self.fra_p)
             self.label_avan = self.__assents.criar_label('AVANÇO:', 550, 75, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
             self.label_pass = self.__assents.criar_label('PASSE:', 550, 111, 0, '', text_color=ViewParameters.cor4, frame=self.fra_p)
 
             # SEÇÃO DE ENTRYs
             self.entry_avan = self.__assents.criar_entry(645, 75, 205, 1, frame=self.fra_p)
             self.entry_pass = self.__assents.criar_entry(645, 111, 205, 1, frame=self.fra_p)
-            self.entry_rpm = self.__assents.criar_entry(170, 216, 200, 1, frame=self.fra_p)
+            self.entry_rpm = self.__assents.criar_entry(170, 180, 200, 1, frame=self.fra_p)
+            self.entry_lim = self.__assents.criar_entry(170, 216, 200, 1, frame=self.fra_p)
 
             # SEÇÃO DE LINHAs
             self.linha1 = ctk.CTkLabel(self.fra_p, 0, 0, text='', image=ViewParameters.img_lh)
@@ -59,8 +62,8 @@ class ViewParameters(ctk.CTkToplevel):
 
             # SEÇÃO DE COMBOBOXs
             self.com_sent = self.__assents.criar_combobox(170, 75, self.fra_p, 200, 10, ('HORÁRIO', 'ANTI-HORÁRIO'))
-            self.com_modo = self.__assents.criar_combobox(170, 111, self.fra_p, 200, 10, ('G96', 'G97'))
-            self.com_ferr = self.__assents.criar_combobox(170, 180, self.fra_p, 200, 10, ('T10D1', 'T11D1'))
+            self.com_modo = self.__assents.criar_combobox(170, 111, self.fra_p, 200, 10, ('VC - COSTANTE (G96)', 'VC - FIXA (G97)'))
+            self.com_ferr = self.__assents.criar_combobox(170, 252, self.fra_p, 200, 10, ('T10D1', 'T11D1'))
 
             # SEÇÃO DE BUTTONs
             self.but_save = self.__assents.criar_button(740, 260, 20, 110, 'SAVE', self.__cmds.save_parameters,
