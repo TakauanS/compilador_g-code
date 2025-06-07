@@ -14,7 +14,18 @@ class DesbastePCmds:
             self.parameters = ViewParameters()
 
         except Exception as e:
-            print(f'Erro na chamada da tela de parâmetros de corte:\n\n{e}')
+            messagebox.showerror('Compilador G-Code', f'Erro na chamada da tela de parâmetros de corte:\n\n{e}')
+            raise ValueError(f'Erro na chamada da tela de parâmetros de corte: {e}')
+
+    # Método responsável por fazer a chamada da tela de posicionamentos dos parametrizados
+    def call_positioning(self):
+        try:
+            from src.view.view_pos.view_posp import ViewPosp
+            self.posp = ViewPosp()
+        
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos:\n\n{e}')
+            raise ValueError(f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos: {e}')
 
     # Método responsável por gerar o g-code
     def up_gcode(self):

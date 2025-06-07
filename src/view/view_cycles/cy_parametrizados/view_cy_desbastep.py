@@ -15,12 +15,12 @@ class ViewCyDesbasteP(ctk.CTkFrame):
     sub = 'Insira as informações em todos os campos abaixo para compilar o ciclo de desbaste parametrizado.'
     pre = 'Insira as informações abaixo para gerar um relatório de usinagem completo e fiel ao processo executado.'
 
-    img_par = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/parametros.png'), size=(25, 25))
-    img_pen = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/pendrive.png'), size=(25, 25))
-    img_lhm = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(810, 25))
-    img_lih = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(25, 25))
+    img_pos = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/pos.png'), size=(25, 25))
     img_rea = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/readme.png'), size=(25, 25))
-
+    img_lih = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(25, 25))
+    img_lhm = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(810, 25))
+    img_par = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/parametros.png'), size=(25, 25))
+    
     def __init__(self, master):
         try:
             super().__init__(master)
@@ -79,19 +79,19 @@ class ViewCyDesbasteP(ctk.CTkFrame):
                                                                 ViewCyDesbasteP.cor1,
                                                                 0, 'PARÂMETROS DE CORTE', 'top', fr=self.__master.fra_menu)
             
-            self.__master.but_pen = self.__assents.criar_button(4, 60, 15, 15, '', self.__cmds.call_parameters,
-                                                                ViewCyDesbasteP.img_pen,
+            self.__master.but_pos = self.__assents.criar_button(4, 60, 15, 15, '', self.__cmds.call_positioning,
+                                                                ViewCyDesbasteP.img_pos,
                                                                 ViewCyDesbasteP.cor1,
                                                                 ViewCyDesbasteP.cor1,
                                                                 ViewCyDesbasteP.cor1,
-                                                                0, 'SALVAR EM PENDRIVE', 'top', fr=self.__master.fra_menu)
+                                                                0, 'POSICIONAMENTOS', 'top', fr=self.__master.fra_menu)
             
             self.__master.but_sav = self.__assents.criar_button(4, 115, 15, 15, '', self.__cmds.up_gcode,
                                                                 ViewCyDesbasteP.img_rea,
                                                                 ViewCyDesbasteP.cor1,
                                                                 ViewCyDesbasteP.cor1,
                                                                 ViewCyDesbasteP.cor1,
-                                                                0, 'SALVAR EM DIRETÓRIO', 'top', fr=self.__master.fra_menu)
+                                                                0, 'SALVAR G-CODE', 'top', fr=self.__master.fra_menu)
         except Exception as e:
             messagebox.showerror('Compilador G-Code | Cycles', f'Ocorreu um erro ao chamar o ciclo de desbaste parametrizado:\n\n{e}')
             print(f'Erro! {e}')

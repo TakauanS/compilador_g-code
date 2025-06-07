@@ -42,10 +42,13 @@ class CyDesbasteP(CyBase):
             DEF REAL DIAMETRO_FINAL;
             DEF REAL ESPESSURA;
 
+            DEF INT FERRAMENTA_DESB;
+            DEF INT FERRAMENTA_ACAB;
+
             DEF REAL X_POS; 
             DEF REAL Z_POS; 
-            DEF REAL APZ_D; 
-            DEF REAL APZ_A;
+            DEF REAL APRX; 
+            DEF REAL APRZ;
 
             DEF REAL LIMIT_RPM;
             DEF REAL AVANCO;
@@ -54,6 +57,10 @@ class CyDesbasteP(CyBase):
 
             DEF STRING [80] ESTILO;
             DEF STRING [1] FORMA;
+
+            ; Seção de Inserção de Ferramenta
+            FERRAMENTA_DESB = ;
+            FERRAMENTA_ACAB = ;
 
             ; Seção de Inserção de Parâmetros da Peça
             DIAMETRO_INICIAL = {self.diametro_inicial};
@@ -67,11 +74,11 @@ class CyDesbasteP(CyBase):
             LIMIT_RPM = {self.__json.get_data(self.__json.data_parameters, 'lim')};
 
             ; Seção de Inserção de valores de Posicionamentos
-            X_POS = 500;
-            Z_POS = 500;
+            X_POS = {self.__json.get_data(self.__json.data_pos, 'posx')};
+            Z_POS = {self.__json.get_data(self.__json.data_pos, 'posz')};
             
-            APZ_D = 10;
-            APZ_A = 10;
+            APRX = {self.__json.get_data(self.__json.data_pos, 'aprx')};
+            APRZ = {self.__json.get_data(self.__json.data_pos, 'aprz')};
 
             ; Estilo de Usinagem
             ESTILO = "desbaste-padrao";
@@ -116,7 +123,7 @@ class CyDesbasteP(CyBase):
                             
             N30 {self.modo} S=RPM;
             N40 LIMS=LIMIT_RPM;
-            N50 {self.__json.get_data(self.__json.data_parameters, 'ferramenta')};
+            N50 ;
             N60 {self.sentido};
 
             MSG("");
@@ -191,15 +198,16 @@ class CyDesbasteP(CyBase):
                 GOTO N70;
             ENDIF
 
-            N20 G0 X=DIAMETRO_INICIAL;
-            N30 G0 Z=APZ_D;
+            N20 G0 X=APRX;
+            N30 G0 Z=APRZ;
+            N40 G90 G0 X=DIAMETRO_INICIAL;
 
             WHILE R0 <= R3
                 MSG("- DESBASTE EM ANDAMENTO...")
                 G91 G1 X=PASSE F=AVANCO
                 G90 G1 Z=ESPESSURA
                 G91 G0 X=ABS(PASSE)
-                G90 G0 Z=APZ_D
+                G90 G0 Z=APRZ
                 G91 G1 X=PASSE
                 R0 = R0 + 1
             ENDWHILE
@@ -212,13 +220,15 @@ class CyDesbasteP(CyBase):
             M00;
             MSG("PASSE DE ACABAMENTO: 1 DE 1");
 
-            N70 G0 X=DIAMETRO_FINAL Z=APZ_A;
-            N80 G1 Z=ESPESSURA;
-            N90 G1 X=DIAMETRO_INICIAL;
+            N70 T=FERRAMENTA_ACAB;
+
+            N80 G0 X=DIAMETRO_FINAL Z=APRZ;
+            N90 G1 Z=ESPESSURA;
+            N100 G1 X=DIAMETRO_INICIAL;
 
             MSG("");
-            N100 G0 G54 X=X_POS Z=Z_POS;
-            N110 RET;''')
+            N110 G0 G54 X=X_POS Z=Z_POS;
+            N120 RET;''')
         
             return self.__file_desbastep
         

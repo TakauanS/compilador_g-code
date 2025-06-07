@@ -30,6 +30,9 @@ class JsonHandler():
             with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_padrao.json', 'r', encoding='utf-8') as file:
                 self.__data_standard = json.load(file)
 
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_pos.json', 'r', encoding='utf-8') as file:
+                self.__data_pos = json.load(file)
+
         except Exception as e:
             print(f'Erro: {e}')
 
@@ -63,3 +66,7 @@ class JsonHandler():
     @property
     def data_parameters(self):
         return self.__data_parameters
+    
+    @property
+    def data_pos(self):
+        return self.__data_pos
