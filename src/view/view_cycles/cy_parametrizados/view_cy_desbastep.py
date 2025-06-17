@@ -86,7 +86,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
                                                                 ViewCyDesbasteP.cor1,
                                                                 0, 'POSICIONAMENTOS', 'top', fr=self.__master.fra_menu)
             
-            self.__master.but_sav = self.__assents.criar_button(4, 115, 15, 15, '', self.__cmds.up_gcode,
+            self.__master.but_sav = self.__assents.criar_button(4, 115, 15, 15, '', self.__cmds.view_gcode,
                                                                 ViewCyDesbasteP.img_rea,
                                                                 ViewCyDesbasteP.cor1,
                                                                 ViewCyDesbasteP.cor1,

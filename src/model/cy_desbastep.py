@@ -59,8 +59,8 @@ class CyDesbasteP(CyBase):
             DEF STRING [1] FORMA;
 
             ; Seção de Inserção de Ferramenta
-            FERRAMENTA_DESB = ;
-            FERRAMENTA_ACAB = ;
+            FERRAMENTA_DESB = {self.__json.get_data(self.__json.data_desbastep, 'ferd')};
+            FERRAMENTA_ACAB = {self.__json.get_data(self.__json.data_desbastep, 'fera')};
 
             ; Seção de Inserção de Parâmetros da Peça
             DIAMETRO_INICIAL = {self.diametro_inicial};
@@ -68,17 +68,17 @@ class CyDesbasteP(CyBase):
             ESPESSURA = -{self.espessura};
 
             ; Seção de Inserção de Parâmetros de Corte
-            AVANCO = {self.__json.get_data(self.__json.data_parameters, 'avanco')};
-            PASSE = -{self.__json.get_data(self.__json.data_parameters, 'passe')};
-            RPM = {self.__json.get_data(self.__json.data_parameters, 'rpm')};
-            LIMIT_RPM = {self.__json.get_data(self.__json.data_parameters, 'lim')};
+            AVANCO = {self.__json.get_data(self.__json.data_desbastep, 'avan')};
+            PASSE = -{self.__json.get_data(self.__json.data_desbastep, 'pass')};
+            RPM = {self.__json.get_data(self.__json.data_desbastep, 'rpmp')};
+            LIMIT_RPM = {self.__json.get_data(self.__json.data_desbastep, 'lims')};
 
             ; Seção de Inserção de valores de Posicionamentos
-            X_POS = {self.__json.get_data(self.__json.data_pos, 'posx')};
-            Z_POS = {self.__json.get_data(self.__json.data_pos, 'posz')};
+            X_POS = {self.__json.get_data(self.__json.data_desbastep, 'posx')};
+            Z_POS = {self.__json.get_data(self.__json.data_desbastep, 'posz')};
             
-            APRX = {self.__json.get_data(self.__json.data_pos, 'aprx')};
-            APRZ = {self.__json.get_data(self.__json.data_pos, 'aprz')};
+            APRX = {self.__json.get_data(self.__json.data_desbastep, 'aprx')};
+            APRZ = {self.__json.get_data(self.__json.data_desbastep, 'aprz')};
 
             ; Estilo de Usinagem
             ESTILO = "desbaste-padrao";
@@ -307,7 +307,8 @@ class CyDesbasteP(CyBase):
             self.__directory = f'{self.__imp}/{name_directory}.WPD' # Concatena o nome da pasta com o caminho do diretório
 
             if os.path.exists(self.__directory):
-                raise ValueError('Erro na geração do g-code')
+                messagebox.showerror('Compilador G-Code', 'O nome de projeto inserido já é existente, tente novamente um novo nome de projeto!')
+                return
             else:
                 os.mkdir(self.__directory)
 

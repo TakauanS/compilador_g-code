@@ -4,17 +4,22 @@ class JsonHandler():
 
     def __init__(self):
 
-        self.__data_user = {} # Retorna dicionário com os dados do usuário
-        self.__data_file = {} # Retorna dicionário com os dados do programa (arquivo)
+        self.__data_user = {} 
+        self.__data_file = {}
 
-        self.__data_machine = {}  # Retorna dicionário com os dados da máquina 
-        self.__data_standard = {} # Retorna dicionário com os dados padrões
+        self.__data_machine = {}  
+        self.__data_standard = {} 
+        self.__data_parameters = {} 
 
-        self.__data_parameters = {} # Retorna dicionário com os dados de parâmetros de corte
+        self.__data_desbastep = {} 
 
     # Método responsável por conveter os arquivos json em dicionários
     def convert_files(self):
         try:
+
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_desbastep.json', 'r', encoding='utf-8') as file:
+                self.__data_desbastep = json.load(file)
+
             with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_parametros.json', 'r', encoding='utf-8') as file:
                 self.__data_parameters = json.load(file)
 
@@ -46,6 +51,10 @@ class JsonHandler():
             raise TypeError('O tipo de dado de para comando deve ser do tipo String!')
         
         return dictionary[data]
+
+    @property
+    def data_desbastep(self):
+        return self.__data_desbastep
 
     @property
     def data_user(self):
