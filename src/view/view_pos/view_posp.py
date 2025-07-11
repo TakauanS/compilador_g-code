@@ -7,10 +7,10 @@ from src.controller.buttons_cmds.pos_cmds.posp_cmds import PospCmds
 
 class ViewPosp(ctk.CTkToplevel):
 
-    cor1 = '#FCF6F2' # Cor branca para FG-COLOR
-    cor2 = '#1A8AE5' # Cor azul para butões FG-COLOR
-    cor3 = '#3757A0' # Cor azul para botões HOUVER-COLOR
-    cor4 = 'black'   # Cor preta para TEXT-COLOR
+    cor1 = '#FFFFFF'
+    cor2 = '#1A8AE5'
+    cor3 = '#3757A0'
+    cor4 = '#000000'
 
     img_up = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/upload.png'), size=(24, 24))
     img_lh = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(365, 24))

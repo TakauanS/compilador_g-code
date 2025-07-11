@@ -10,7 +10,7 @@ class Assents:
     cor3 = '#737277' # Cor cinza para placeholder
     cor4 = '#1A8AE5' # Cor azul para butões fg_color     
     cor5 = '#3757A0' # Cor azul para botões hover_color
-    cor6 = '#FCF6F2' # Cor branco para fg_color
+    cor6 = '#FFFFFF' # Cor branco para fg_color
     cor7 = '#FAEFEB' # Cor branca para inputdialog
 
     img_up = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/upload.png'), size=(24, 24))
@@ -22,7 +22,7 @@ class Assents:
         self.master = master
 
     # Método responsável por criar label
-    def criar_label(self, text, x, y, height=0, tooltip='', bg_color='#FCF6F2', fg_color='#FCF6F2', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
+    def criar_label(self, text, x, y, height=0, tooltip='', bg_color='#FFFFFF', fg_color='#FFFFFF', text_color='white', font=('Corbel', 20, 'normal'), frame=None):
 
         if frame is None:
             frame = self.master
@@ -47,7 +47,7 @@ class Assents:
         return self.frame
 
     # Método responsável por criar labelframe
-    def criar_labelframe(self, x, y, width, height, text, bg='#FCF6F2', frame=None):
+    def criar_labelframe(self, x, y, width, height, text, bg='#FFFFFF', frame=None):
 
         if frame is None: 
             frame = self.master

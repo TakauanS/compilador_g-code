@@ -6,14 +6,14 @@ from src.controller.buttons_cmds.cycles_cmds.main_cycles_cmds import MainCyclesC
 
 class ViewMainCycles:
 
-    cor1 = '#1A8AE5' # Cor Azul para FG-COLOR
-    cor2 = '#FCF6F2' # Cor branca para FG-COLOR
-    cor3 = 'black' # Cor preta para TEXT-COLOR
-
-    sub = 'Abaixo estão listados todos os ciclos de usinagem disponíveis, prontos para parametrização e uso funcional:'
+    cor1 = '#1A8AE5'
+    cor2 = '#FFFFFF'
+    cor3 = '#000000'
 
     img_up = CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/up_cycle.png'))
     img_help = CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ajuda.png'))
+
+    sub = 'Abaixo estão listados todos os ciclos de usinagem disponíveis, prontos para parametrização e uso funcional:'
 
     def __init__(self, master):
 

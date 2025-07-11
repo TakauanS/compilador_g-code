@@ -32,6 +32,88 @@ class CyDesbasteP(CyBase):
 
         self.__json = JsonHandler()
         self.__json.convert_files()
+        self.set_types()
+
+    # Método responsável por definir os tipos de variáveis
+    def set_types(self):
+
+        self.tipo_var = self.__json.get_data(self.__json.data_desbastep, 'vari')
+
+        if self.tipo_var == '' or self.tipo_var == 'VARIÁVEIS DE USUÁRIO (DEF)':
+
+            self.ferr_desb = 'FERRAMENTA_DESB'
+            self.ferr_acab = 'FERRAMENTA_ACAB'
+
+            self.diam_inic = 'DIAMETRO_INICIAL'
+            self.diam_fina = 'DIAMETRO_FINAL'
+            self.espess = 'ESPESSURA'
+
+            self.avan = 'AVANCO'
+            self.pas = 'PASSE'
+            self.rpm = 'RPM'
+            self.lim = 'LIMIT_RPM'
+
+            self.x_pos = 'X_POS'
+            self.z_pos = 'Z_POS'
+            self.aprx = 'APRX'
+            self.aprz = 'APRZ'
+
+            self.esti = 'ESTILO'
+            self.form = 'FORMA'
+        
+            self.com_fera = ''
+            self.com_ferd = ''
+            self.com_diam_inic = ''
+            self.com_diam_fina = ''
+            self.com_espess = ''
+            self.com_avan = ''
+            self.com_pas = ''
+            self.com_rpm = ''
+            self.com_lim = ''
+            self.com_xpos = ''
+            self.com_zpos = ''
+            self.com_aprx = ''
+            self.com_aprz = ''
+            self.com_esti = ''
+            self.com_form = ''
+
+        if self.tipo_var == 'PARÂMETROS R':
+
+            self.ferr_desb = 'R1'
+            self.ferr_acab = 'R2'
+
+            self.diam_inic = 'R3'
+            self.diam_fina = 'R4'
+            self.espess = 'R5'
+
+            self.avan = 'R6'
+            self.pas = 'R7'
+            self.rpm = 'R8'
+            self.lim = 'R9'
+
+            self.x_pos = 'R10'
+            self.z_pos = 'R11'
+            self.aprx = 'R12'
+            self.aprz = 'R13'
+
+            self.esti = 'R14'
+            self.form = 'R15'
+
+            self.com_fera = 'FERRAMENTA DE ACABAMENTO'
+            self.com_ferd = 'FERRAMENTA DE DESBASTE'
+            self.com_diam_inic = 'DIÂMETRO INICIAL'
+            self.com_diam_fina = 'DIÂMETRO FINAL'
+            self.com_espess = 'ESPESSURA'
+            self.com_avan = 'AVANÇO'
+            self.com_pas = 'PASSSE'
+            self.com_rpm = 'RPM'
+            self.com_lim = 'LIMIT DE RPM'
+            self.com_xpos = 'POSICIONAMENTO DE SEGURANÇA (X)'
+            self.com_zpos = 'POSICIONAMENTO DE SEGURANÇA (Z)'
+            self.com_aprx = 'APROXIMAÇÃO (X)'
+            self.com_aprz = 'APROXIMAÇÃO (Z)'
+            self.com_esti = 'ESTILO DE USINAGEM (DESBASTE-PADRÃO OU ZIGZAG)'
+            self.com_form = 'FORMA DE USINAGEM'
 
     # Método responsável por armazenar o arquivo main em atributo
     def create_main(self):
@@ -59,30 +141,30 @@ class CyDesbasteP(CyBase):
             DEF STRING [1] FORMA;
 
             ; Seção de Inserção de Ferramenta
-            FERRAMENTA_DESB = {self.__json.get_data(self.__json.data_desbastep, 'ferd')};
-            FERRAMENTA_ACAB = {self.__json.get_data(self.__json.data_desbastep, 'fera')};
+            {self.ferr_desb} = {self.__json.get_data(self.__json.data_desbastep, 'ferd')}; {self.com_ferd}
+            {self.ferr_acab} = {self.__json.get_data(self.__json.data_desbastep, 'fera')}; {self.com_fera}
 
             ; Seção de Inserção de Parâmetros da Peça
-            DIAMETRO_INICIAL = {self.diametro_inicial};
-            DIAMETRO_FINAL = {self.diametro_final};
-            ESPESSURA = -{self.espessura};
+            {self.diam_inic} = {self.diametro_inicial}; {self.com_diam_inic}
+            {self.diam_fina} = {self.diametro_final}; {self.com_diam_fina}
+            {self.espess} = -{self.espessura}; {self.com_espess}
 
             ; Seção de Inserção de Parâmetros de Corte
-            AVANCO = {self.__json.get_data(self.__json.data_desbastep, 'avan')};
-            PASSE = -{self.__json.get_data(self.__json.data_desbastep, 'pass')};
-            RPM = {self.__json.get_data(self.__json.data_desbastep, 'rpmp')};
-            LIMIT_RPM = {self.__json.get_data(self.__json.data_desbastep, 'lims')};
+            {self.avan} = {self.__json.get_data(self.__json.data_desbastep, 'avan')}; {self.com_avan}
+            {self.pas} = -{self.__json.get_data(self.__json.data_desbastep, 'pass')}; {self.com_pas}
+            {self.rpm} = {self.__json.get_data(self.__json.data_desbastep, 'rpmp')}; {self.com_rpm}
+            {self.lim} = {self.__json.get_data(self.__json.data_desbastep, 'lims')}; {self.com_lim}
 
             ; Seção de Inserção de valores de Posicionamentos
-            X_POS = {self.__json.get_data(self.__json.data_desbastep, 'posx')};
-            Z_POS = {self.__json.get_data(self.__json.data_desbastep, 'posz')};
+            {self.x_pos} = {self.__json.get_data(self.__json.data_desbastep, 'posx')}; {self.com_xpos}
+            {self.z_pos} = {self.__json.get_data(self.__json.data_desbastep, 'posz')}; {self.com_zpos}
             
-            APRX = {self.__json.get_data(self.__json.data_desbastep, 'aprx')};
-            APRZ = {self.__json.get_data(self.__json.data_desbastep, 'aprz')};
+            {self.aprx} = {self.__json.get_data(self.__json.data_desbastep, 'aprx')}; {self.com_aprx}
+            {self.aprz} = {self.__json.get_data(self.__json.data_desbastep, 'aprz')}; {self.com_aprz}
 
             ; Estilo de Usinagem
-            ESTILO = "desbaste-padrao";
-            FORMA = "d";
+            {self.esti} = "desbaste-padrao"; {self.com_esti}
+            {self.form} = "d"; {self.com_form}
 
             _N_CMP_CONFIGS_SPF;
             

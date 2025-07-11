@@ -8,19 +8,19 @@ from src.controller.buttons_cmds.cycles_cmds.cy_parametrizados_cmds.cy_desbastep
 
 class ViewCyDesbasteP(ctk.CTkFrame):
 
-    cor1 = '#FCF6F2' # Cor branca para FG-COLOR
-    cor2 = '#1A8AE5' # Cor Azul para FG-COLOR
-    cor3 = 'black'   # Cor preta para TEXT-COLOR
-
-    sub = 'Insira as informações em todos os campos abaixo para compilar o ciclo de desbaste parametrizado.'
-    pre = 'Insira as informações abaixo para gerar um relatório de usinagem completo e fiel ao processo executado.'
+    cor1 = '#FFFFFF'
+    cor2 = '#1A8AE5'
+    cor3 = '#000000'
 
     img_pos = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/pos.png'), size=(25, 25))
     img_rea = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/readme.png'), size=(25, 25))
     img_lih = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(25, 25))
     img_lhm = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/linha_h.png'), size=(810, 25))
     img_par = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/parametros.png'), size=(25, 25))
-    
+
+    sub = 'Insira as informações em todos os campos abaixo para compilar o ciclo de desbaste parametrizado.'
+    pre = 'Insira as informações abaixo para gerar um relatório de usinagem completo e fiel ao processo executado.'
+
     def __init__(self, master):
         try:
             super().__init__(master)

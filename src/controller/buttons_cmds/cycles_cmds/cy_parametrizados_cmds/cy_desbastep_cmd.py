@@ -31,54 +31,6 @@ class DesbastePCmds:
             messagebox.showerror('Compilador G-Code', f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos:\n\n{e}')
             raise ValueError(f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos: {e}')
 
-    # Método responsável por bloquear a edição dos entrys
-    def lock_entrys(self):
-        try:
-            self.__master.entry_dii.configure(state='disabled')
-            self.__master.entry_dif.configure(state='disabled')
-            self.__master.entry_esp.configure(state='disabled')
-
-            self.__master.entry_fea.configure(state='disabled')
-            self.__master.entry_fed.configure(state='disabled')
-
-            self.__master.entry_ava.configure(state='disabled')
-            self.__master.entry_pas.configure(state='disabled')
-            self.__master.entry_rpm.configure(state='disabled')
-            self.__master.entry_lim.configure(state='disabled')
-
-            self.__master.entry_pox.configure(state='disabled')
-            self.__master.entry_poz.configure(state='disabled')
-            self.__master.entry_apx.configure(state='disabled')
-            self.__master.entry_apz.configure(state='disabled')
-
-        except Exception as e:
-            messagebox.showerror('Compilador G-Code', f'Erro no momento de bloquear os campos que se encontra:\n\n{e}')
-            raise ValueError(f'Erro no momento de bloquear os campos que se encontra: {e}')
-
-    # Método responsável por desbloquear os campos dos entrys
-    def unlock_entrys(self):
-        try:
-            self.__master.entry_dii.configure(state='normal')
-            self.__master.entry_dif.configure(state='normal')
-            self.__master.entry_esp.configure(state='normal')
-
-            self.__master.entry_fea.configure(state='normal')
-            self.__master.entry_fed.configure(state='normal')
-
-            self.__master.entry_ava.configure(state='normal')
-            self.__master.entry_pas.configure(state='normal')
-            self.__master.entry_rpm.configure(state='normal')
-            self.__master.entry_lim.configure(state='normal')
-
-            self.__master.entry_pox.configure(state='normal')
-            self.__master.entry_poz.configure(state='normal')
-            self.__master.entry_apx.configure(state='normal')
-            self.__master.entry_apz.configure(state='normal')
-        
-        except Exception as e:
-            messagebox.showerror('Compilador G-Code', f'Erro no momento de desbloquear os campos que se encontra:\n\n{e}')
-            raise ValueError(f'Erro no momento de desbloquear os campos que se encontra: {e}')
-
     # Método responsável por carregar os dados do ciclo do json
     def load_json(self):
         try:
@@ -135,11 +87,74 @@ class DesbastePCmds:
             self.view_verif.entry_rpm.insert('0', self.marpm)
             self.view_verif.entry_lim.insert('0', self.lirpm)
 
+            self.view_verif.entry_sdi.insert('0', self.dii_parcial)
+            self.view_verif.entry_szc.insert('0', self.esp_parcial)
+            self.view_verif.entry_szs.insert('0', self.esp_parcial)
+
             self.view_verif.mainloop()
 
         except Exception as e:
             messagebox.showerror('Compilador G-Code', 'Erro na geração do g-code, revise os campos e tente novamente!')
             print(f'Erro na geração do g-code final:\n\n{e}')
+
+    # Método responsável por bloquear a edição dos entrys
+    def validate_gcode(self):
+        try:
+            dii = float(self.__master.entry_dii.get())
+            dif = float(self.__master.entry_dif.get())
+            esp = float(self.__master.entry_esp.get())
+
+            ava = float(self.__master.entry_ava.get())
+            pas = float(self.__master.entry_pas.get())
+            rpm = float(self.__master.entry_rpm.get())
+            lim = float(self.__master.entry_lim.get())
+
+            apx = float(self.__master.entry_apx.get())
+            apz = float(self.__master.entry_apz.get())
+            pox = float(self.__master.entry_pox.get())
+            poz = float(self.__master.entry_poz.get())
+
+            sim_espc = float(self.__master.entry_szc.get())
+            sim_espu = float(self.__master.entry_szs.get())
+
+            # Seção de validação de parâmetros de simulação
+            if sim_espc < sim_espu or sim_espc < 0:
+                messagebox.showerror('Compilador G-Code', 'Erro, os valores de parâmetros de simulação estão incorretos:\n\na espessura completa da peça não pode ser menor que a espessura de segurança ou igual a zero!')
+                return
+
+            # Seção de validação de parâmetros de dimensões
+            if dif > dii or dif <= 0:
+                messagebox.showerror('Compilador G-Code', 'Erro, os valores de dimensões estão incorretos:\n\no diâmetro final não pode ser maior que o diâmetro inicial ou igual a zero!')
+                return
+
+            if esp <= 0:
+                messagebox.showerror('Compilador G-Code', 'Erro, os valores de parâmetros de dimensões estão incorretos:\n\no valor da espessura não pode ser menor ou igual a zero!')
+                return
+
+            # Seção de validação de parâmetros de corte
+            if ava <= 0:
+                messagebox.showerror('Compilador G-Code', 'Erro, os valores de parâmetros de corte estão incorretos:\n\no valor de avanço não pode ser menor ou igual a zero!')
+                return
+            
+            if pas <= 0:
+                messagebox.showerror('Compilador G-Code', 'Erro, os valores de parâmetros de corte estão incorretos:\n\no valor do passe de profundidade não pode ser menor ou igual a zero!')
+                return
+
+            if rpm > lim or rpm <= 0:
+                messagebox.showerror('Compilador G-Code', 'Erro, os valores de parâmetros de corte estão incorretos:\n\no valor de rpm não pode ser maior que o limite de rpm ou igual a zero!')
+                return
+
+            # Seção de validação de parâmetros de posicionamento
+            if pox <= apx:
+                messagebox.showerror('Compilador G-Code', 'Erro, os valores de parâmetros de posicionamento estão incorretos:\n\no valor de posicionamento no eixo X não pode ser menor ou igual ao valor de aproximação no eixo X!')
+                return
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de validar os campos que se abaixo encontra:\n\n{e}')
+            raise ValueError(f'Erro no momento de validar os campos que se encontra abaixo: {e}')
+
+        else:
+            messagebox.showinfo('Compilador G-Code', 'Todos os campos foram verificados e você já pode gerar o seu ciclo de desbaste parametrizado!')
 
     # Método responsável por salvar o g-code do ciclo de desbaste parametrizado
     def save_gcode(self):
@@ -164,21 +179,26 @@ class DesbastePCmds:
                 'posx': self.__master.entry_pox.get(),
                 'posz': self.__master.entry_poz.get(),
                 'aprx': self.__master.entry_apx.get(),
-                'aprz': self.__master.entry_apz.get()
+                'aprz': self.__master.entry_apz.get(),
+                'vari': self.__master.combo_tip.get()
             }
 
             self.input_dialog = self.__assents.criar_inputdialog('Compilador G-Code', 'Dê um nome à pasta do ciclo de desbaste parametrizado.')
             self.nome_project = self.input_dialog.get_input()
 
-            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_desbastep.json', 'w', encoding='utf-8') as file:
-                json.dump(self.data_cycle, file, indent=4, ensure_ascii=False)
+            if self.nome_project == '' or self.nome_project == None:
+                messagebox.showerror('Compilador G-Code', 'Erro, você deve informar o nome da pasta para compilar o ciclo.')
+                return
+            else:
+                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_desbastep.json', 'w', encoding='utf-8') as file:
+                    json.dump(self.data_cycle, file, indent=4, ensure_ascii=False)
 
-            self.desbastep = CyDesbasteP(self.dii_real, self.dif_real, self.esp_real)
-            self.desbastep.initialize_files()
-            self.desbastep.generate_gcode(self.nome_project)
+                self.desbastep = CyDesbasteP(self.dii_real, self.dif_real, self.esp_real)
+                self.desbastep.initialize_files()
+                self.desbastep.generate_gcode(self.nome_project)
 
-            messagebox.showinfo('Compilador G-Code', 'Seu ciclo de desbaste parametrizado foi compilado com sucesso e já está disponível em seus arquivos!')
-            self.__master.destroy()
+                messagebox.showinfo('Compilador G-Code', 'Seu ciclo de desbaste parametrizado foi compilado com sucesso e já está disponível em seus arquivos!')
+                self.__master.destroy()
 
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro no momento de salvar o g-code do ciclo de desbaste parametrizado:\n\n{e}')

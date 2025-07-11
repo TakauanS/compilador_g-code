@@ -6,10 +6,10 @@ from src.controller.buttons_cmds.cycles_cmds.cy_parametrizados_cmds.cy_desbastep
 
 class ViewVerificationDesbasteP(ctk.CTkToplevel):
 
-    cor1 = '#FCF6F2' # Cor branca para FG-COLOR
-    cor2 = '#1A8AE5' # Cor azul para butões FG-COLOR
-    cor3 = '#3757A0' # Cor azul para botões HOUVER-COLOR
-    cor4 = 'black'   # Cor preta para TEXT-COLOR
+    cor1 = '#FFFFFF'
+    cor2 = '#1A8AE5'
+    cor3 = '#3757A0'
+    cor4 = '#000000'
 
     def __init__(self):
         try:
@@ -27,7 +27,7 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.fra_p = self.__assents.criar_frame(10, 10, 430, 830, 0, 1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, self)
 
             self.fra_dim = self.__assents.criar_labelframe(10, 3, 340, 150, 'Dimensões da Peça', ViewVerificationDesbasteP.cor1, self.fra_p)
-            self.fra_cod = self.__assents.criar_labelframe(10, 155, 340, 265, 'Códigos G', ViewVerificationDesbasteP.cor1, self.fra_p)
+            self.fra_sim = self.__assents.criar_labelframe(10, 155, 340, 265, 'Parâmetros de Simulação', ViewVerificationDesbasteP.cor1, self.fra_p)
             self.fra_par = self.__assents.criar_labelframe(360, 3, 460, 150, 'Parâmetros de Cortes', ViewVerificationDesbasteP.cor1, self.fra_p)
             self.fra_pos = self.__assents.criar_labelframe(360, 155, 460, 110, 'Posicionamentos da Ferramenta', ViewVerificationDesbasteP.cor1, self.fra_p)
             self.fra_out = self.__assents.criar_labelframe(360, 267, 460, 152, 'Outros', ViewVerificationDesbasteP.cor1, self.fra_p)
@@ -41,8 +41,7 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.menu_arquivo.add_command(label='VOLTAR', command=self.destroy)
             self.menu.add_cascade(label='ARQUIVO', menu=self.menu_arquivo)
 
-            self.menu_editar.add_command(label='DESBLOQUEAR', command=self.__cmds.unlock_entrys)
-            self.menu_editar.add_command(label='BLOQUEAR', command=self.__cmds.lock_entrys)
+            self.menu_editar.add_command(label='VALIDAR', command=self.__cmds.validate_gcode)
             self.menu.add_cascade(label='EDITAR', menu=self.menu_editar)
 
             self.menu.add_command(label='GERAR G-CODE', command=self.__cmds.save_gcode)
@@ -68,6 +67,14 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.label_sis = self.__assents.criar_label('SISTEMA DE CÓD. G:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
             self.label_rea = self.__assents.criar_label('ARQUIVO DE INTRO:', 10, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
 
+            self.label_sdi = self.__assents.criar_label('DIÂMETRO INICIAL:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_sim)
+            self.label_szc = self.__assents.criar_label('ESPESSURA CMP:', 10, 45, 0, 'ESPESSURA COMPLETA', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_sim)
+            self.label_szs = self.__assents.criar_label('ESPESSURA USI:', 10, 85, 0, 'ESPESSURA USINÁVEL', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_sim)
+
+            # SEÇÃO DE COMBOBOXs
+            self.combo_tip = self.__assents.criar_combobox(180, 85, self.fra_out, 260, 10, ('VARIÁVEIS DE USUÁRIO (DEF)', 'PARÂMETROS R'))
+            self.combo_sis = self.__assents.criar_combobox(180, 5, self.fra_out, 260, 10, ('SISTEMA DE CÓDIGO - A', 'SISTEMA DE CÓDIGO - B', 'SISTEMA DE CÓDIGO - C'))
+
             # SEÇÃO DE ENTRYs
             self.entry_dii = self.__assents.criar_entry(170, 5, 150, 1, 'center', self.fra_dim)
             self.entry_dif = self.__assents.criar_entry(170, 45, 150, 1, 'center', self.fra_dim)
@@ -85,8 +92,10 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.entry_apx = self.__assents.criar_entry(120, 45, 100, 1, 'center', self.fra_pos)
             self.entry_apz = self.__assents.criar_entry(340, 45, 100, 1, 'center', self.fra_pos)
 
-            self.entry_tip = self.__assents.criar_entry(180, 85, 260, 1, 'center', self.fra_out)
-            self.entry_sis = self.__assents.criar_entry(180, 5, 260, 1, 'center', self.fra_out)
+            self.entry_sdi = self.__assents.criar_entry(170, 5, 150, 1, 'center', self.fra_sim)
+            self.entry_szc = self.__assents.criar_entry(170, 45, 150, 1, 'center', self.fra_sim)
+            self.entry_szs = self.__assents.criar_entry(170, 85, 150, 1, 'center', self.fra_sim)
+
             self.entry_rea = self.__assents.criar_entry(180, 45, 260, 1, 'center', self.fra_out)
 
             self.config(bg=ViewVerificationDesbasteP.cor1, menu=self.menu)

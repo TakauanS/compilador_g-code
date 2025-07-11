@@ -8,10 +8,10 @@ from src.controller.buttons_cmds.main_screen_cmds import MainScreenCmds
 
 class ViewMainScreen(ctk.CTk):
 
-    cor1 = '#FCF6F2' # Cor branca de FG-COLOR
-    cor2 = '#EBE8E8' # Cor branca de FG-COLOR (mais puxado para o cinza)
-    cor3 = '#242322' # Cor preta de TEXT-COLOR
-    cor4 = '#1A8AE5' # Cor azul de FG-COLOR
+    cor1 = '#FFFFFF'
+    cor2 = '#FFFFFF'
+    cor3 = '#242322' 
+    cor4 = '#1A8AE5'
 
     img_up = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/upload.png'))
     img_hel = ctk.CTkImage(Image.open('C:/Users/USUARIO/Documents/Compilador G-Code/assets/imgs/ajuda.png'), size=(28, 28))
