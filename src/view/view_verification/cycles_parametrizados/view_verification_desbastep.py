@@ -63,7 +63,6 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.label_apx = self.__assents.criar_label('APRX. SEG:', 10, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_pos)
             self.label_apz = self.__assents.criar_label('APRZ. SEG:', 240, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_pos)
 
-            self.label_tip = self.__assents.criar_label('TIPO DE VARIÁVEL:', 10, 85, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
             self.label_sis = self.__assents.criar_label('SISTEMA DE CÓD. G:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
             self.label_rea = self.__assents.criar_label('ARQUIVO DE INTRO:', 10, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
 
@@ -72,7 +71,6 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.label_szs = self.__assents.criar_label('ESPESSURA USI:', 10, 85, 0, 'ESPESSURA USINÁVEL', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_sim)
 
             # SEÇÃO DE COMBOBOXs
-            self.combo_tip = self.__assents.criar_combobox(180, 85, self.fra_out, 260, 10, ('VARIÁVEIS DE USUÁRIO (DEF)', 'PARÂMETROS R'))
             self.combo_sis = self.__assents.criar_combobox(180, 5, self.fra_out, 260, 10, ('SISTEMA DE CÓDIGO - A', 'SISTEMA DE CÓDIGO - B', 'SISTEMA DE CÓDIGO - C'))
 
             # SEÇÃO DE ENTRYs

@@ -179,8 +179,7 @@ class DesbastePCmds:
                 'posx': self.__master.entry_pox.get(),
                 'posz': self.__master.entry_poz.get(),
                 'aprx': self.__master.entry_apx.get(),
-                'aprz': self.__master.entry_apz.get(),
-                'vari': self.__master.combo_tip.get()
+                'aprz': self.__master.entry_apz.get()
             }
 
             self.input_dialog = self.__assents.criar_inputdialog('Compilador G-Code', 'Dê um nome à pasta do ciclo de desbaste parametrizado.')
