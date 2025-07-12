@@ -10,6 +10,7 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
     cor2 = '#1A8AE5'
     cor3 = '#3757A0'
     cor4 = '#000000'
+    cor5 = '#adadad'
 
     def __init__(self):
         try:
@@ -35,16 +36,21 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             # SEÇÃO DE MENU BAR
             self.menu = Menu(self)
             self.menu_arquivo = Menu(self.menu, tearoff=0)
-            self.menu_editar = Menu(self.menu, tearoff=0)
+            self.menu_configs = Menu(self.menu, tearoff=0)
+            self.menu_avancad = Menu(self.menu_configs, tearoff=0)
 
             self.menu_arquivo.add_command(label='SALVAR DADOS .txt')
+            self.menu_arquivo.add_command(label='GERAR G-CODE', command=self.__cmds.save_gcode)
             self.menu_arquivo.add_command(label='VOLTAR', command=self.destroy)
             self.menu.add_cascade(label='ARQUIVO', menu=self.menu_arquivo)
 
-            self.menu_editar.add_command(label='VALIDAR', command=self.__cmds.validate_gcode)
-            self.menu.add_cascade(label='EDITAR', menu=self.menu_editar)
+            self.menu_configs.add_command(label='VALIDAR G-CODE', command=self.__cmds.validate_gcode)
+            self.menu_configs.add_cascade(label='AVANÇADOS', menu=self.menu_avancad)
+            self.menu.add_cascade(label='CONFIGURAÇÕES', menu=self.menu_configs)
 
-            self.menu.add_command(label='GERAR G-CODE', command=self.__cmds.save_gcode)
+            self.menu_avancad.add_command(label='PARÂMETROS DE CORTE')
+            self.menu_avancad.add_command(label='POSICIONAMENTOS')
+            self.menu_avancad.add_command(label='OFFSET')
 
             # SEÇÃO DE LABELs
             self.label_dii = self.__assents.criar_label('DIÂMETRO INICIAL:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_dim)
@@ -63,15 +69,16 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.label_apx = self.__assents.criar_label('APRX. SEG:', 10, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_pos)
             self.label_apz = self.__assents.criar_label('APRZ. SEG:', 240, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_pos)
 
-            self.label_sis = self.__assents.criar_label('SISTEMA DE CÓD. G:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
-            self.label_rea = self.__assents.criar_label('ARQUIVO DE INTRO:', 10, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
+            self.label_rea = self.__assents.criar_label('README USER:', 10, 45, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
+            self.label_pro = self.__assents.criar_label('DIMENSÕES EM:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_out)
 
             self.label_sdi = self.__assents.criar_label('DIÂMETRO INICIAL:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_sim)
             self.label_szc = self.__assents.criar_label('ESPESSURA CMP:', 10, 45, 0, 'ESPESSURA COMPLETA', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_sim)
             self.label_szs = self.__assents.criar_label('ESPESSURA USI:', 10, 85, 0, 'ESPESSURA USINÁVEL', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_sim)
 
             # SEÇÃO DE COMBOBOXs
-            self.combo_sis = self.__assents.criar_combobox(180, 5, self.fra_out, 260, 10, ('SISTEMA DE CÓDIGO - A', 'SISTEMA DE CÓDIGO - B', 'SISTEMA DE CÓDIGO - C'))
+            self.combo_rea = self.__assents.criar_combobox(150, 43, self.fra_out, 220, 10, ('SIM', 'NÃO'), 'center', 'disabled')
+            self.combo_pro = self.__assents.criar_combobox(150, 3, self.fra_out, 220, 10, ('DIÂMETRO', 'RAIO'), 'center', 'disabled')
 
             # SEÇÃO DE ENTRYs
             self.entry_dii = self.__assents.criar_entry(170, 5, 150, 1, 'center', self.fra_dim)
@@ -94,7 +101,9 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.entry_szc = self.__assents.criar_entry(170, 45, 150, 1, 'center', self.fra_sim)
             self.entry_szs = self.__assents.criar_entry(170, 85, 150, 1, 'center', self.fra_sim)
 
-            self.entry_rea = self.__assents.criar_entry(180, 45, 260, 1, 'center', self.fra_out)
+            # SEÇÃO DE CHECKBOXs
+            self.check_pro = self.__assents.criar_checkbox(380, 5, self.__cmds.unlock_dimension, self.fra_out)
+            self.check_rea = self.__assents.criar_checkbox(380, 45, self.__cmds.unlock_readme, self.fra_out)
 
             self.config(bg=ViewVerificationDesbasteP.cor1, menu=self.menu)
 

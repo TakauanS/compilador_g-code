@@ -31,6 +31,26 @@ class DesbastePCmds:
             messagebox.showerror('Compilador G-Code', f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos:\n\n{e}')
             raise ValueError(f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos: {e}')
 
+    # Método responsável por liberar a alteração de dimensões
+    def unlock_dimension(self):
+        try:
+            self.__master.combo_pro.configure(state='readonly')
+            self.__master.check_pro.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração de dimensão:\n\n{e}')
+            raise ValueError(f'Erro no momento de liberar a alteração de dimensão: {e}')
+        
+    # Método responsável por liberar a alteração do readme user
+    def unlock_readme(self):
+        try:
+            self.__master.combo_rea.configure(state='readonly')
+            self.__master.check_rea.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do readme user:\n\n{e}')
+            raise ValueError(f'Erro no momento de liberar a alteração do readme user: {e}')
+
     # Método responsável por carregar os dados do ciclo do json
     def load_json(self):
         try:
@@ -179,7 +199,8 @@ class DesbastePCmds:
                 'posx': self.__master.entry_pox.get(),
                 'posz': self.__master.entry_poz.get(),
                 'aprx': self.__master.entry_apx.get(),
-                'aprz': self.__master.entry_apz.get()
+                'aprz': self.__master.entry_apz.get(),
+                'tdim': self.__master.combo_pro.get()
             }
 
             self.input_dialog = self.__assents.criar_inputdialog('Compilador G-Code', 'Dê um nome à pasta do ciclo de desbaste parametrizado.')

@@ -141,6 +141,14 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo init em atributo
     def create_init(self):
         try:
+            tipo_dim = self.__json.get_data(self.__json.data_desbastep, 'tdim') # retorna o tipo de dimensão (diâmetro ou raio)
+
+            if tipo_dim == 'DIÂMETRO' or tipo_dim == '':
+                tipo_dim = 'DIAMON; Programação em Diâmetro'
+            
+            if tipo_dim == 'RAIO':
+                tipo_dim = 'DIAMOF; Programação em Raio'
+
             self.__file_init = textwrap.dedent(f'''
             ; Seção de Variáveis de Usuário - LUDs
             N10 DEF STRING [30] _RESULT; Var que retorna o valor da forma de usinagem
@@ -152,7 +160,7 @@ class CyDesbasteP(CyBase):
             N50 R4 = R2 - R1; Condicional para desbaste zig-zag
 
             N60 _RESULT = TOUPPER(ESTILO);
-            N70 DIAMON; Programação em diâmetro
+            N70 {tipo_dim} 
 
             ; Estruturas de Controles
             IF R1 <= 0

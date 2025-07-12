@@ -129,17 +129,17 @@ class Assents:
         return self.button
     
     # Método responsável por criar combobox
-    def criar_combobox(self, x, y, frame=None, width=200, corner_radius=10, values=(), justify='center'):
+    def criar_combobox(self, x, y, frame=None, width=200, corner_radius=10, values=(), justify='center', state='readonly'):
 
         if frame is None:
             frame = self.master
 
         self.combobox = ctk.CTkComboBox(frame, 
+                                state=state,
                                 width=width,
                                 values=values, 
                                 border_width=1,
                                 justify=justify,
-                                state='readonly',
                                 font=('Arial', 14),
                                 bg_color=Assents.cor6,
                                 button_color=Assents.cor4,
@@ -162,3 +162,18 @@ class Assents:
                                              bg_color=Assents.cor6, 
                                              border_width_unchecked=1)                                     
         self.radiobutton.place(x=x, y=y)
+
+    # Método responsável por criar checkbox
+    def criar_checkbox(self, x, y, cmd, frame=None, bd='#ADABAD'):
+
+        if frame is None:
+            frame = self.master
+
+        self.check = ctk.CTkCheckBox(frame,
+                                         text='', 
+                                         width=0, 
+                                         command=cmd,
+                                         corner_radius=8,   
+                                         border_color=bd)
+        self.check.place(x=x, y=y)
+        return self.check
