@@ -35,9 +35,10 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
 
             # SEÇÃO DE MENU BAR
             self.menu = Menu(self)
-            self.menu_arquivo = Menu(self.menu, tearoff=0)
-            self.menu_configs = Menu(self.menu, tearoff=0)
-            self.menu_avancad = Menu(self.menu_configs, tearoff=0)
+            self.menu_arquivo = Menu(self.menu, tearoff=0) # Menu para arquivo
+            self.menu_configs = Menu(self.menu, tearoff=0) # Menu para configurações
+            self.menu_avancad = Menu(self.menu_configs, tearoff=0) # Menu para opções avançadas
+            self.menu_paramet = Menu(self.menu_avancad, tearoff=0) # Menu para parâmetros de corte
 
             self.menu_arquivo.add_command(label='SALVAR DADOS .txt')
             self.menu_arquivo.add_command(label='GERAR G-CODE', command=self.__cmds.save_gcode)
@@ -48,9 +49,12 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.menu_configs.add_cascade(label='AVANÇADOS', menu=self.menu_avancad)
             self.menu.add_cascade(label='CONFIGURAÇÕES', menu=self.menu_configs)
 
-            self.menu_avancad.add_command(label='PARÂMETROS DE CORTE')
+            self.menu_avancad.add_cascade(label='PARÂMETROS DE CORTE', menu=self.menu_paramet)
             self.menu_avancad.add_command(label='POSICIONAMENTOS')
             self.menu_avancad.add_command(label='OFFSET')
+
+            self.menu_paramet.add_command(label='ROTAÇÃO', command=self.__cmds.call_rotations)
+            self.menu_paramet.add_command(label='AVANÇO')
 
             # SEÇÃO DE LABELs
             self.label_dii = self.__assents.criar_label('DIÂMETRO INICIAL:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_dim)

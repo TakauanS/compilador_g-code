@@ -15,7 +15,7 @@ class DesbastePCmds:
     def call_parameters(self):
         try:
             from src.view.view_parameters import ViewParameters
-            self.parameters = ViewParameters()
+            view_parameters = ViewParameters()
 
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro na chamada da tela de parâmetros de corte:\n\n{e}')
@@ -25,11 +25,21 @@ class DesbastePCmds:
     def call_positioning(self):
         try:
             from src.view.view_pos.view_posp import ViewPosp
-            self.posp = ViewPosp()
+            view_posp = ViewPosp()
         
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos:\n\n{e}')
             raise ValueError(f'Aconteceu um erro inesperado no momento de chamar a tela de posicionamentos: {e}')
+
+    # Método responsável por fazer a chamada da tela de configuração de rotações
+    def call_rotations(self):
+        try:
+            from src.view.view_menus.cy_parametrizados.view_rpm_desbp_men import ViewRpmDesbasp_Men
+            view_rpm = ViewRpmDesbasp_Men()
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Aconteceu um erro inesperado no momento de chamar a tela de configuração de velocidade de corte:\n\n{e}')
+            raise ValueError(f'Aconteceu um erro inesperado no momento de chamar a tela de configuração de velocidade de corte: {e}')
 
     # Método responsável por liberar a alteração de dimensões
     def unlock_dimension(self):
