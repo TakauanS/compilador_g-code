@@ -3,6 +3,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 
 from src.model.assents import Assents
+from src.controller.buttons_cmds.cycles_cmds.cy_parametrizados_cmds.cy_desbastep_cmd import DesbastePCmds
 
 class ViewRpmDesbasp_Men(ctk.CTkToplevel):
 
@@ -21,12 +22,13 @@ class ViewRpmDesbasp_Men(ctk.CTkToplevel):
             super().__init__()
 
             self.__assents = Assents(self)
+            self.__cmds = DesbastePCmds(self)
 
             self.geometry('850x320')
             self.title('Compilador G-Code | Configurações Avançadas - Rotações do Fuso')
             self.config(bg=ViewRpmDesbasp_Men.cor1)
             self.resizable(False, False)
-            self.grab_set() # Dar foco máximo a tela de posicionamentos 
+            self.grab_set() 
 
             # SEÇÃO DE FRAMEs
             fra_p = self.__assents.criar_frame(10, 5, 305, 830, 10, 1, ViewRpmDesbasp_Men.cor1, ViewRpmDesbasp_Men.cor1, self)
@@ -59,17 +61,16 @@ class ViewRpmDesbasp_Men(ctk.CTkToplevel):
             self.combo_sen = self.__assents.criar_combobox(160, 111, fra_p, 220, 10, ('HORÁRIO', 'ANTI-HORÁRIO'), state='disabled')
 
             # SEÇÃO DE CHECKBOXs
-            self.check_mod = self.__assents.criar_checkbox(395, 77, "ainda_n", fra_p)
-            self.check_sen = self.__assents.criar_checkbox(395, 113, "ainda_n", fra_p)
+            self.check_mod = self.__assents.criar_checkbox(395, 77, self.__cmds.unlock_mode, fra_p)
+            self.check_sen = self.__assents.criar_checkbox(395, 113, self.__cmds.unlock_sense, fra_p)
 
             # SEÇÃO DE BUTTONs
-            self.but_save = self.__assents.criar_button(715, 265, 20, 110, 'SAVE', "self.__cmds.save_positioning",
+            self.but_save = self.__assents.criar_button(713, 265, 20, 110, 'SAVE', self.__cmds.save_rotations,
                                                         ViewRpmDesbasp_Men.img_up,
                                                         ViewRpmDesbasp_Men.cor3,
                                                         ViewRpmDesbasp_Men.cor2,
                                                         ViewRpmDesbasp_Men.cor1,
                                                         ti='SALVAR CONFIGURAÇÕES', fr=fra_p)
-
         except Exception as e:
             messagebox.showerror('Compilador G-Code', 'Erro no momento de carregar os widgets da tela de configurações avançadas das rotações do fuso!')
             raise ValueError(f'Erro no momento de carregar os widgets da tela de configurações avançadas das rotações do fuso: {e}')

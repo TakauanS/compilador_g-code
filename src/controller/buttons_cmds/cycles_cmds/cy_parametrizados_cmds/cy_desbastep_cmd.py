@@ -61,6 +61,26 @@ class DesbastePCmds:
             messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do readme user:\n\n{e}')
             raise ValueError(f'Erro no momento de liberar a alteração do readme user: {e}')
 
+    # Método responsável por liberar a alteração do modo de velocidade do spindle
+    def unlock_mode(self):
+        try:
+            self.__master.combo_mod.configure(state='readonly')
+            self.__master.check_mod.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do modo de velocidade do spindle:\n\n{e}')
+            raise ValueError(f'Erro no momento de liberar a alteração do modo de velocidade do spindle: {e}')
+
+    # Método responsável por liberar a alteração do sentido de giro do spindle
+    def unlock_sense(self):
+        try:
+            self.__master.combo_sen.configure(state='readonly')
+            self.__master.check_sen.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do sentido de giro do spindle:\n\n{e}')
+            raise ValueError(f'Erro no momento de liberar a alteração do sentido de giro do spindle: {e}')
+
     # Método responsável por carregar os dados do ciclo do json
     def load_json(self):
         try:
@@ -185,6 +205,44 @@ class DesbastePCmds:
 
         else:
             messagebox.showinfo('Compilador G-Code', 'Todos os campos foram verificados e você já pode gerar o seu ciclo de desbaste parametrizado!')
+
+    # Método responsável por salvar as configurações das rotações do fuso
+    def save_rotations(self):
+        try:
+            data_rotations = {
+                'modo_velo': self.__master.combo_mod.get(),
+                'sent_giro': self.__master.combo_sen.get(),
+                'lim_sup': self.__master.entry_sup.get(),
+                'lim_inf': self.__master.entry_inf.get(),
+                'fuso': self.__master.entry_fus.get()
+            }
+
+            try:
+                if float(data_rotations['lim_sup']) <= float(data_rotations['lim_inf']):
+                    messagebox.showerror('Compilador G-Code', 'Erro, o limite superior não pode ser menor ou igual ao limite inferior!')
+                    return
+            except ValueError:
+                messagebox.showerror('Compilador G-Code', 'Erro, os campos de limites não podem ficar em branco e nem ser não numéricos!')
+                return
+
+            if data_rotations['modo_velo'] == '':
+                data_rotations['modo_velo'] = 'FIXA'
+
+            if data_rotations['sent_giro'] == '':
+                data_rotations['sent_giro'] = 'HORÁRIO'
+
+            if data_rotations['fuso'] == '':
+                data_rotations['fuso'] = '0'
+    
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_rotations.json', 'w', encoding='utf-8') as file:
+                json.dump(data_rotations, file, indent=4, ensure_ascii=False)
+
+            messagebox.showinfo('Compilador G-Code', 'Configurações de rotações do fuso salvas com sucesso!')
+            self.__master.destroy()
+            
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro ao salvar as configurações das rotações do fuso:\n\n{e}')
+            raise ValueError(f'Erro ao salvar as configurações das rotações do fuso: {e}')
 
     # Método responsável por salvar o g-code do ciclo de desbaste parametrizado
     def save_gcode(self):
