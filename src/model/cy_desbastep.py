@@ -39,25 +39,11 @@ class CyDesbasteP(CyBase):
         try:
             self.__file_main = textwrap.dedent(f'''
             ; Seção de Definição de Variáveis de Usuário - PUDs
-            DEF REAL DIAMETRO_INICIAL;
-            DEF REAL DIAMETRO_FINAL;
-            DEF REAL ESPESSURA;
-
-            DEF INT FERRAMENTA_DESB;
-            DEF INT FERRAMENTA_ACAB;
-
-            DEF REAL X_POS; 
-            DEF REAL Z_POS; 
-            DEF REAL APRX; 
-            DEF REAL APRZ;
-
-            DEF REAL LIMIT_RPM;
-            DEF REAL AVANCO;
-            DEF REAL PASSE;
-            DEF REAL RPM;
-
-            DEF STRING [80] ESTILO;
-            DEF STRING [1] FORMA;
+            DEF REAL DIAMETRO_INICIAL, DIAMETRO_FINAL, ESPESSURA;
+            DEF INT FERRAMENTA_DESB, FERRAMENTA_ACAB;
+            DEF REAL LIMIT_RPM, AVANCO, PASSE, RPM;
+            DEF REAL X_POS, Z_POS, APRX, APRZ;
+            DEF STRING [80] ESTILO, FORMA;
 
             ; Seção de Inserção de Ferramenta
             FERRAMENTA_DESB = {self.jsonC.get_data(self.jsonC.data_desbastep, 'ferd')}; 
@@ -98,41 +84,52 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo configs em atributo
     def create_configs(self):
         try:
+            modo_prog = self.jsonC.get_data(self.jsonC.data_desbastep, 'tdim')
             modo_velo = self.jsonC.get_data(self.jsonC.data_rotations, 'modo_velo')
-            sent_spin = self.jsonC.get_data(self.jsonC.data_rotations, 'sent_giro')
-            #self.modo = self.jsonC.get_data(self.jsonC.data_parameters, 'modo') # Retorna o valor do modo de corte
-            #self.sentido = self.jsonC.get_data(self.jsonC.data_parameters, 'sentido') # Retorna o valor do sentido de rotação
+            sent_giro = self.jsonC.get_data(self.jsonC.data_rotations, 'sent_giro')
 
-            #if self.sentido == 'HORÁRIO':
-            #    self.sentido = 'M3'
+            if modo_prog == '' or modo_prog == 'DIÂMETRO':
+                modo_prog = 'DIAMON'
 
-            #elif self.sentido == 'ANTI-HORÁRIO':
-             #   self.sentido = 'M4'
+            if modo_prog == 'RAIO':
+                modo_prog = 'DIAMOF'
 
-            #if self.modo == 'VC - COSTANTE (G96)':
-             #   self.modo = 'G96'
-              #  self.modo_avanco = 'G94'
-            
-            #elif self.modo == 'VC - FIXA (G97)':
-             #   self.modo = 'G97'
-              #  self.modo_avanco = 'G95'
+            if modo_velo == '' or modo_velo == 'FIXA':
+                modo_velo = 'G97'
+
+            if modo_velo == 'CONSTANTE':
+                modo_velo = 'G96'
+
+            if sent_giro == '' or sent_giro == 'HORÁRIO':
+                sent_giro = 'M3'
+
+            if sent_giro == 'ANTI-HORÁRIO':
+                sent_giro = 'M4'
+
+            if modo_velo == 'G96':
+                modo_avanco = 'G95'
+
+            if modo_velo == 'G97':
+                modo_avanco  = 'G94'
 
             self.__file_configs = textwrap.dedent(f'''
             ; Seção de Carregamento de Parâmetros
             MSG("- CARREGANDO PARAMETROS G-CODES...");                                
                                                   
             N10 G290;
-            N20 G18 G40 G90 ;
+            N20 G18 G40 G90 {modo_avanco};
                             
             N30 {modo_velo} S=RPM;
             N40 LIMS=LIMIT_RPM;
-            N50 ;
-            N60 {sent_spin};
+            N50 {self.jsonC.get_data(self.jsonC.data_desbastep, 'ferd')}
+            N60 {sent_giro};
 
+            N70 {modo_prog};
+            
             MSG("");
             _N_CMP_INIT_SPF;
                                             
-            N70 RET;
+            N80 RET;
             ''')
             
             return self.__file_configs
@@ -154,35 +151,38 @@ class CyDesbasteP(CyBase):
 
             self.__file_init = textwrap.dedent(f'''
             ; Seção de Variáveis de Usuário - LUDs
-            N10 DEF STRING [30] _RESULT; Var que retorna o valor da forma de usinagem
+            N10 DEF STRING [30] _ESTILO; Var que retorna o valor do estilo de usinagem
+            N20 DEF STRING [1] _FORMA; Var que retorna o valor da forma de usinagem
                         
             ; Seção de Variáveis Secundárias
-            N20 R1 = ABS(PASSE); Conversão da var passe
-            N30 R2 = (DIAMETRO_INICIAL - DIAMETRO_FINAL) / R1; Número de passes
-            N40 R3 = R2 - 1; Condicional para desbaste padrao
-            N50 R4 = R2 - R1; Condicional para desbaste zig-zag
+            N30 R1 = ABS(PASSE); Conversão da var passe
+            N40 R2 = (DIAMETRO_INICIAL - DIAMETRO_FINAL) / R1; Número de passes
+            N50 R3 = R2 - 1; Condicional para desbaste padrao
+            N60 R4 = R2 - R1; Condicional para desbaste zig-zag
+            R5 = R2 - 2.5
 
-            N60 _RESULT = TOUPPER(ESTILO);
-            N70 {tipo_dim} 
+            N70 _ESTILO = TOUPPER(ESTILO);
+            N80 _FORMA = TOUPPER(FORMA);
 
-            ; Estruturas de Controles
-            IF R1 <= 0
-                MSG("- ERRO NA INSERÇÃO DO VALOR DO PASSE. TENTE NOVAMENTE!");
-                M00;
-                M30;
+            IF (_ESTILO=="DESBASTE-PADRAO")
+                IF (_FORMA=="D")
+                    MSG(" - CARREGANDO CICLO DE DESBASTE PADRÃO...");
+                    _N_CMP_DESB_PADRAO_SPF;
+                ENDIF
+                IF (_FORMA=="A")
+                    MSG(" - CARREGANDO CICLO DE DESBASTE PADRÃO...");
+                    CALL "_N_CMP_DESB_PADRAO_SPF" BLOCK "INICIO_ACABAMENTO" TO "FIM_ACABAMENTO"
+                ENDIF
             ENDIF
 
-            IF (_RESULT=="DESBASTE-PADRAO")
-                MSG("- CARREGANDO CICLO DE DEBSASTE PADRÃO...");
-                _N_CMP_DESB_PADRAO_SPF;
+            IF (_ESTILO == "DESBASTE-ZIG")
+                IF (_FORMA == "D")
+                    MSG(" - CARREGANDO CICLO DE DESBASTE ZIG-ZAG...");
+                    _N_CMP_DESB_ZIG_SPF;
+                ENDIF
             ENDIF
 
-            IF (_RESULT=="DESBASTE-ZIG")
-                MSG("- CARREGANDO CICLO DE DESBASTE ZIG-ZAG...");
-                _N_CMP_DESB_ZIG_SPF;
-            ENDIF
-
-            N80 RET;''')
+            N90 RET;''')
 
             return self.__file_init
         
@@ -196,50 +196,40 @@ class CyDesbasteP(CyBase):
             self.__file_desbastep = textwrap.dedent(f'''
             N10 G0 G54 X=X_POS Z=Z_POS;
 
-            ; Estrutura de Controle - Desbaste & Acabamento
-            IF (FORMA=="d")
-                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE DESBASTE - PADRÃO...");
-                MSG("");
-                GOTO N20;
-            ENDIF
-
-            IF (FORMA=="a")
-                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE ACABAMENTO - PADRÃO...")
-                MSG("");
-                GOTO N70;
-            ENDIF
-
             N20 G0 X=APRX;
             N30 G0 Z=APRZ;
-            N40 G90 G0 X=DIAMETRO_INICIAL;
+            N40 G0 X=DIAMETRO_INICIAL; 
 
             WHILE R0 <= R3
-                MSG("- DESBASTE EM ANDAMENTO...")
-                G91 G1 X=PASSE F=AVANCO
-                G90 G1 Z=ESPESSURA
-                G91 G0 X=ABS(PASSE)
-                G90 G0 Z=APRZ
-                G91 G1 X=PASSE
+                MSG(" - DESBASTE EM ANDAMENTO...")
+                G1 X=IC(PASSE) F=AVANCO
+                G1 Z=ESPESSURA
+                G0 X=IC(ABS(PASSE))
+                G0 Z=APRZ
+                G1 X=IC(PASSE)
                 R0 = R0 + 1
             ENDWHILE
 
-            N50 G90;
-            N60 G0 G54 X=X_POS Z=Z_POS;
+            INICIO_ACABAMENTO:
 
-            ; Seção de Acabamento
-            MSG("- INICIAR CICLO DE ACABAMENTO? CYCLE START!");
-            M00;
+            N50 G0 G54 X=X_POS Z=Z_POS;
+            MSG("");
+
+            IF FERRAMENTA_DESB <> FERRAMENTA_ACAB
+                T=FERRAMENTA_ACAB;
+            ENDIF
+
             MSG("PASSE DE ACABAMENTO: 1 DE 1");
 
-            N70 T=FERRAMENTA_ACAB;
-
-            N80 G0 X=DIAMETRO_FINAL Z=APRZ;
-            N90 G1 Z=ESPESSURA;
-            N100 G1 X=DIAMETRO_INICIAL;
+            N70 G0 X=DIAMETRO_FINAL Z=APRZ;
+            N80 G1 Z=ESPESSURA;
+            N90 G1 X=DIAMETRO_INICIAL;
 
             MSG("");
-            N110 G0 G54 X=X_POS Z=Z_POS;
-            N120 RET;''')
+            N100 G0 G54 X=X_POS Z=Z_POS;
+
+            FIM_ACABAMENTO:
+            N110 RET;''')
         
             return self.__file_desbastep
         
@@ -251,47 +241,39 @@ class CyDesbasteP(CyBase):
     def create_desbaste_zig(self):
         try:
             self.__file_desbastez = textwrap.dedent(f'''
+            MSG("");
             N10 G0 G54 X=X_POS Z=Z_POS;
 
-            ; Estrutura de Controle - Desbaste & Acabamento
-            IF (FORMA=="d")
-                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE DESBASTE - PADRÃO...");
-                MSG("");
-                GOTO N20;
-            ENDIF
+            N20 G0 X=APRX;
+            N30 G0 Z=APRZ;
+            N40 G0 X=DIAMETRO_INICIAL;
 
-            IF (FORMA=="a")
-                MSG("- INICIALIZANDO PARÂMETROS DO CICLO DE ACABAMENTO - PADRÃO...")
-                MSG("");
-                GOTO N70;
-            ENDIF
-
-            N20 G0 X=DIAMETRO_INICIAL;
-            N30 G0 Z=APZ_D;
-
-            WHILE R0 <= R3
-                G91 G1 X=PASSE F=AVANCO
-                G90 G1 Z=ESPESSURA
-                G91 G0 X=ABS(PASSE)
-                G90 G0 Z=APZ_D
-                G91 G1 X=PASSE
+            WHILE R0 <= R5
+                MSG(" - DESBASTE EM ANDAMENTO...")
+                G1 X=IC(PASSE) F=AVANCO
+                G1 Z=ESPESSURA
+                R0 = R0 + 1
+                G1 X=IC(PASSE)
+                G1 Z=APRZ
                 R0 = R0 + 1
             ENDWHILE
 
-            N50 G90;
-            N60 G0 G54 X=X_POS Z=Z_POS;
+            M00
+
+            N40 G90;
+            N50 G0 G54 X=X_POS Z=Z_POS;
 
             ; Seção de Acabamento
             MSG("- INICIAR CICLO DE ACABAMENTO? CYCLE START!");
             M00;
             MSG("");
 
-            N70 G0 X=DIAMETRO_FINAL Z=APZ_A;
-            N80 G1 Z=ESPESSURA;
-            N90 G1 X=DIAMETRO_INICIAL;
+            N60 G0 X=DIAMETRO_FINAL Z=APRZ;
+            N70 G1 Z=ESPESSURA;
+            N80 G1 X=DIAMETRO_INICIAL;
 
-            N100 G0 G54 X=X_POS Z=Z_POS;
-            N110 RET;''')
+            N90 G0 G54 X=X_POS Z=Z_POS;
+            N100 RET;''')
         
             return self.__file_desbastez
         
