@@ -55,16 +55,16 @@ class SetupManagerCmds:
             if '' in self.__master.dic_user.values() or '' in self.__master.dic_file.values() or '' in self.__master.dic_mach.values() or '' in self.__master.dic_padr:
                 messagebox.showerror('Compilador G-Code', 'Um ou mais campos estão vazios, preencha todos os campos para prosseguir com a operação.')
             else:
-                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_usuario.json', 'w', encoding='utf-8') as arquivo:
+                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_main/configs_usuario.json', 'w', encoding='utf-8') as arquivo:
                     json.dump(self.__master.dic_user, arquivo, indent=4, ensure_ascii=False)
 
-                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_programa.json', 'w', encoding='utf-8') as arquivo:
+                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_main/configs_programa.json', 'w', encoding='utf-8') as arquivo:
                     json.dump(self.__master.dic_file, arquivo, indent=4, ensure_ascii=False)
 
-                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_maquina.json', 'w', encoding='utf-8') as arquivo:
+                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_main/configs_maquina.json', 'w', encoding='utf-8') as arquivo:
                     json.dump(self.__master.dic_mach, arquivo, indent=4, ensure_ascii=False)
 
-                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_padrao.json', 'w', encoding='utf-8') as arquivo:
+                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_main/configs_padrao.json', 'w', encoding='utf-8') as arquivo:
                     json.dump(self.__master.dic_padr, arquivo, indent=4, ensure_ascii=False)
 
                 messagebox.showinfo('Compilador G-Code', 'Os dados foram compilados e armazenados com sucesso no sistema')

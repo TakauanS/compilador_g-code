@@ -25,7 +25,7 @@ class PospCmds:
                 messagebox.showerror('Compilador G-Code', 'Erro no momento de salvar os posicionamentos do usuário:\n\n- os campos acima não podem ficar em branco.')
                 return
             else:
-                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_pos.json', 'w', encoding='utf-8') as file:
+                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_main/configs_pos.json', 'w', encoding='utf-8') as file:
                     json.dump(self.dic_positioning, file, indent=4, ensure_ascii=False)
                     messagebox.showinfo('Compilador G-Code', 'Os seus posicionamentos foram configurados com sucesso!')
                     self.__master.destroy()

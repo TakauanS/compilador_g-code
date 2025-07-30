@@ -1,15 +1,13 @@
 import json
 from tkinter import messagebox
 
-from src.model.json_handler import JsonHandler
+from src.model.json_manager.json_main import JsonMain
 
 class ParametersCmds:
 
     def __init__(self, master):
         self.__master = master
-
-        self.__json = JsonHandler()
-        self.__json.convert_files()
+        self.json = JsonMain()
 
     # Método responsável por inserir os parâmetros de corte padrão
     def insert_parameters(self):
@@ -17,9 +15,9 @@ class ParametersCmds:
             self.__master.entry_rpm.delete(0, 'end')
             self.__master.entry_avan.delete(0, 'end')
 
-            self.__master.com_sent.set(self.__json.get_data(self.__json.data_machine, 'sentido_rotacao'))
-            self.__master.entry_rpm.insert(0, self.__json.get_data(self.__json.data_standard, 'rpm'))
-            self.__master.entry_avan.insert(0, self.__json.get_data(self.__json.data_standard, 'ava'))
+            self.__master.com_sent.set(self.json.get_data(self.json.data_maquina, 'sentido_rotacao'))
+            self.__master.entry_rpm.insert(0, self.json.get_data(self.json.data_padrao, 'rpm'))
+            self.__master.entry_avan.insert(0, self.json.get_data(self.json.data_padrao, 'ava'))
 
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro na implementação dos parâmetros de corte padrão:\n\n{e}')
@@ -41,7 +39,7 @@ class ParametersCmds:
             if '' in self.dic_parameters.values():
                 messagebox.showerror('Compilador G-Code', 'Não foi possível salvar os parâmetros de corte, verifique se todos os campos estão preenchidos.')
             else:
-                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_parametros.json', 'w', encoding='utf-8') as file:
+                with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_main/configs_parametros.json', 'w', encoding='utf-8') as file:
                     json.dump(self.dic_parameters, file, indent=4, ensure_ascii=False)
                     messagebox.showinfo('Compilador G-Code', 'Os seus parâmetros de corte foram configurados com sucesso!')
                     self.__master.destroy()                   

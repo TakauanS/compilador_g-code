@@ -84,10 +84,8 @@ class DesbastePCmds:
     # Método responsável por carregar os dados do ciclo do json
     def load_json(self):
         try:
-            from src.model.json_handler import JsonHandler
-
-            self.json = JsonHandler()
-            self.json.convert_files()
+            from src.model.json_manager.json_main import JsonMain
+            self.json = JsonMain()
 
             # Seção de carregamento de dados de posicionamentos
             self.posx = self.json.get_data(self.json.data_pos, 'posx')
@@ -96,11 +94,11 @@ class DesbastePCmds:
             self.aprz = self.json.get_data(self.json.data_pos, 'aprz')
 
             # Seção de carregamento de dados de parâmetros de corte
-            self.ferra = self.json.get_data(self.json.data_parameters, 'ferramenta')
-            self.avanc = self.json.get_data(self.json.data_parameters, 'avanco')
-            self.passe = self.json.get_data(self.json.data_parameters, 'passe')
-            self.lirpm = self.json.get_data(self.json.data_parameters, 'lim')
-            self.marpm = self.json.get_data(self.json.data_parameters, 'rpm')
+            self.ferra = self.json.get_data(self.json.data_parametros, 'ferramenta')
+            self.avanc = self.json.get_data(self.json.data_parametros, 'avanco')
+            self.passe = self.json.get_data(self.json.data_parametros, 'passe')
+            self.lirpm = self.json.get_data(self.json.data_parametros, 'lim')
+            self.marpm = self.json.get_data(self.json.data_parametros, 'rpm')
         
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro no momento de carregar os valores do ciclo:\n\n{e}')

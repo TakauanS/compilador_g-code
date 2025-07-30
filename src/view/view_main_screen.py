@@ -2,7 +2,7 @@ from PIL import Image
 import customtkinter as ctk
 
 from src.model.assents import Assents
-from src.model.json_handler import JsonHandler
+from src.model.json_manager.json_main import JsonMain
 from src.controller.buttons_cmds.events_cmds import EventsCmds
 from src.controller.buttons_cmds.main_screen_cmds import MainScreenCmds
 
@@ -26,11 +26,8 @@ class ViewMainScreen(ctk.CTk):
 
         self.__assents = Assents(self)
         self.__even = EventsCmds(self)
-
         self.__cmds = MainScreenCmds(self)
-
-        self.__json_handler = JsonHandler()
-        self.__json_handler.convert_files()
+        self.json = JsonMain()
 
         self.geometry('900x500')
         self.title('Compilador G-Code')
@@ -98,7 +95,7 @@ class ViewMainScreen(ctk.CTk):
 
         self.label_help = self.__assents.criar_label('HELP', 316, 40, text_color=self.__assents.cor4, font=('Corbel', 13, 'bold'), frame=self.fra_menu)
 
-        self.label_mode = self.__assents.criar_label(f"model: {self.__json_handler.get_data(self.__json_handler.data_user, 'modelo')}", 5, 4,     
+        self.label_mode = self.__assents.criar_label(f"model: {self.json.get_data(self.json.data_user, 'modelo')}", 5, 4,     
                                                     tooltip='MODELO DE MÁQUINA', frame=self.fra_rodp,
                                                     font=('Arial', 13, 'normal'),
                                                     text_color=ViewMainScreen.cor3) 

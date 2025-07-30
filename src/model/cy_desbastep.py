@@ -3,7 +3,8 @@ import textwrap
 from tkinter import messagebox
 
 from src.model.cycles.cy_base import CyBase
-from src.model.json_handler import JsonHandler
+from src.model.json_manager.json_main import JsonMain
+from src.model.json_manager.cy_parametrizados.json_desbastep import JsonDesbasteP
 
 class CyDesbasteP(CyBase):
 
@@ -30,8 +31,8 @@ class CyDesbasteP(CyBase):
         self.__di_final = di_final
         self.__espessura = espessura
 
-        self.__json = JsonHandler()
-        self.__json.convert_files()
+        self.jsonM = JsonMain()
+        self.jsonC = JsonDesbasteP()
 
     # Método responsável por armazenar o arquivo main em atributo
     def create_main(self):
@@ -59,8 +60,8 @@ class CyDesbasteP(CyBase):
             DEF STRING [1] FORMA;
 
             ; Seção de Inserção de Ferramenta
-            FERRAMENTA_DESB = {self.__json.get_data(self.__json.data_desbastep, 'ferd')}; 
-            FERRAMENTA_ACAB = {self.__json.get_data(self.__json.data_desbastep, 'fera')};
+            FERRAMENTA_DESB = {self.jsonC.get_data(self.jsonC.data_desbastep, 'ferd')}; 
+            FERRAMENTA_ACAB = {self.jsonC.get_data(self.jsonC.data_desbastep, 'fera')};
             
             ; Seção de Inserção de Parâmetros da Peça
             DIAMETRO_INICIAL = {self.diametro_inicial};
@@ -68,17 +69,17 @@ class CyDesbasteP(CyBase):
             ESPESSURA = -{self.espessura};
 
             ; Seção de Inserção de Parâmetros de Corte
-            AVANCO = {self.__json.get_data(self.__json.data_desbastep, 'avan')};
-            PASSE = -{self.__json.get_data(self.__json.data_desbastep, 'pass')};
-            RPM = {self.__json.get_data(self.__json.data_desbastep, 'rpmp')}; 
-            LIMIT_RPM = {self.__json.get_data(self.__json.data_desbastep, 'lims')};
+            AVANCO = {self.jsonC.get_data(self.jsonC.data_desbastep, 'avan')};
+            PASSE = -{self.jsonC.get_data(self.jsonC.data_desbastep, 'pass')};
+            RPM = {self.jsonC.get_data(self.jsonC.data_desbastep, 'rpmp')}; 
+            LIMIT_RPM = {self.jsonC.get_data(self.jsonC.data_desbastep, 'lims')};
 
             ; Seção de Inserção de valores de Posicionamentos
-            X_POS = {self.__json.get_data(self.__json.data_desbastep, 'posx')};
-            Z_POS = {self.__json.get_data(self.__json.data_desbastep, 'posz')};
+            X_POS = {self.jsonC.get_data(self.jsonC.data_desbastep, 'posx')};
+            Z_POS = {self.jsonC.get_data(self.jsonC.data_desbastep, 'posz')};
             
-            APRX = {self.__json.get_data(self.__json.data_desbastep, 'aprx')};
-            APRZ = {self.__json.get_data(self.__json.data_desbastep, 'aprz')};
+            APRX = {self.jsonC.get_data(self.jsonC.data_desbastep, 'aprx')};
+            APRZ = {self.jsonC.get_data(self.jsonC.data_desbastep, 'aprz')};
 
             ; Estilo de Usinagem
             ESTILO = "desbaste-padrao";
@@ -97,34 +98,36 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo configs em atributo
     def create_configs(self):
         try:
-            self.modo = self.__json.get_data(self.__json.data_parameters, 'modo') # Retorna o valor do modo de corte
-            self.sentido = self.__json.get_data(self.__json.data_parameters, 'sentido') # Retorna o valor do sentido de rotação
+            modo_velo = self.jsonC.get_data(self.jsonC.data_rotations, 'modo_velo')
+            sent_spin = self.jsonC.get_data(self.jsonC.data_rotations, 'sent_giro')
+            #self.modo = self.jsonC.get_data(self.jsonC.data_parameters, 'modo') # Retorna o valor do modo de corte
+            #self.sentido = self.jsonC.get_data(self.jsonC.data_parameters, 'sentido') # Retorna o valor do sentido de rotação
 
-            if self.sentido == 'HORÁRIO':
-                self.sentido = 'M3'
-            
-            elif self.sentido == 'ANTI-HORÁRIO':
-                self.sentido = 'M4'
+            #if self.sentido == 'HORÁRIO':
+            #    self.sentido = 'M3'
 
-            if self.modo == 'VC - COSTANTE (G96)':
-                self.modo = 'G96'
-                self.modo_avanco = 'G94'
+            #elif self.sentido == 'ANTI-HORÁRIO':
+             #   self.sentido = 'M4'
+
+            #if self.modo == 'VC - COSTANTE (G96)':
+             #   self.modo = 'G96'
+              #  self.modo_avanco = 'G94'
             
-            elif self.modo == 'VC - FIXA (G97)':
-                self.modo = 'G97'
-                self.modo_avanco = 'G95'
+            #elif self.modo == 'VC - FIXA (G97)':
+             #   self.modo = 'G97'
+              #  self.modo_avanco = 'G95'
 
             self.__file_configs = textwrap.dedent(f'''
             ; Seção de Carregamento de Parâmetros
             MSG("- CARREGANDO PARAMETROS G-CODES...");                                
                                                   
             N10 G290;
-            N20 G18 G40 G90 {self.modo_avanco};
+            N20 G18 G40 G90 ;
                             
-            N30 {self.modo} S=RPM;
+            N30 {modo_velo} S=RPM;
             N40 LIMS=LIMIT_RPM;
             N50 ;
-            N60 {self.sentido};
+            N60 {sent_spin};
 
             MSG("");
             _N_CMP_INIT_SPF;
@@ -141,7 +144,7 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo init em atributo
     def create_init(self):
         try:
-            tipo_dim = self.__json.get_data(self.__json.data_desbastep, 'tdim') # retorna o tipo de dimensão (diâmetro ou raio)
+            tipo_dim = self.jsonC.get_data(self.jsonC.data_desbastep, 'tdim') # retorna o tipo de dimensão (diâmetro ou raio)
 
             if tipo_dim == 'DIÂMETRO' or tipo_dim == '':
                 tipo_dim = 'DIAMON; Programação em Diâmetro'
@@ -306,12 +309,12 @@ class CyDesbasteP(CyBase):
             self.create_desbaste_padrao()
         
         except Exception as e:
-            raise ValueError(f'Erro na inicialização dos arquivos g-code:\n\n{e}')
+            raise ValueError(f'Erro na inicialização dos arquivos g-code: {e}')
 
     # Método responsável por gerar o g-code do ciclo de desbaste parametrizado
     def generate_gcode(self, name_directory: str):
         try:
-            self.__imp = self.__json.get_data(self.__json.data_file, 'diretorio') # Importa o caminho do diretório que o usuário escolheu
+            self.__imp = self.jsonM.get_data(self.jsonM.data_programa, 'diretorio') # Importa o caminho do diretório que o usuário escolheu
             self.__directory = f'{self.__imp}/{name_directory}.WPD' # Concatena o nome da pasta com o caminho do diretório
 
             if os.path.exists(self.__directory):

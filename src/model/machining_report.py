@@ -2,7 +2,7 @@ from docx import Document
 from datetime import date
 from tkinter import messagebox
 
-from src.model.json_handler import JsonHandler
+from src.model.json_manager.json_main import JsonMain
 
 class MachiningReport:
     
@@ -11,22 +11,20 @@ class MachiningReport:
             self._ordem = ordem
             self._material = material
 
-            self.__json = JsonHandler()
-            self.__json.convert_files()
-
+            self.json = JsonMain()
             self._doc = Document('C:/Users/USUARIO/Documents/Compilador G-Code/docs/Relatório de Usinagem CNC.docx')
 
             self._references = {
                 'DD/MM/AAAA': str(date.today()),
-                'NOME': self.__json.get_data(self.__json.data_user, 'usuario'),
-                'EMPRESA': self.__json.get_data(self.__json.data_user, 'empresa'),
-                'MAQUINA': self.__json.get_data(self.__json.data_user, 'modelo'),
+                'NOME': self.json.get_data(self.json.data_user, 'usuario'),
+                'EMPRESA': self.json.get_data(self.json.data_user, 'empresa'),
+                'MAQUINA': self.json.get_data(self.json.data_user, 'modelo'),
                 'ORDEM': self._ordem,
                 'MATERIAL': self._material,
-                'FERRAMENTA': self.__json.get_data(self.__json.data_parameters, 'ferramenta'),
-                'SPINDLE': self.__json.get_data(self.__json.data_parameters, 'rpm'),
-                'PASSE': self.__json.get_data(self.__json.data_parameters, 'passe'),
-                'AVANÇO': self.__json.get_data(self.__json.data_parameters, 'avanco')
+                'FERRAMENTA': self.json.get_data(self.json.data_parametros, 'ferramenta'),
+                'SPINDLE': self.json.get_data(self.json.data_parametros, 'rpm'),
+                'PASSE': self.json.get_data(self.json.data_parametros, 'passe'),
+                'AVANÇO': self.json.get_data(self.json.data_parametros, 'avanco')
                 }
 
         except Exception as e:

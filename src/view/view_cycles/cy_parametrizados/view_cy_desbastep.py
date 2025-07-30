@@ -3,7 +3,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 from src.model.assents import Assents
 
-from src.model.json_handler import JsonHandler
+from src.model.json_manager.json_main import JsonMain
 from src.controller.buttons_cmds.cycles_cmds.cy_parametrizados_cmds.cy_desbastep_cmd import DesbastePCmds
 
 class ViewCyDesbasteP(ctk.CTkFrame):
@@ -27,9 +27,7 @@ class ViewCyDesbasteP(ctk.CTkFrame):
 
             self.__master = master
 
-            self.__json = JsonHandler()
-            self.__json.convert_files()
-            
+            self.json = JsonMain()
             self.__assents = Assents(self.__master)
             self.__cmds = DesbastePCmds(self.__master)
 
