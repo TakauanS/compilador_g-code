@@ -54,7 +54,7 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
             self.menu_avancad.add_command(label='OFFSET')
 
             self.menu_paramet.add_command(label='ROTAÇÃO', command=self.__cmds.call_rotations)
-            self.menu_paramet.add_command(label='AVANÇO')
+            self.menu_paramet.add_command(label='AVANÇO', command=self.__cmds.call_advance)
 
             # SEÇÃO DE LABELs
             self.label_dii = self.__assents.criar_label('DIÂMETRO INICIAL:', 10, 5, 0, '', ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor1, ViewVerificationDesbasteP.cor4, ('Corbel', 18, 'normal'), self.fra_dim)

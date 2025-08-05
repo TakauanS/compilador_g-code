@@ -41,6 +41,16 @@ class DesbastePCmds:
             messagebox.showerror('Compilador G-Code', f'Aconteceu um erro inesperado no momento de chamar a tela de configuração de velocidade de corte:\n\n{e}')
             raise ValueError(f'Aconteceu um erro inesperado no momento de chamar a tela de configuração de velocidade de corte: {e}')
 
+    # Método responsável por fazer a chamada da tela de configuração de avanços
+    def call_advance(self):
+        try:
+            from src.view.view_menus.cy_parametrizados.view_ava_desbp_men import ViewAvaDesbasp_Men
+            view_ava = ViewAvaDesbasp_Men()
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Aconteceu um erro inesperado no momento de chamar a tela de configuração de velocidade de corte:\n\n{e}')
+            raise ValueError(f'Aconteceu um erro inesperado no momento de chamar a tela de configuração de velocidade de corte: {e}')
+
     # Método responsável por liberar a alteração de dimensões
     def unlock_dimension(self):
         try:
