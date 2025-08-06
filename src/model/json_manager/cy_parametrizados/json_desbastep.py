@@ -10,6 +10,9 @@ class JsonDesbasteP:
             with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_rotations.json', 'r', encoding='utf-8') as file:
                 self.__data_rotations = json.load(file)
 
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_advance.json', 'r', encoding='utf-8') as file:
+                self.__data_advance = json.load(file)
+
         except Exception as e:
             raise Exception(f'Erro ao inicializar os dados json do ciclo de desbaste parametrizado: {e}')
 
@@ -33,3 +36,8 @@ class JsonDesbasteP:
     @property
     def data_rotations(self):
         return self.__data_rotations
+    
+    # Retorna os dados de avanços de corte
+    @property
+    def data_advance(self):
+        return self.__data_advance

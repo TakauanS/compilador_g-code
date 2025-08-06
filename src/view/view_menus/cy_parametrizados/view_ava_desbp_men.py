@@ -33,6 +33,10 @@ class ViewAvaDesbasp_Men(ctk.CTkToplevel):
             self.resizable(False, False)
             self.grab_set()
 
+            # SEÇÃO DE VARIÁVEIS JSONs
+            vc_conf = self.json.get_data(self.json.data_rotations, 'modo_velo')
+            av_conf = self.json.get_data(self.json.data_desbastep, 'avan')
+
             # SEÇÃO DE FRAMEs
             fra_p = self.assents.criar_frame(10, 5, 305, 830, 10, 1, ViewAvaDesbasp_Men.cor1, ViewAvaDesbasp_Men.cor1, self)
 
@@ -48,7 +52,7 @@ class ViewAvaDesbasp_Men(ctk.CTkToplevel):
             label_aca = self.assents.criar_label('AVANÇO ACAB:', 10, 190, 0, 'AVANÇO DE CORTE (ACABAMENTO)', text_color=ViewAvaDesbasp_Men.cor4, frame=fra_p)
 
             label_lim = self.assents.criar_label('LIMIT. AVANÇO:', 475, 90, 0, 'LIMITE DE AVANÇO DE CORTE', text_color=ViewAvaDesbasp_Men.cor4, frame=fra_p)
-            label_vel = self.assents.criar_label(f'modo_velo: {self.json.get_data(self.json.data_rotations, 'modo_velo')}', 10, 285, 0, 'MODO DE VELOCIDADE DE CORTE', 
+            label_vel = self.assents.criar_label(f'modo_velo: {vc_conf}', 10, 285, 0, 'MODO DE VELOCIDADE DE CORTE', 
                                                  text_color=ViewAvaDesbasp_Men.cor4, 
                                                  font=('Corbel', 14, 'normal'), 
                                                  frame=fra_p)
@@ -58,19 +62,30 @@ class ViewAvaDesbasp_Men(ctk.CTkToplevel):
             
             # SEÇÃO DE ENTRYs
             self.entry_deb = self.assents.criar_entry(155, 226, 150, 1, frame=fra_p)
+            self.entry_deb.insert(0, av_conf)
+            self.entry_deb.configure(state='disabled')
+
             self.entry_aca = self.assents.criar_entry(155, 190, 150, 1, frame=fra_p)
-            self.entry_lim = self.assents.criar_entry(620, 90, 150, 1, frame=fra_p)
+            self.entry_aca.insert(0, av_conf)
+            self.entry_aca.configure(state='disabled')
+
+            self.entry_lim = self.assents.criar_entry(625, 90, 150, 1, frame=fra_p)
 
             # SEÇÃO DE COMBOBOXs
             self.combo_tip = self.assents.criar_combobox(190, 126, fra_p, 180, 10, ('mm/min', 'mm/rot', '1/min'), state='readonly')
             self.combo_mod = self.assents.criar_combobox(190, 90, fra_p, 180, 10, ('FNORM', 'FLIN'), state='readonly')
 
+            # SEÇÃO DE CHECKBOXs
+            self.check_deb = self.assents.criar_checkbox(315, 229, self.cmds.unlock_advance_desb, fra_p)
+            self.check_aca = self.assents.criar_checkbox(315, 193, self.cmds.unlock_advance_acab, fra_p)
+
             # SEÇÃO DE BUTTONs
-            self.but_save = self.assents.criar_button(713, 265, 20, 110, 'SAVE', "self.__cmds.save_rotations",
+            self.but_save = self.assents.criar_button(713, 265, 20, 110, 'SAVE', self.cmds.save_advance,
                                                         ViewAvaDesbasp_Men.img_up,
                                                         ViewAvaDesbasp_Men.cor3,
                                                         ViewAvaDesbasp_Men.cor2,
                                                         ViewAvaDesbasp_Men.cor1,
                                                         ti='SALVAR CONFIGURAÇÕES', fr=fra_p)
         except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de gerenciar os widgets da tela de configuração de avanços do ciclo:\n\n{e}')
             raise Exception(f'Erro no momento de gerenciar os widgets da tela de configuração de avanços do ciclo: {e}')

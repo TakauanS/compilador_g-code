@@ -42,9 +42,12 @@ class ViewVerificationDesbasteP(ctk.CTkToplevel):
 
             self.menu_arquivo.add_command(label='SALVAR DADOS .txt')
             self.menu_arquivo.add_command(label='GERAR G-CODE', command=self.__cmds.save_gcode)
+            self.menu_arquivo.add_separator()
             self.menu_arquivo.add_command(label='VOLTAR', command=self.destroy)
             self.menu.add_cascade(label='ARQUIVO', menu=self.menu_arquivo)
 
+            self.menu_configs.add_command(label='ATUALIZAR', command=self.__cmds.update_data)
+            self.menu_configs.add_separator()
             self.menu_configs.add_command(label='VALIDAR G-CODE', command=self.__cmds.validate_gcode)
             self.menu_configs.add_cascade(label='AVANÇADOS', menu=self.menu_avancad)
             self.menu.add_cascade(label='CONFIGURAÇÕES', menu=self.menu_configs)

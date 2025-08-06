@@ -91,6 +91,42 @@ class DesbastePCmds:
             messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do sentido de giro do spindle:\n\n{e}')
             raise ValueError(f'Erro no momento de liberar a alteração do sentido de giro do spindle: {e}')
 
+    # Método responsável por liberar a alteração do avanço de desbaste
+    def unlock_advance_desb(self):
+        try:
+            self.__master.entry_deb.configure(state='normal')
+            self.__master.check_deb.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do avanço de desbaste:\n\n{e}')
+            raise Exception(f'Erro no momento de liberar a alteração do avanço de desbaste: {e}')
+        
+    # Método responsável por liberar a alteração do avanço de acabamento
+    def unlock_advance_acab(self):
+        try:
+            self.__master.entry_aca.configure(state='normal')
+            self.__master.check_aca.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do avanço de acabamento:\n\n{e}')
+            raise Exception(f'Erro no momento de liberar a alteração do avanço de acabamento: {e}')
+
+    # Método responsável por atualizar os dados da tela de verificação
+    def update_data(self):
+        try:
+            from src.model.json_manager.cy_parametrizados.json_desbastep import JsonDesbasteP
+            json_desb = JsonDesbasteP()
+
+            self.__master.entry_ava.delete(0, 'end')
+            self.__master.entry_lim.delete(0, 'end')
+
+            self.__master.entry_ava.insert(0, json_desb.get_data(json_desb.data_advance, 'ava_desbast'))
+            self.__master.entry_lim.insert(0, json_desb.get_data(json_desb.data_rotations, 'lim_sup'))
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de atualizar os campos de verificação do ciclo:\n\n{e}')
+            raise Exception(f'Erro no momento de atualizar os campos de verificação do ciclo: {e}')
+
     # Método responsável por carregar os dados do ciclo do json
     def load_json(self):
         try:
@@ -155,7 +191,7 @@ class DesbastePCmds:
             messagebox.showerror('Compilador G-Code', 'Erro na geração do g-code, revise os campos e tente novamente!')
             print(f'Erro na geração do g-code final:\n\n{e}')
 
-    # Método responsável por bloquear a edição dos entrys
+    # Método responsável por validar os campos entrys
     def validate_gcode(self):
         try:
             dii = float(self.__master.entry_dii.get())
@@ -251,6 +287,33 @@ class DesbastePCmds:
         except Exception as e:
             messagebox.showerror('Compilador G-Code', f'Erro ao salvar as configurações das rotações do fuso:\n\n{e}')
             raise ValueError(f'Erro ao salvar as configurações das rotações do fuso: {e}')
+
+    # Método responsável por salvar as configurações de avanço
+    def save_advance(self):
+        try:
+            data_advance = {
+                'modo_avanco': self.__master.combo_mod.get(),
+                'tipo_avanco': self.__master.combo_tip.get(),
+                'ava_desbast': self.__master.entry_deb.get(),
+                'ava_acabame': self.__master.entry_aca.get(),
+                'limit_avanc': self.__master.entry_lim.get()
+            }
+        
+            if data_advance['modo_avanco'] == '':
+                data_advance['modo_avanco'] = 'FNORM'
+
+            if data_advance['tipo_avanco'] == '':
+                data_advance['tipo_avanco'] = 'mm/rot'
+
+            with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_advance.json', 'w', encoding='utf-8') as file:
+                json.dump(data_advance, file, indent=4, ensure_ascii=False)
+
+            messagebox.showinfo('Compilador G-Code', 'Configurações de avanços de corte salvas com sucesso!')
+            self.__master.destroy()
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Aconteceu um erro no momento de salvar as configurações de avanço:\n\n{e}')
+            raise Exception(f'Aconteceu um erro no momento de salvar as configurações de avanço: {e}')
 
     # Método responsável por salvar o g-code do ciclo de desbaste parametrizado
     def save_gcode(self):
