@@ -291,6 +291,9 @@ class DesbastePCmds:
     # Método responsável por salvar as configurações de avanço
     def save_advance(self):
         try:
+            from src.model.json_manager.json_main import JsonMain
+            json_data = JsonMain()
+
             data_advance = {
                 'modo_avanco': self.__master.combo_mod.get(),
                 'tipo_avanco': self.__master.combo_tip.get(),
@@ -304,6 +307,12 @@ class DesbastePCmds:
 
             if data_advance['tipo_avanco'] == '':
                 data_advance['tipo_avanco'] = 'mm/rot'
+
+            if data_advance['ava_desbast'] == '':
+                data_advance['ava_desbast'] = json_data.get_data(json_data.data_parametros, 'avanco')
+
+            if data_advance['ava_acabame'] == '':
+                data_advance['ava_acabame'] = json_data.get_data(json_data.data_parametros, 'avanco')
 
             with open('C:/Users/USUARIO/Documents/Compilador G-Code/src/configs/configs_cycles/cycles_parametrizados/cycle_desbastep/configs_advance.json', 'w', encoding='utf-8') as file:
                 json.dump(data_advance, file, indent=4, ensure_ascii=False)

@@ -37,36 +37,49 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo main em atributo
     def create_main(self):
         try:
+            ava_tipo = self.jsonC.get_data(self.jsonC.data_advance, 'tipo_avanco')
+            ava_desb = self.jsonC.get_data(self.jsonC.data_advance, 'ava_desbast')
+            ava_acab = self.jsonC.get_data(self.jsonC.data_advance, 'ava_acabame')
+
+            rpm_mod = self.jsonC.get_data(self.jsonC.data_rotations, 'modo_velo')
+            rpm_min = self.jsonC.get_data(self.jsonC.data_rotations, 'lim_inf')
+            rpm_max = self.jsonC.get_data(self.jsonC.data_rotations, 'lim_sup')
+
             self.__file_main = textwrap.dedent(f'''
             ; Seção de Definição de Variáveis de Usuário - PUDs
-            DEF REAL DIAMETRO_INICIAL, DIAMETRO_FINAL, ESPESSURA;
-            DEF INT FERRAMENTA_DESB, FERRAMENTA_ACAB;
-            DEF REAL LIMIT_RPM, AVANCO, PASSE, RPM;
-            DEF REAL X_POS, Z_POS, APRX, APRZ;
-            DEF STRING [80] ESTILO, FORMA;
-
-            ; Seção de Inserção de Ferramenta
-            FERRAMENTA_DESB = {self.jsonC.get_data(self.jsonC.data_desbastep, 'ferd')}; 
-            FERRAMENTA_ACAB = {self.jsonC.get_data(self.jsonC.data_desbastep, 'fera')};
-            
+            DEF REAL DIAMETRO_INICIAL, DIAMETRO_FINAL, ESPESSURA, X_POS, Z_POS, APRX, APRZ;
+            DEF REAL AVANCO_DESB, AVANCO_ACAB, RPM_MIN, RPM_MAX, RPM, PASSE;
+            DEF STRING [80] TIPO_AVANCO, RPM_MODO, ESTILO, FORMA;
+            DEF INT FERRAMENTA_DESB, FERRAMENTA_ACAB
+                                        
             ; Seção de Inserção de Parâmetros da Peça
             DIAMETRO_INICIAL = {self.diametro_inicial};
             DIAMETRO_FINAL = {self.diametro_final};
             ESPESSURA = -{self.espessura};
 
-            ; Seção de Inserção de Parâmetros de Corte
-            AVANCO = {self.jsonC.get_data(self.jsonC.data_desbastep, 'avan')};
-            PASSE = -{self.jsonC.get_data(self.jsonC.data_desbastep, 'pass')};
-            RPM = {self.jsonC.get_data(self.jsonC.data_desbastep, 'rpmp')}; 
-            LIMIT_RPM = {self.jsonC.get_data(self.jsonC.data_desbastep, 'lims')};
-
             ; Seção de Inserção de valores de Posicionamentos
             X_POS = {self.jsonC.get_data(self.jsonC.data_desbastep, 'posx')};
             Z_POS = {self.jsonC.get_data(self.jsonC.data_desbastep, 'posz')};
-            
+
             APRX = {self.jsonC.get_data(self.jsonC.data_desbastep, 'aprx')};
             APRZ = {self.jsonC.get_data(self.jsonC.data_desbastep, 'aprz')};
 
+            ; Seção de Inserção de Parâmetros de Corte
+            RPM = {self.jsonC.get_data(self.jsonC.data_desbastep, 'rpmp')};
+            RPM_MIN = {rpm_min};
+            RPM_MAX = {rpm_max};
+            RPM_MODO = "{rpm_mod}";
+
+            TIPO_AVANCO = "{ava_tipo}";
+            AVANCO_DESB = {ava_desb};
+            AVANCO_ACAB = {ava_acab};
+
+            PASSE = -{self.jsonC.get_data(self.jsonC.data_desbastep, 'pass')};
+
+            ; Seção de Inserção de Ferramenta
+            FERRAMENTA_DESB = {self.jsonC.get_data(self.jsonC.data_desbastep, 'ferd')}; 
+            FERRAMENTA_ACAB = {self.jsonC.get_data(self.jsonC.data_desbastep, 'fera')};
+            
             ; Estilo de Usinagem
             ESTILO = "desbaste-padrao";
             FORMA = "d";
@@ -85,7 +98,6 @@ class CyDesbasteP(CyBase):
     def create_configs(self):
         try:
             modo_prog = self.jsonC.get_data(self.jsonC.data_desbastep, 'tdim')
-            modo_velo = self.jsonC.get_data(self.jsonC.data_rotations, 'modo_velo')
             sent_giro = self.jsonC.get_data(self.jsonC.data_rotations, 'sent_giro')
 
             if modo_prog == '' or modo_prog == 'DIÂMETRO':
@@ -94,43 +106,59 @@ class CyDesbasteP(CyBase):
             if modo_prog == 'RAIO':
                 modo_prog = 'DIAMOF'
 
-            if modo_velo == '' or modo_velo == 'FIXA':
-                modo_velo = 'G97'
-
-            if modo_velo == 'CONSTANTE':
-                modo_velo = 'G96'
-
             if sent_giro == '' or sent_giro == 'HORÁRIO':
                 sent_giro = 'M3'
 
             if sent_giro == 'ANTI-HORÁRIO':
                 sent_giro = 'M4'
 
-            if modo_velo == 'G96':
-                modo_avanco = 'G95'
-
-            if modo_velo == 'G97':
-                modo_avanco  = 'G94'
-
             self.__file_configs = textwrap.dedent(f'''
+            ; Seção de Variáveis de Usuário - LUDs
+            N10 DEF STRING [30] _RESULT_AVANCO, _RESULT_RPM; Var que Converte os Valores
+
+            N20 _RESULT_AVANCO = TOUPPER(TIPO_AVANCO);
+            N30 _RESULT_RPM = TOUPPER(RPM_MODO);
+
+            ; Seção de Validação de Parâmetros
+            IF (_RESULT_RPM=="CONSTANTE")
+                IF (_RESULT_AVANCO=="MM/ROT")
+                    G[15]=4; G96
+                ENDIF
+                IF (_RESULT_AVANCO=="MM/MIN")
+                    G[15]=7; G961
+                ENDIF
+            ENDIF
+
+            IF (_RESULT_RPM=="FIXA")
+                IF (_RESULT_AVANCO=="MM/ROT")
+                    G[15]=5; G97
+                ENDIF
+                IF (_RESULT_AVANCO=="MM/MIN")
+                    G[15]=8; G971
+                ENDIF
+            ENDIF
+
             ; Seção de Carregamento de Parâmetros
             MSG("- CARREGANDO PARAMETROS G-CODES...");                                
-                                                  
-            N10 G290;
-            N20 G18 G40 G90 {modo_avanco};
-                            
-            N30 {modo_velo} S=RPM;
-            N40 LIMS=LIMIT_RPM;
-            N50 {self.jsonC.get_data(self.jsonC.data_desbastep, 'ferd')}
-            N60 {sent_giro};
 
-            N70 {modo_prog};
-            
+            N40 G0 G54 X=X_POS Z=Z_POS;
+                                                                                   
+            N50 G290;
+            N60 G18 G40 G90;
+
+            N70 G25 S=RPM_MIN;
+            N80 G26 S=RPM_MAX;
+            N90 S=RPM;
+
+            N100 T=FERRAMENTA_DESB;
+            N110 {sent_giro};
+
+            N120 {modo_prog};
+
             MSG("");
             _N_CMP_INIT_SPF;
-                                            
-            N80 RET;
-            ''')
+
+            N130 RET;''')
             
             return self.__file_configs
         
@@ -141,36 +169,43 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo init em atributo
     def create_init(self):
         try:
-            tipo_dim = self.jsonC.get_data(self.jsonC.data_desbastep, 'tdim') # retorna o tipo de dimensão (diâmetro ou raio)
-
-            if tipo_dim == 'DIÂMETRO' or tipo_dim == '':
-                tipo_dim = 'DIAMON; Programação em Diâmetro'
-            
-            if tipo_dim == 'RAIO':
-                tipo_dim = 'DIAMOF; Programação em Raio'
-
             self.__file_init = textwrap.dedent(f'''
             ; Seção de Variáveis de Usuário - LUDs
-            N10 DEF STRING [30] _ESTILO; Var que retorna o valor do estilo de usinagem
-            N20 DEF STRING [1] _FORMA; Var que retorna o valor da forma de usinagem
-                        
+            N10 DEF STRING [30] _ESTILO, _FORMA; Var que retorna o valor de forma e estilo
+            N20 DEF BOOL _RESULT_DESB_PADRAO, _RESULT_DESB_ZIG; Var que retorna existência de arquivos
+
             ; Seção de Variáveis Secundárias
-            N30 R1 = ABS(PASSE); Conversão da var passe
-            N40 R2 = (DIAMETRO_INICIAL - DIAMETRO_FINAL) / R1; Número de passes
-            N50 R3 = R2 - 1; Condicional para desbaste padrao
-            N60 R4 = R2 - R1; Condicional para desbaste zig-zag
-            R5 = R2 - 2.5
+            N30 R0 = 0; CO para todos os desbastes
+            N40 R1 = ABS(PASSE); Conversão da var passe
+            N50 R2 = (DIAMETRO_INICIAL - DIAMETRO_FINAL) / R1; Número de passes
+            N60 R3 = R2 - 1; CO para desbaste padrao
+            N70 R5 = R2 - 1; CO para desbaste zig
 
-            N70 _ESTILO = TOUPPER(ESTILO);
-            N80 _FORMA = TOUPPER(FORMA);
+            N80 _ESTILO = TOUPPER(ESTILO);
+            N90 _FORMA = TOUPPER(FORMA);
 
+            N100 _RESULT_DESB_PADRAO = ISFILE("_N_CMP_DESB_PADRAO_SPF");
+            N110 _RESULT_DESB_ZIG = ISFILE("_N_CMP_DESB_ZIG_SPF");
+
+            WORKPIECE(,,,"CYLINDER",0,0,ESPESSURA,ESPESSURA,DIAMETRO_INICIAL)
+
+            ; Seção de Validação de Existência de Arquivos de Ciclos
+            IF (_RESULT_DESB_PADRAO==FALSE)
+            SETAL(61032, "_N_CMP_DESB_PADRAO_SPF"); 
+            ENDIF
+
+            IF (_RESULT_DESB_ZIG==FALSE)
+                SETAL(61032, "_N_CMP_DESB_ZIG_SPF");
+            ENDIF
+
+            ; Seção de Saltos para Ciclos de Usinagem
             IF (_ESTILO=="DESBASTE-PADRAO")
                 IF (_FORMA=="D")
                     MSG(" - CARREGANDO CICLO DE DESBASTE PADRÃO...");
                     _N_CMP_DESB_PADRAO_SPF;
                 ENDIF
                 IF (_FORMA=="A")
-                    MSG(" - CARREGANDO CICLO DE DESBASTE PADRÃO...");
+                    MSG(" - CARREGANDO CICLO DE ACABAMENTO PADRÃO...");
                     CALL "_N_CMP_DESB_PADRAO_SPF" BLOCK "INICIO_ACABAMENTO" TO "FIM_ACABAMENTO"
                 ENDIF
             ENDIF
@@ -180,9 +215,13 @@ class CyDesbasteP(CyBase):
                     MSG(" - CARREGANDO CICLO DE DESBASTE ZIG-ZAG...");
                     _N_CMP_DESB_ZIG_SPF;
                 ENDIF
+                IF (_FORMA == "A")
+                    MSG(" - CARREGANDO CICLO DE ACABAMENTO ZIG-ZAG...")
+                    CALL "_N_CMP_DESB_ZIG_SPF" BLOCK "INICIO_ACABAMENTO" TO "FIM_ACABAMENTO"
+                ENDIF
             ENDIF
 
-            N90 RET;''')
+            N120 RET;''')
 
             return self.__file_init
         
@@ -193,43 +232,42 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo de ciclo de desbaste padrão em atributo
     def create_desbaste_padrao(self):
         try:
-            self.__file_desbastep = textwrap.dedent(f'''
-            N10 G0 G54 X=X_POS Z=Z_POS;
+            modo_avanco = self.jsonC.get_data(self.jsonC.data_advance, 'modo_avanco')
 
-            N20 G0 X=APRX;
-            N30 G0 Z=APRZ;
-            N40 G0 X=DIAMETRO_INICIAL; 
+            self.__file_desbastep = textwrap.dedent(f'''
+            N10 G0 X=APRX Z=APRZ;
+            N20 G0 X=DIAMETRO_INICIAL; 
 
             WHILE R0 <= R3
                 MSG(" - DESBASTE EM ANDAMENTO...")
-                G1 X=IC(PASSE) F=AVANCO
+                G1 X=IC(PASSE) F=AVANCO_DESB {modo_avanco}
                 G1 Z=ESPESSURA
-                G0 X=IC(ABS(PASSE))
+                G1 X=IC(5)
                 G0 Z=APRZ
-                G1 X=IC(PASSE)
+                G0 X=IC(-5)
                 R0 = R0 + 1
             ENDWHILE
 
             INICIO_ACABAMENTO:
 
-            N50 G0 G54 X=X_POS Z=Z_POS;
             MSG("");
+            N30 G0 G54 X=X_POS Z=Z_POS;
 
             IF FERRAMENTA_DESB <> FERRAMENTA_ACAB
                 T=FERRAMENTA_ACAB;
             ENDIF
 
             MSG("PASSE DE ACABAMENTO: 1 DE 1");
-
-            N70 G0 X=DIAMETRO_FINAL Z=APRZ;
-            N80 G1 Z=ESPESSURA;
-            N90 G1 X=DIAMETRO_INICIAL;
+                            
+            N40 G0 X=DIAMETRO_FINAL Z=APRZ;
+            N50 G1 Z=ESPESSURA FB=AVANCO_ACAB {modo_avanco};
+            N60 G1 X=DIAMETRO_INICIAL FB=AVANCO_ACAB {modo_avanco};
 
             MSG("");
-            N100 G0 G54 X=X_POS Z=Z_POS;
+            N70 G0 G54 X=X_POS Z=Z_POS;
 
             FIM_ACABAMENTO:
-            N110 RET;''')
+            N80 RET;''')
         
             return self.__file_desbastep
         
@@ -240,17 +278,15 @@ class CyDesbasteP(CyBase):
     # Método responsável por armazenar o arquivo de ciclo de desbaste zigzag em atributo
     def create_desbaste_zig(self):
         try:
-            self.__file_desbastez = textwrap.dedent(f'''
-            MSG("");
-            N10 G0 G54 X=X_POS Z=Z_POS;
+            modo_avanco = self.jsonC.get_data(self.jsonC.data_advance, 'modo_avanco')
 
-            N20 G0 X=APRX;
-            N30 G0 Z=APRZ;
-            N40 G0 X=DIAMETRO_INICIAL;
+            self.__file_desbastez = textwrap.dedent(f'''
+            N10 G0 X=APRX Z=APRZ;
+            N20 G0 X=DIAMETRO_INICIAL;
 
             WHILE R0 <= R5
                 MSG(" - DESBASTE EM ANDAMENTO...")
-                G1 X=IC(PASSE) F=AVANCO
+                G1 X=IC(PASSE) F=AVANCO_DESB {modo_avanco}
                 G1 Z=ESPESSURA
                 R0 = R0 + 1
                 G1 X=IC(PASSE)
@@ -258,22 +294,23 @@ class CyDesbasteP(CyBase):
                 R0 = R0 + 1
             ENDWHILE
 
-            M00
+            INICIO_ACABAMENTO:
 
-            N40 G90;
-            N50 G0 G54 X=X_POS Z=Z_POS;
-
-            ; Seção de Acabamento
-            MSG("- INICIAR CICLO DE ACABAMENTO? CYCLE START!");
-            M00;
             MSG("");
+            N30 G0 G54 X=X_POS Z=Z_POS;
 
-            N60 G0 X=DIAMETRO_FINAL Z=APRZ;
-            N70 G1 Z=ESPESSURA;
-            N80 G1 X=DIAMETRO_INICIAL;
+            IF FERRAMENTA_DESB <> FERRAMENTA_ACAB
+                T=FERRAMENTA_ACAB;
+            ENDIF
 
-            N90 G0 G54 X=X_POS Z=Z_POS;
-            N100 RET;''')
+            N40 G0 X=DIAMETRO_FINAL Z=APRZ;
+            N50 G1 Z=ESPESSURA FB=AVANCO_ACAB {modo_avanco};
+            N60 G1 X=DIAMETRO_INICIAL FB=AVANCO_ACAB {modo_avanco};
+
+            N70 G0 G54 X=X_POS Z=Z_POS;
+
+            FIM_ACABAMENTO:
+            N80 RET;''')
         
             return self.__file_desbastez
         
