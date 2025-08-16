@@ -81,6 +81,46 @@ class DesbastePCmds:
             messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do modo de velocidade do spindle:\n\n{e}')
             raise ValueError(f'Erro no momento de liberar a alteração do modo de velocidade do spindle: {e}')
 
+    # Método responsável por liberar a alteração do modo de avanço
+    def unlock_mod_advance(self):
+        try:
+            self.__master.combo_mod.configure(state='readonly')
+            self.__master.check_mod.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do modo de avanço:\n\n{e}')
+            raise Exception(f'Erro no momento de liberar a alteração do modo de avanço: {e}')
+
+    # Método responsável por liberar a alteração do tipo de avanço
+    def unlock_tip_advance(self):
+        try:
+            self.__master.combo_tip.configure(state='readonly')
+            self.__master.check_tip.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração do tipo de avanço:\n\n{e}')
+            raise Exception(f'Erro no momento de liberar a alteração do tipo de avanço:{e}')
+
+    # Método responsável por liberar a alteração do limite superior de rotação
+    def unlock_sup_rotations(self):
+        try:
+            self.__master.entry_sup.configure(state='normal')
+            self.__master.check_sup.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração da rotação superior:\n\n{e}')
+            raise Exception(f'Erro no momento de liberar a alteração da rotação superior: {e}')
+        
+    # Método responsável por liberar a alteração do limite inferior de rotação
+    def unlock_inf_rotations(self):
+        try:
+            self.__master.entry_inf.configure(state='normal')
+            self.__master.check_inf.configure(state='disabled')
+
+        except Exception as e:
+            messagebox.showerror('Compilador G-Code', f'Erro no momento de liberar a alteração da rotação inferior:\n\n{e}')
+            raise Exception(f'Erro no momento de liberar a alteração da rotação inferior: {e}')
+
     # Método responsável por liberar a alteração do sentido de giro do spindle
     def unlock_sense(self):
         try:

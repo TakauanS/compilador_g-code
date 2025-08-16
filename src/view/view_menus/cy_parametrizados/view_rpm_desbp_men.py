@@ -3,6 +3,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 
 from src.model.assents import Assents
+from src.model.json_manager.cy_parametrizados.json_desbastep import JsonDesbasteP
 from src.controller.buttons_cmds.cycles_cmds.cy_parametrizados_cmds.cy_desbastep_cmd import DesbastePCmds
 
 class ViewRpmDesbasp_Men(ctk.CTkToplevel):
@@ -21,6 +22,7 @@ class ViewRpmDesbasp_Men(ctk.CTkToplevel):
         try:
             super().__init__()
 
+            json = JsonDesbasteP()
             self.__assents = Assents(self)
             self.__cmds = DesbastePCmds(self)
 
@@ -54,7 +56,12 @@ class ViewRpmDesbasp_Men(ctk.CTkToplevel):
             self.entry_fus = self.__assents.criar_entry(585, 75, 135, 1, frame=fra_p)
 
             self.entry_sup = self.__assents.criar_entry(120, 200, 170, 1, frame=fra_p)
+            self.entry_sup.insert('0', json.get_data(json.data_desbastep, 'lims'))
+            self.entry_sup.configure(state='disabled')
+
             self.entry_inf = self.__assents.criar_entry(120, 235, 170, 1, frame=fra_p)
+            self.entry_inf.insert('0', 0)
+            self.entry_inf.configure(state='disabled')
 
             # SEÇÃO DE COMBOBOXs
             self.combo_mod = self.__assents.criar_combobox(160, 75, fra_p, 220, 10, ('CONSTANTE', 'FIXA'), state='disabled')
@@ -63,6 +70,9 @@ class ViewRpmDesbasp_Men(ctk.CTkToplevel):
             # SEÇÃO DE CHECKBOXs
             self.check_mod = self.__assents.criar_checkbox(395, 77, self.__cmds.unlock_mode, fra_p)
             self.check_sen = self.__assents.criar_checkbox(395, 113, self.__cmds.unlock_sense, fra_p)
+
+            self.check_sup = self.__assents.criar_checkbox(303, 202, self.__cmds.unlock_sup_rotations, fra_p)
+            self.check_inf = self.__assents.criar_checkbox(303, 237, self.__cmds.unlock_inf_rotations, fra_p)
 
             # SEÇÃO DE BUTTONs
             self.but_save = self.__assents.criar_button(713, 265, 20, 110, 'SAVE', self.__cmds.save_rotations,

@@ -72,12 +72,15 @@ class ViewAvaDesbasp_Men(ctk.CTkToplevel):
             self.entry_lim = self.assents.criar_entry(625, 90, 150, 1, frame=fra_p)
 
             # SEÇÃO DE COMBOBOXs
-            self.combo_tip = self.assents.criar_combobox(190, 126, fra_p, 180, 10, ('mm/min', 'mm/rot', '1/min'), state='readonly')
-            self.combo_mod = self.assents.criar_combobox(190, 90, fra_p, 180, 10, ('FNORM', 'FLIN'), state='readonly')
+            self.combo_tip = self.assents.criar_combobox(190, 126, fra_p, 180, 10, ('mm/min', 'mm/rot'), state='disabled')
+            self.combo_mod = self.assents.criar_combobox(190, 90, fra_p, 180, 10, ('FNORM', 'FLIN'), state='disabled')
 
             # SEÇÃO DE CHECKBOXs
             self.check_deb = self.assents.criar_checkbox(315, 229, self.cmds.unlock_advance_desb, fra_p)
             self.check_aca = self.assents.criar_checkbox(315, 193, self.cmds.unlock_advance_acab, fra_p)
+
+            self.check_tip = self.assents.criar_checkbox(382, 129, self.cmds.unlock_tip_advance, fra_p)
+            self.check_mod = self.assents.criar_checkbox(382, 93, self.cmds.unlock_mod_advance, fra_p)
 
             # SEÇÃO DE BUTTONs
             self.but_save = self.assents.criar_button(713, 265, 20, 110, 'SAVE', self.cmds.save_advance,
