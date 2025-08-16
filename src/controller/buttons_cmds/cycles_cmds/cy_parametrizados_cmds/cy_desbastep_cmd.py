@@ -367,7 +367,7 @@ class DesbastePCmds:
     # Método responsável por salvar o g-code do ciclo de desbaste parametrizado
     def save_gcode(self):
         try:
-            from src.model.cy_desbastep import CyDesbasteP
+            from src.model.cycles.cy_parametrizados.cy_desbastep import CyDesbasteP
 
             # Seção de conversão de entrys da tela de verificação
             self.dii_real = float(self.__master.entry_dii.get())
