@@ -173,19 +173,21 @@ class CyDesbasteP(CyBase):
             ; Seção de Variáveis de Usuário - LUDs
             N10 DEF STRING [30] _ESTILO, _FORMA; Var que retorna o valor de forma e estilo
             N20 DEF BOOL _RESULT_DESB_PADRAO, _RESULT_DESB_ZIG; Var que retorna existência de arquivos
+            N30 DEF REAL _TIPO; Var que retorna o tipo de ferramenta
 
             ; Seção de Variáveis Secundárias
-            N30 R0 = 0; CO para todos os desbastes
-            N40 R1 = ABS(PASSE); Conversão da var passe
-            N50 R2 = (DIAMETRO_INICIAL - DIAMETRO_FINAL) / R1; Número de passes
-            N60 R3 = R2 - 1; CO para desbaste padrao
-            N70 R5 = R2 - 1; CO para desbaste zig
+            N40 R0 = 0; CO para todos os desbastes
+            N50 R1 = ABS(PASSE); Conversão da var passe
+            N60 R2 = (DIAMETRO_INICIAL - DIAMETRO_FINAL) / R1; Número de passes
+            N70 R3 = R2 - 1; CO para desbaste padrao
+            N80 R5 = R2 - 1; CO para desbaste zig
 
-            N80 _ESTILO = TOUPPER(ESTILO);
-            N90 _FORMA = TOUPPER(FORMA);
+            N90 _ESTILO = TOUPPER(ESTILO);
+            N100 _FORMA = TOUPPER(FORMA);
 
-            N100 _RESULT_DESB_PADRAO = ISFILE("_N_CMP_DESB_PADRAO_SPF");
-            N110 _RESULT_DESB_ZIG = ISFILE("_N_CMP_DESB_ZIG_SPF");
+            N110 _RESULT_DESB_PADRAO = ISFILE("_N_CMP_DESB_PADRAO_SPF");
+            N120 _RESULT_DESB_ZIG = ISFILE("_N_CMP_DESB_ZIG_SPF");
+            N130 _TIPO = $TC_DP1[FERRAMENTA_DESB, 1];
 
             WORKPIECE(,,,"CYLINDER",0,0,ESPESSURA,ESPESSURA,DIAMETRO_INICIAL)
 
@@ -212,8 +214,12 @@ class CyDesbasteP(CyBase):
 
             IF (_ESTILO == "DESBASTE-ZIG")
                 IF (_FORMA == "D")
-                    MSG(" - CARREGANDO CICLO DE DESBASTE ZIG-ZAG...");
-                    _N_CMP_DESB_ZIG_SPF;
+                    IF NOT (_TIPO==550)
+                        SETAL(61212);
+                    ELSE
+                        MSG(" - CARREGANDO CICLO DE DESBASTE ZIG-ZAG...")
+                        _N_CMP_DESB_ZIG_SPF;
+                    ENDIF
                 ENDIF
                 IF (_FORMA == "A")
                     MSG(" - CARREGANDO CICLO DE ACABAMENTO ZIG-ZAG...")
@@ -221,7 +227,7 @@ class CyDesbasteP(CyBase):
                 ENDIF
             ENDIF
 
-            N120 RET;''')
+            N140 RET;''')
 
             return self.__file_init
         
